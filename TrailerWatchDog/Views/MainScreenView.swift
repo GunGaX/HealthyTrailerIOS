@@ -8,9 +8,18 @@
 import SwiftUI
 
 struct MainScreenView: View {
+    @StateObject private var viewModel = MainViewModel()
+    
     var body: some View {
         VStack {
-            trailerPhoto
+            HStack {
+                graphButton
+                Spacer()
+                logOutButton
+            }
+            .padding()
+            
+            emptyTrailerPhoto
         }
     }
     
@@ -34,7 +43,7 @@ struct MainScreenView: View {
         }
     }
     
-    private var trailerPhoto: some View {
+    private var emptyTrailerPhoto: some View {
         Image("emptyTrailerImage")
             .resizable()
             .scaledToFit()
