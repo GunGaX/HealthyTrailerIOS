@@ -11,6 +11,9 @@
 		B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */; };
 		B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */; };
 		B63E7BEC2AFD23ED00ECA81B /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BEB2AFD23ED00ECA81B /* UIApplicationExtensions.swift */; };
+		B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BEE2AFD78EC00ECA81B /* NavigationManager.swift */; };
+		B63E7BF12AFD79CC00ECA81B /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BF02AFD79CC00ECA81B /* ViewExtensions.swift */; };
+		B63E7BF42AFD79FB00ECA81B /* NavigationDestinationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BF32AFD79FB00ECA81B /* NavigationDestinationModifier.swift */; };
 		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
 		B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */; };
 		B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */; };
@@ -30,6 +33,9 @@
 		B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBlueButtonStyle.swift; sourceTree = "<group>"; };
 		B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
 		B63E7BEB2AFD23ED00ECA81B /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
+		B63E7BEE2AFD78EC00ECA81B /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
+		B63E7BF02AFD79CC00ECA81B /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		B63E7BF32AFD79FB00ECA81B /* NavigationDestinationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestinationModifier.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* TrailerWatchDog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailerWatchDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerWatchDogApp.swift; sourceTree = "<group>"; };
 		B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -62,6 +68,7 @@
 			children = (
 				B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */,
 				B63E7BEB2AFD23ED00ECA81B /* UIApplicationExtensions.swift */,
+				B63E7BF02AFD79CC00ECA81B /* ViewExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -80,6 +87,22 @@
 				B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		B63E7BED2AFD78DD00ECA81B /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				B63E7BEE2AFD78EC00ECA81B /* NavigationManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		B63E7BF22AFD79E400ECA81B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B63E7BF32AFD79FB00ECA81B /* NavigationDestinationModifier.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		B68CE69C2AFBD5EB0047E644 = {
@@ -103,6 +126,8 @@
 			children = (
 				B68CE6CD2AFD0D180047E644 /* Info.plist */,
 				B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */,
+				B63E7BF22AFD79E400ECA81B /* Helpers */,
+				B63E7BED2AFD78DD00ECA81B /* Managers */,
 				B63E7BE22AFD153800ECA81B /* Extensions */,
 				B68CE6BF2AFD0BF10047E644 /* Common */,
 				B68CE6BC2AFD09F20047E644 /* ViewModels */,
@@ -247,11 +272,14 @@
 			files = (
 				B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */,
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
+				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
 				B63E7BEC2AFD23ED00ECA81B /* UIApplicationExtensions.swift in Sources */,
 				B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */,
 				B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */,
 				B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */,
 				B68CE6BE2AFD0A040047E644 /* MainViewModel.swift in Sources */,
+				B63E7BF12AFD79CC00ECA81B /* ViewExtensions.swift in Sources */,
+				B63E7BF42AFD79FB00ECA81B /* NavigationDestinationModifier.swift in Sources */,
 				B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

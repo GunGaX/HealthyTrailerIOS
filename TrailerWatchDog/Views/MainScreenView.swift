@@ -8,32 +8,36 @@
 import SwiftUI
 
 struct MainScreenView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
     @StateObject private var viewModel = MainViewModel()
     
     var body: some View {
-        VStack {
-            MainHeaderView()
+        NavigationStack(path: $navigationManager.path) {
+            VStack {
+                MainHeaderView()
                 
-            ScrollView {
-                HStack {
-                    statusIndicator
-                        .padding(.leading, -12)
-                    Spacer()
-                    connectionSection
-                        .padding(.trailing)
+                ScrollView {
+                    HStack {
+                        statusIndicator
+                            .padding(.leading, -12)
+                        Spacer()
+                        connectionSection
+                            .padding(.trailing)
+                    }
+                    .padding(.top, 30)
+                    HStack {
+                        graphButton
+                        Spacer()
+                        logOutButton
+                    }
+                    .padding()
+                    
+                    trailer
                 }
-                .padding(.top, 30)
-                HStack {
-                    graphButton
-                    Spacer()
-                    logOutButton
-                }
-                .padding()
-                
-                trailer
             }
+            .ignoresSafeArea(.container, edges: .top)
+            .navigationDestinations()
         }
-        .ignoresSafeArea(.container, edges: .top)
     }
     
     private var logOutButton: some View {
@@ -300,4 +304,5 @@ struct MainScreenView: View {
 
 #Preview {
     MainScreenView()
+        .environmentObject(NavigationManager())
 }

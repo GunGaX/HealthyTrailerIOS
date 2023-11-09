@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct TrailerWatchDogApp: App {
+    @StateObject var navigationManager = NavigationManager()
+    
     var body: some Scene {
         WindowGroup {
             MainScreenView()
+                .environmentObject(navigationManager)
         }
     }
 }

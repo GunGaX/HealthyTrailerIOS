@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainHeaderView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+    
     var body: some View {
         HStack(spacing: 20) {
             title
@@ -34,7 +36,7 @@ struct MainHeaderView: View {
     
     private var loggedHistoryIcon: some View {
         Button {
-            
+            navigationManager.append(HistoryPathItem())
         } label: {
             Image("folderIcon")
                 .resizable()
@@ -66,6 +68,7 @@ struct MainHeaderView: View {
 #Preview {
     VStack {
         MainHeaderView()
+            .environmentObject(NavigationManager())
         Spacer()
     }
     .ignoresSafeArea(.container, edges: .top)
