@@ -12,6 +12,13 @@
 		B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */; };
 		B68CE6B02AFBD5ED0047E644 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AF2AFBD5ED0047E644 /* Preview Assets.xcassets */; };
 		B68CE6BE2AFD0A040047E644 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6BD2AFD0A040047E644 /* MainViewModel.swift */; };
+		B68CE6C72AFD0C2A0047E644 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6C12AFD0C290047E644 /* Roboto-Black.ttf */; };
+		B68CE6C82AFD0C2A0047E644 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6C22AFD0C290047E644 /* Roboto-Medium.ttf */; };
+		B68CE6C92AFD0C2A0047E644 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6C32AFD0C290047E644 /* Roboto-Regular.ttf */; };
+		B68CE6CA2AFD0C2A0047E644 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6C42AFD0C290047E644 /* Roboto-Thin.ttf */; };
+		B68CE6CB2AFD0C2A0047E644 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6C52AFD0C2A0047E644 /* Roboto-Bold.ttf */; };
+		B68CE6CC2AFD0C2A0047E644 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6C62AFD0C2A0047E644 /* Roboto-Light.ttf */; };
+		B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6CF2AFD0DCC0047E644 /* CustomFonts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +28,14 @@
 		B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B68CE6AF2AFBD5ED0047E644 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B68CE6BD2AFD0A040047E644 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		B68CE6C12AFD0C290047E644 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
+		B68CE6C22AFD0C290047E644 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		B68CE6C32AFD0C290047E644 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		B68CE6C42AFD0C290047E644 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		B68CE6C52AFD0C2A0047E644 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		B68CE6C62AFD0C2A0047E644 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		B68CE6CD2AFD0D180047E644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B68CE6CF2AFD0DCC0047E644 /* CustomFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +68,9 @@
 		B68CE6A72AFBD5EB0047E644 /* TrailerWatchDog */ = {
 			isa = PBXGroup;
 			children = (
+				B68CE6CD2AFD0D180047E644 /* Info.plist */,
 				B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */,
+				B68CE6BF2AFD0BF10047E644 /* Common */,
 				B68CE6BC2AFD09F20047E644 /* ViewModels */,
 				B68CE6BB2AFD09DE0047E644 /* Views */,
 				B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */,
@@ -84,6 +101,36 @@
 				B68CE6BD2AFD0A040047E644 /* MainViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B68CE6BF2AFD0BF10047E644 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B68CE6C02AFD0C030047E644 /* Fonts */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		B68CE6C02AFD0C030047E644 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B68CE6CE2AFD0DB30047E644 /* Roboto */,
+				B68CE6CF2AFD0DCC0047E644 /* CustomFonts.swift */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		B68CE6CE2AFD0DB30047E644 /* Roboto */ = {
+			isa = PBXGroup;
+			children = (
+				B68CE6C12AFD0C290047E644 /* Roboto-Black.ttf */,
+				B68CE6C52AFD0C2A0047E644 /* Roboto-Bold.ttf */,
+				B68CE6C62AFD0C2A0047E644 /* Roboto-Light.ttf */,
+				B68CE6C22AFD0C290047E644 /* Roboto-Medium.ttf */,
+				B68CE6C32AFD0C290047E644 /* Roboto-Regular.ttf */,
+				B68CE6C42AFD0C290047E644 /* Roboto-Thin.ttf */,
+			);
+			path = Roboto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,8 +191,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B68CE6CB2AFD0C2A0047E644 /* Roboto-Bold.ttf in Resources */,
+				B68CE6C82AFD0C2A0047E644 /* Roboto-Medium.ttf in Resources */,
 				B68CE6B02AFBD5ED0047E644 /* Preview Assets.xcassets in Resources */,
+				B68CE6CA2AFD0C2A0047E644 /* Roboto-Thin.ttf in Resources */,
+				B68CE6C92AFD0C2A0047E644 /* Roboto-Regular.ttf in Resources */,
 				B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */,
+				B68CE6CC2AFD0C2A0047E644 /* Roboto-Light.ttf in Resources */,
+				B68CE6C72AFD0C2A0047E644 /* Roboto-Black.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */,
+				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */,
 				B68CE6BE2AFD0A040047E644 /* MainViewModel.swift in Sources */,
 			);
@@ -295,6 +349,7 @@
 				DEVELOPMENT_TEAM = PXD5F88JRN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TrailerWatchDog/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -324,6 +379,7 @@
 				DEVELOPMENT_TEAM = PXD5F88JRN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TrailerWatchDog/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
