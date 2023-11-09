@@ -30,7 +30,7 @@ struct MainScreenView: View {
                 }
                 .padding()
                 
-                emptyTrailerPhoto
+                trailer
             }
         }
         .ignoresSafeArea(.container, edges: .top)
@@ -50,11 +50,26 @@ struct MainScreenView: View {
     
     private var graphButton: some View {
         Button {
-            
+            withAnimation {
+                viewModel.displayingMode.toggle()
+            }
         } label: {
-            Image("graphIcon")
+            Image(viewModel.displayingMode ? "graphIcon" : "twoRectanglesIcon")
                 .resizable()
                 .frame(width: 32, height: 32)
+        }
+    }
+    
+    @ViewBuilder
+    private var trailer: some View {
+        if viewModel.isTWDConnected {
+            if viewModel.displayingMode {
+                fillTrailer
+            } else {
+                flatTrailer
+            }
+        } else {
+            emptyTrailerPhoto
         }
     }
     
@@ -62,6 +77,83 @@ struct MainScreenView: View {
         Image("emptyTrailerImage")
             .resizable()
             .scaledToFit()
+    }
+    
+    private var fillTrailer: some View {
+        VStack(spacing: -3) {
+            Image("fillTrailerTop")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 220)
+            
+            ForEach(viewModel.axis, id: \.self) { axis in
+                axisBar(leftTireValue: 27.2, rightTireValue: 34.2, leftTireAvg: 34, rightTireAvg: 34, axisNumber: axis)
+                if axis != viewModel.axis.last {
+                    separatingAxisBar
+                }
+            }
+
+            Image("fillTrailerBack")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 220)
+        }
+    }
+    
+    private func axisBar(leftTireValue: Double, rightTireValue: Double, leftTireAvg: Int, rightTireAvg: Int, axisNumber: Int) -> some View {
+        HStack(spacing: -20) {
+            valueBar(tireValue: leftTireValue, isRight: false)
+            
+            ZStack {
+                Image("fillAxisImage")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 220)
+                    
+                
+                HStack {
+                    VStack {
+                        Text("\(axisNumber * 2 - 1)")
+                        Text("Avg:")
+                            .opacity(0.8)
+                        HStack(alignment: .bottom, spacing: 5) {
+                            Text(leftTireAvg.description)
+                            Text("°C")
+                                .font(.roboto500, size: 10)
+                                .padding(.bottom, 1)
+                        }
+                    }
+                    .font(.roboto500, size: 14)
+                    .foregroundStyle(Color.white)
+                    .frame(width: 44)
+                    Spacer()
+                    VStack {
+                        Text("\(axisNumber * 2)")
+                        Text("Avg:")
+                            .opacity(0.8)
+                        HStack(alignment: .bottom, spacing: 5) {
+                            Text(rightTireAvg.description)
+                            Text("°C")
+                                .font(.roboto500, size: 10)
+                                .padding(.bottom, 1)
+                        }
+                    }
+                    .font(.roboto500, size: 14)
+                    .foregroundStyle(Color.white)
+                    .frame(width: 44)
+                }
+            }
+            .zIndex(2.0)
+            
+            valueBar(tireValue: rightTireValue, isRight: true)
+        }
+    }
+    
+    private var separatingAxisBar: some View {
+        Image("separatingAxisImage")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 220)
     }
     
     private var statusIndicator: some View {
@@ -97,8 +189,7 @@ struct MainScreenView: View {
             Text("Connected:")
                 .foregroundStyle(Color.textDark)
             
-            // MOCK DEVICE NAME
-            Text("TWD-1400-AX3WX3W")
+            Text("TWD-DEVICE-NAME")
                 .foregroundStyle(Color.mainBlue)
         }
         .font(.roboto500, size: 16)
@@ -113,6 +204,97 @@ struct MainScreenView: View {
             Text("Try to connect")
         }
         .buttonStyle(.mainBlueButton)
+    }
+    
+    private var flatTrailer: some View {
+        VStack(spacing: 10) {
+            
+            ForEach(viewModel.axis, id: \.self) { axis in
+                flatAxisBar(leftTireValue: 27.2, rightTireValue: 34.2, leftTireAvg: 34, rightTireAvg: 34, axisNumber: axis)
+            }
+        }
+    }
+    
+    private func flatAxisBar(leftTireValue: Double, rightTireValue: Double, leftTireAvg: Int, rightTireAvg: Int, axisNumber: Int) -> some View {
+        VStack(spacing: 8) {
+            Text("Axis \(axisNumber)")
+                .font(.roboto500, size: 16)
+                .foregroundStyle(Color.textDark)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading)
+            
+            HStack(spacing: 0) {
+                valueBar(tireValue: leftTireValue, isRight: false)
+                ZStack {
+                    tireImage
+                    VStack {
+                        Text("\(axisNumber * 2 - 1)")
+                        Text("Avg:")
+                            .opacity(0.8)
+                        HStack(alignment: .bottom, spacing: 5) {
+                            Text(leftTireAvg.description)
+                            Text("°C")
+                                .font(.roboto500, size: 10)
+                                .padding(.bottom, 1)
+                        }
+                    }
+                    .font(.roboto500, size: 14)
+                    .foregroundStyle(Color.white)
+                    .frame(width: 44)
+                }
+                .padding(.trailing, 12)
+                ZStack {
+                    tireImage
+                    VStack {
+                        Text("\(axisNumber * 2)")
+                        Text("Avg:")
+                            .opacity(0.8)
+                        HStack(alignment: .bottom, spacing: 5) {
+                            Text(rightTireAvg.description)
+                            Text("°C")
+                                .font(.roboto500, size: 10)
+                                .padding(.bottom, 1)
+                        }
+                    }
+                    .font(.roboto500, size: 14)
+                    .foregroundStyle(Color.white)
+                    .frame(width: 44)
+                }
+                valueBar(tireValue: rightTireValue, isRight: true)
+            }
+        }
+    }
+    
+    private var tireImage: some View {
+        ZStack {
+            Image("emptyTireImage")
+                .resizable()
+                .scaledToFit()
+            Image("onTireMarksImage")
+                .resizable()
+                .scaledToFit()
+        }
+        .frame(height: 64)
+    }
+    
+    private func valueBar(tireValue: Double, isRight: Bool) -> some View {
+        ZStack {
+            Rectangle()
+                .foregroundStyle(Color.lightGreen)
+                .padding(.top, 2)
+                .padding(.bottom, 1)
+            
+            HStack(alignment: .bottom, spacing: 5) {
+                Text(tireValue.description)
+                    .font(.roboto700, size: 18)
+                
+                Text("°C")
+                    .font(.roboto700, size: 10)
+                    .padding(.bottom, 3)
+            }
+            .foregroundStyle(Color.mainGreen)
+            .padding(isRight ? .trailing : .leading, -10)
+        }
     }
 }
 

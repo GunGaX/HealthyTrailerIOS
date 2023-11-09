@@ -9,4 +9,7 @@ import Foundation
 
 final class MainViewModel: ObservableObject {
     @Published var isTWDConnected = false
+    @Published var displayingMode = true
+    
+    @Published var axis = [1, 2, 3, 4]
 }
