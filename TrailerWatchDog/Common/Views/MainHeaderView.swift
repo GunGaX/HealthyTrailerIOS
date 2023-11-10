@@ -46,7 +46,7 @@ struct MainHeaderView: View {
     
     private var terminalIcon: some View {
         Button {
-            
+            navigationManager.append(TerminalPathItem())
         } label: {
             Image("terminalIcon")
                 .resizable()
@@ -56,7 +56,7 @@ struct MainHeaderView: View {
     
     private var settingsIcon: some View {
         Button {
-            
+            navigationManager.append(SettingPathItem())
         } label: {
             Image("settingsIcon")
                 .resizable()
