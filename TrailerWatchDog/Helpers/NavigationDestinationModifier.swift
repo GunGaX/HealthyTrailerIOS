@@ -12,13 +12,13 @@ struct NavigationDestinationsViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .navigationDestination(for: SettingPathItem.self) { pathItem in
-                Text("Settings")
+                SettingsView()
             }
             .navigationDestination(for: TerminalPathItem.self) { pathItem in
-                Text("Terminal")
+                TerminalView()
             }
             .navigationDestination(for: HistoryPathItem.self) { pathItem in
-                Text("History")
+                LoggedHistoryView()
             }
     }
 }

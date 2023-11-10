@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct TerminalView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            SecondaryHeaderView(titleText: "Terminal")
+            
+            ScrollView {
+                
+            }
+        }
+        .ignoresSafeArea(.container, edges: .top)
+        .navigationBarBackButtonHidden()
     }
 }
 
 #Preview {
     TerminalView()
+        .environmentObject(NavigationManager())
 }

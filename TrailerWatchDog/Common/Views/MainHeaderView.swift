@@ -21,6 +21,7 @@ struct MainHeaderView: View {
         .padding(.horizontal)
         .padding(.vertical, 20)
         .padding(.top, ScreenUtils.statusBarHeight)
+        .frame(height: 120)
         .background(
             Rectangle()
                 .foregroundStyle(.white)
