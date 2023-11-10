@@ -18,6 +18,8 @@
 		B63E7BF82AFE5F1100ECA81B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BF72AFE5F1100ECA81B /* SettingsView.swift */; };
 		B63E7BFA2AFE604500ECA81B /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BF92AFE604500ECA81B /* TerminalView.swift */; };
 		B63E7BFC2AFE606500ECA81B /* LoggedHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BFB2AFE606500ECA81B /* LoggedHistoryView.swift */; };
+		B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BFD2AFE659C00ECA81B /* TireTemperaturePlotView.swift */; };
+		B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C002AFE67E000ECA81B /* ChartDataModel.swift */; };
 		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
 		B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */; };
 		B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */; };
@@ -44,6 +46,8 @@
 		B63E7BF72AFE5F1100ECA81B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B63E7BF92AFE604500ECA81B /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
 		B63E7BFB2AFE606500ECA81B /* LoggedHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedHistoryView.swift; sourceTree = "<group>"; };
+		B63E7BFD2AFE659C00ECA81B /* TireTemperaturePlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TireTemperaturePlotView.swift; sourceTree = "<group>"; };
+		B63E7C002AFE67E000ECA81B /* ChartDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDataModel.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* TrailerWatchDog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailerWatchDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerWatchDogApp.swift; sourceTree = "<group>"; };
 		B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -94,6 +98,7 @@
 			children = (
 				B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */,
 				B63E7BF52AFE5D1900ECA81B /* SecondaryHeaderView.swift */,
+				B63E7BFD2AFE659C00ECA81B /* TireTemperaturePlotView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -112,6 +117,14 @@
 				B63E7BF32AFD79FB00ECA81B /* NavigationDestinationModifier.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B63E7BFF2AFE67CE00ECA81B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B63E7C002AFE67E000ECA81B /* ChartDataModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		B68CE69C2AFBD5EB0047E644 = {
@@ -139,6 +152,7 @@
 				B63E7BED2AFD78DD00ECA81B /* Managers */,
 				B63E7BE22AFD153800ECA81B /* Extensions */,
 				B68CE6BF2AFD0BF10047E644 /* Common */,
+				B63E7BFF2AFE67CE00ECA81B /* Models */,
 				B68CE6BC2AFD09F20047E644 /* ViewModels */,
 				B68CE6BB2AFD09DE0047E644 /* Views */,
 				B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */,
@@ -286,6 +300,8 @@
 				B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */,
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
+				B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */,
+				B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */,
 				B63E7BEC2AFD23ED00ECA81B /* UIApplicationExtensions.swift in Sources */,
 				B63E7BF62AFE5D1900ECA81B /* SecondaryHeaderView.swift in Sources */,
 				B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */,

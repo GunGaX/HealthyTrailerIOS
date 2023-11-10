@@ -228,7 +228,7 @@ struct MainScreenView: View {
                 .padding(.leading)
             
             HStack(spacing: 0) {
-                valueBar(tireValue: leftTireValue, isRight: false)
+                flatValueBar(tireValues: ChartData.mockArray, isRight: false)
                 ZStack {
                     tireImage
                     VStack {
@@ -246,6 +246,7 @@ struct MainScreenView: View {
                     .foregroundStyle(Color.white)
                     .frame(width: 44)
                 }
+                .zIndex(2.0)
                 .padding(.trailing, 12)
                 ZStack {
                     tireImage
@@ -264,7 +265,8 @@ struct MainScreenView: View {
                     .foregroundStyle(Color.white)
                     .frame(width: 44)
                 }
-                valueBar(tireValue: rightTireValue, isRight: true)
+                .zIndex(2.0)
+                flatValueBar(tireValues: ChartData.mockArray, isRight: true)
             }
         }
     }
@@ -299,6 +301,33 @@ struct MainScreenView: View {
             .foregroundStyle(Color.mainGreen)
             .padding(isRight ? .trailing : .leading, -10)
         }
+    }
+    
+    private func flatValueBar(tireValues: [ChartData], isRight: Bool) -> some View {
+        ZStack {
+            Rectangle()
+                .foregroundStyle(Color.lightGreen)
+                .padding(.top, 2)
+                .padding(.bottom, 1)
+            
+            VStack(spacing: 10) {
+                HStack(alignment: .bottom, spacing: 5) {
+                    Text(tireValues.last?.value.description ?? "0.0")
+                        .font(.roboto700, size: 18)
+                    
+                    Text("°C")
+                        .font(.roboto700, size: 10)
+                        .padding(.bottom, 3)
+                }
+                .foregroundStyle(Color.mainGreen)
+                
+                TireTemperaturePlotView(data: tireValues)
+                    .padding(.horizontal)
+                    .frame(height: 20)
+            }
+            .padding(.vertical, 6)
+        }
+        .padding(isRight ? .leading : .trailing, -10)
     }
 }
 
