@@ -22,6 +22,8 @@
 		B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C002AFE67E000ECA81B /* ChartDataModel.swift */; };
 		B63E7C032AFE86AF00ECA81B /* DefaultSignleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C022AFE86AF00ECA81B /* DefaultSignleSliderView.swift */; };
 		B63E7C052AFF9DD800ECA81B /* DoubleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C042AFF9DD800ECA81B /* DoubleExtensions.swift */; };
+		B63E7C072AFFA7B500ECA81B /* DefaultDoubleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C062AFFA7B500ECA81B /* DefaultDoubleSliderView.swift */; };
+		B63E7C092AFFB33400ECA81B /* NotificationSoundPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C082AFFB33400ECA81B /* NotificationSoundPickerView.swift */; };
 		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
 		B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */; };
 		B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */; };
@@ -52,6 +54,8 @@
 		B63E7C002AFE67E000ECA81B /* ChartDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDataModel.swift; sourceTree = "<group>"; };
 		B63E7C022AFE86AF00ECA81B /* DefaultSignleSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignleSliderView.swift; sourceTree = "<group>"; };
 		B63E7C042AFF9DD800ECA81B /* DoubleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtensions.swift; sourceTree = "<group>"; };
+		B63E7C062AFFA7B500ECA81B /* DefaultDoubleSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDoubleSliderView.swift; sourceTree = "<group>"; };
+		B63E7C082AFFB33400ECA81B /* NotificationSoundPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSoundPickerView.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* TrailerWatchDog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailerWatchDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerWatchDogApp.swift; sourceTree = "<group>"; };
 		B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 				B63E7BF52AFE5D1900ECA81B /* SecondaryHeaderView.swift */,
 				B63E7BFD2AFE659C00ECA81B /* TireTemperaturePlotView.swift */,
 				B63E7C022AFE86AF00ECA81B /* DefaultSignleSliderView.swift */,
+				B63E7C062AFFA7B500ECA81B /* DefaultDoubleSliderView.swift */,
+				B63E7C082AFFB33400ECA81B /* NotificationSoundPickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -307,6 +313,7 @@
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
 				B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */,
+				B63E7C092AFFB33400ECA81B /* NotificationSoundPickerView.swift in Sources */,
 				B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */,
 				B63E7BEC2AFD23ED00ECA81B /* UIApplicationExtensions.swift in Sources */,
 				B63E7C052AFF9DD800ECA81B /* DoubleExtensions.swift in Sources */,
@@ -320,6 +327,7 @@
 				B63E7BF42AFD79FB00ECA81B /* NavigationDestinationModifier.swift in Sources */,
 				B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */,
 				B63E7BF82AFE5F1100ECA81B /* SettingsView.swift in Sources */,
+				B63E7C072AFFA7B500ECA81B /* DefaultDoubleSliderView.swift in Sources */,
 				B63E7BFC2AFE606500ECA81B /* LoggedHistoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
