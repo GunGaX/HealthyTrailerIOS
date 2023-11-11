@@ -20,6 +20,8 @@
 		B63E7BFC2AFE606500ECA81B /* LoggedHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BFB2AFE606500ECA81B /* LoggedHistoryView.swift */; };
 		B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BFD2AFE659C00ECA81B /* TireTemperaturePlotView.swift */; };
 		B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C002AFE67E000ECA81B /* ChartDataModel.swift */; };
+		B63E7C032AFE86AF00ECA81B /* DefaultSignleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C022AFE86AF00ECA81B /* DefaultSignleSliderView.swift */; };
+		B63E7C052AFF9DD800ECA81B /* DoubleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C042AFF9DD800ECA81B /* DoubleExtensions.swift */; };
 		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
 		B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */; };
 		B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */; };
@@ -48,6 +50,8 @@
 		B63E7BFB2AFE606500ECA81B /* LoggedHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedHistoryView.swift; sourceTree = "<group>"; };
 		B63E7BFD2AFE659C00ECA81B /* TireTemperaturePlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TireTemperaturePlotView.swift; sourceTree = "<group>"; };
 		B63E7C002AFE67E000ECA81B /* ChartDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDataModel.swift; sourceTree = "<group>"; };
+		B63E7C022AFE86AF00ECA81B /* DefaultSignleSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignleSliderView.swift; sourceTree = "<group>"; };
+		B63E7C042AFF9DD800ECA81B /* DoubleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtensions.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* TrailerWatchDog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailerWatchDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerWatchDogApp.swift; sourceTree = "<group>"; };
 		B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -81,6 +85,7 @@
 				B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */,
 				B63E7BEB2AFD23ED00ECA81B /* UIApplicationExtensions.swift */,
 				B63E7BF02AFD79CC00ECA81B /* ViewExtensions.swift */,
+				B63E7C042AFF9DD800ECA81B /* DoubleExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -99,6 +104,7 @@
 				B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */,
 				B63E7BF52AFE5D1900ECA81B /* SecondaryHeaderView.swift */,
 				B63E7BFD2AFE659C00ECA81B /* TireTemperaturePlotView.swift */,
+				B63E7C022AFE86AF00ECA81B /* DefaultSignleSliderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -303,12 +309,14 @@
 				B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */,
 				B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */,
 				B63E7BEC2AFD23ED00ECA81B /* UIApplicationExtensions.swift in Sources */,
+				B63E7C052AFF9DD800ECA81B /* DoubleExtensions.swift in Sources */,
 				B63E7BF62AFE5D1900ECA81B /* SecondaryHeaderView.swift in Sources */,
 				B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */,
 				B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */,
 				B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */,
 				B68CE6BE2AFD0A040047E644 /* MainViewModel.swift in Sources */,
 				B63E7BF12AFD79CC00ECA81B /* ViewExtensions.swift in Sources */,
+				B63E7C032AFE86AF00ECA81B /* DefaultSignleSliderView.swift in Sources */,
 				B63E7BF42AFD79FB00ECA81B /* NavigationDestinationModifier.swift in Sources */,
 				B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */,
 				B63E7BF82AFE5F1100ECA81B /* SettingsView.swift in Sources */,

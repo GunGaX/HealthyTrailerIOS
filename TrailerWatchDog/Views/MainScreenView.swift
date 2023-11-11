@@ -13,7 +13,7 @@ struct MainScreenView: View {
     
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
-            VStack {
+            VStack(spacing: 0) {
                 MainHeaderView()
                 
                 ScrollView {
