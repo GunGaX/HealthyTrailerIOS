@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainScreenView: View {
     @EnvironmentObject var navigationManager: NavigationManager
-    @StateObject private var viewModel = MainViewModel()
+    @EnvironmentObject var viewModel: MainViewModel
     
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
@@ -35,6 +35,7 @@ struct MainScreenView: View {
                     trailer
                 }
             }
+            .environmentObject(viewModel)
             .ignoresSafeArea(.container, edges: .top)
             .navigationDestinations()
         }
@@ -334,4 +335,5 @@ struct MainScreenView: View {
 #Preview {
     MainScreenView()
         .environmentObject(NavigationManager())
+        .environmentObject(MainViewModel())
 }

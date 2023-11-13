@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var navigationManager: NavigationManager
+    @EnvironmentObject var viewModel: MainViewModel
+    
     @State private var maxTPMSSensorTemperature = 0.7728
     @State private var maxDifferenceTPMSSensorTemperature = 0.3
     @State private var maxTWDSensorTemperature = 0.7728
@@ -16,9 +18,7 @@ struct SettingsView: View {
     @State private var preassureMinValue = 0.2
     @State private var preassureMaxValue = 0.8
     @State private var selectedSound: NotificationSound = .chime
-    
-    let axlesCount: Int = 3
-    
+        
     var body: some View {
         VStack(spacing: 0) {
             SecondaryHeaderView(titleText: "Settings")
@@ -52,7 +52,7 @@ struct SettingsView: View {
                 .font(.roboto500, size: 18)
                 .padding(.trailing, 20)
             
-            Text(axlesCount.description)
+            Text(viewModel.axis.count.description)
                 .foregroundStyle(Color.mainGrey)
                 .font(.roboto500, size: 26)
                 .padding(30)
@@ -85,4 +85,5 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
         .environmentObject(NavigationManager())
+        .environmentObject(MainViewModel())
 }

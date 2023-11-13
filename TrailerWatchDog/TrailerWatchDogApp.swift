@@ -10,11 +10,13 @@ import SwiftUI
 @main
 struct TrailerWatchDogApp: App {
     @StateObject var navigationManager = NavigationManager()
+    @StateObject private var viewModel = MainViewModel()
     
     var body: some Scene {
         WindowGroup {
             MainScreenView()
                 .environmentObject(navigationManager)
+                .environmentObject(viewModel)
         }
     }
 }
