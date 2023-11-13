@@ -22,11 +22,7 @@ struct SecondaryHeaderView: View {
         .padding(.vertical, 20)
         .padding(.top, ScreenUtils.statusBarHeight)
         .frame(height: 120)
-        .background(
-            Rectangle()
-                .foregroundStyle(.white)
-                .shadow(color: .black.opacity(0.25), radius: 8, x: 0, y: 4)
-        )
+        .headerShadowRectangle()
     }
     
     private var title: some View {

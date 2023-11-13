@@ -24,16 +24,23 @@ struct NotificationSoundPickerView: View {
     var body: some View {
         VStack(spacing: 18) {
             ForEach(NotificationSound.allCases, id: \.self) { item in
-                caseView(item: item)
+                NotificationSoundItemView(selectedSound: $selectedSound, sound: item)
             }
         }
     }
+}
+
+fileprivate struct NotificationSoundItemView: View {
+    @Binding var selectedSound: NotificationSound
+    let sound: NotificationSound
     
-    @ViewBuilder
-    private func caseView(item: NotificationSound) -> some View {
-        let isSelected = selectedSound == item
+    var isSelected: Bool {
+        selectedSound == sound
+    }
+    
+    var body: some View {
         Button {
-            selectedSound = item
+            selectedSound = sound
         } label: {
             HStack(spacing: 20) {
                 ZStack {
@@ -49,7 +56,7 @@ struct NotificationSoundPickerView: View {
                     }
                 }
                 
-                Text(item.title)
+                Text(sound.title)
                     .foregroundStyle(Color.textDark)
                     .font(isSelected ? .roboto500 : .roboto400, size: 16)
             }

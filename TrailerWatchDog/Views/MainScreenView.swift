@@ -91,8 +91,8 @@ struct MainScreenView: View {
                 .scaledToFit()
                 .frame(width: 220)
             
-            ForEach(viewModel.axis, id: \.self) { axis in
-                axisBar(leftTireValue: 27.2, rightTireValue: 34.2, leftTireAvg: 34, rightTireAvg: 34, axisNumber: axis)
+            ForEach(viewModel.axis) { axis in
+                AxisBarView(axis: axis)
                 if axis != viewModel.axis.last {
                     separatingAxisBar
                 }
@@ -102,55 +102,6 @@ struct MainScreenView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 220)
-        }
-    }
-    
-    private func axisBar(leftTireValue: Double, rightTireValue: Double, leftTireAvg: Int, rightTireAvg: Int, axisNumber: Int) -> some View {
-        HStack(spacing: -20) {
-            valueBar(tireValue: leftTireValue, isRight: false)
-            
-            ZStack {
-                Image("fillAxisImage")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 220)
-                    
-                
-                HStack {
-                    VStack {
-                        Text("\(axisNumber * 2 - 1)")
-                        Text("Avg:")
-                            .opacity(0.8)
-                        HStack(alignment: .bottom, spacing: 5) {
-                            Text(leftTireAvg.description)
-                            Text("°C")
-                                .font(.roboto500, size: 10)
-                                .padding(.bottom, 1)
-                        }
-                    }
-                    .font(.roboto500, size: 14)
-                    .foregroundStyle(Color.white)
-                    .frame(width: 44)
-                    Spacer()
-                    VStack {
-                        Text("\(axisNumber * 2)")
-                        Text("Avg:")
-                            .opacity(0.8)
-                        HStack(alignment: .bottom, spacing: 5) {
-                            Text(rightTireAvg.description)
-                            Text("°C")
-                                .font(.roboto500, size: 10)
-                                .padding(.bottom, 1)
-                        }
-                    }
-                    .font(.roboto500, size: 14)
-                    .foregroundStyle(Color.white)
-                    .frame(width: 44)
-                }
-            }
-            .zIndex(2.0)
-            
-            valueBar(tireValue: rightTireValue, isRight: true)
         }
     }
     
@@ -215,14 +166,91 @@ struct MainScreenView: View {
         VStack(spacing: 10) {
             
             ForEach(viewModel.axis, id: \.self) { axis in
-                flatAxisBar(leftTireValue: 27.2, rightTireValue: 34.2, leftTireAvg: 34, rightTireAvg: 34, axisNumber: axis)
+                FlatAxisBarView(axis: axis)
             }
         }
     }
+}
+
+fileprivate struct AxisBarView: View {
+    let axis: AxiesData
     
-    private func flatAxisBar(leftTireValue: Double, rightTireValue: Double, leftTireAvg: Int, rightTireAvg: Int, axisNumber: Int) -> some View {
+    var body: some View {
+        HStack(spacing: -20) {
+            valueBar(tireValue: axis.leftTire.temperature, isRight: false)
+            
+            ZStack {
+                Image("fillAxisImage")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 220)
+                
+                
+                HStack {
+                    VStack {
+                        Text("\(axis.axisNumber * 2 - 1)")
+                        Text("Avg:")
+                            .opacity(0.8)
+                        HStack(alignment: .bottom, spacing: 5) {
+                            Text(axis.leftTire.avgTemperature.description)
+                            Text("°C")
+                                .font(.roboto500, size: 10)
+                                .padding(.bottom, 1)
+                        }
+                    }
+                    .font(.roboto500, size: 14)
+                    .foregroundStyle(Color.white)
+                    .frame(width: 44)
+                    Spacer()
+                    VStack {
+                        Text("\(axis.axisNumber * 2)")
+                        Text("Avg:")
+                            .opacity(0.8)
+                        HStack(alignment: .bottom, spacing: 5) {
+                            Text(axis.rightTire.avgTemperature.description)
+                            Text("°C")
+                                .font(.roboto500, size: 10)
+                                .padding(.bottom, 1)
+                        }
+                    }
+                    .font(.roboto500, size: 14)
+                    .foregroundStyle(Color.white)
+                    .frame(width: 44)
+                }
+            }
+            .zIndex(2.0)
+            
+            valueBar(tireValue: axis.rightTire.temperature, isRight: true)
+        }
+    }
+    
+    private func valueBar(tireValue: Double, isRight: Bool) -> some View {
+        ZStack {
+            Rectangle()
+                .foregroundStyle(Color.lightGreen)
+                .padding(.top, 2)
+                .padding(.bottom, 1)
+            
+            HStack(alignment: .bottom, spacing: 5) {
+                Text(tireValue.description)
+                    .font(.roboto700, size: 18)
+                
+                Text("°C")
+                    .font(.roboto700, size: 10)
+                    .padding(.bottom, 3)
+            }
+            .foregroundStyle(Color.mainGreen)
+            .padding(isRight ? .trailing : .leading, -10)
+        }
+    }
+}
+
+fileprivate struct FlatAxisBarView: View {
+    let axis: AxiesData
+    
+    var body: some View {
         VStack(spacing: 8) {
-            Text("Axis \(axisNumber)")
+            Text("Axis \(axis.axisNumber)")
                 .font(.roboto500, size: 16)
                 .foregroundStyle(Color.textDark)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -233,11 +261,11 @@ struct MainScreenView: View {
                 ZStack {
                     tireImage
                     VStack {
-                        Text("\(axisNumber * 2 - 1)")
+                        Text("\(axis.axisNumber * 2 - 1)")
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(leftTireAvg.description)
+                            Text(axis.leftTire.avgTemperature.description)
                             Text("°C")
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
@@ -252,11 +280,11 @@ struct MainScreenView: View {
                 ZStack {
                     tireImage
                     VStack {
-                        Text("\(axisNumber * 2)")
+                        Text("\(axis.axisNumber * 2)")
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(rightTireAvg.description)
+                            Text(axis.rightTire.avgTemperature.description)
                             Text("°C")
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
@@ -282,26 +310,6 @@ struct MainScreenView: View {
                 .scaledToFit()
         }
         .frame(height: 64)
-    }
-    
-    private func valueBar(tireValue: Double, isRight: Bool) -> some View {
-        ZStack {
-            Rectangle()
-                .foregroundStyle(Color.lightGreen)
-                .padding(.top, 2)
-                .padding(.bottom, 1)
-            
-            HStack(alignment: .bottom, spacing: 5) {
-                Text(tireValue.description)
-                    .font(.roboto700, size: 18)
-                
-                Text("°C")
-                    .font(.roboto700, size: 10)
-                    .padding(.bottom, 3)
-            }
-            .foregroundStyle(Color.mainGreen)
-            .padding(isRight ? .trailing : .leading, -10)
-        }
     }
     
     private func flatValueBar(tireValues: [ChartData], isRight: Bool) -> some View {
