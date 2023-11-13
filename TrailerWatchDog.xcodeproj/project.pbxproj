@@ -26,6 +26,7 @@
 		B63E7C092AFFB33400ECA81B /* NotificationSoundPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C082AFFB33400ECA81B /* NotificationSoundPickerView.swift */; };
 		B63E7C0B2B02269F00ECA81B /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C0A2B02269F00ECA81B /* ViewModifiers.swift */; };
 		B63E7C0D2B02297300ECA81B /* AxiesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */; };
+		B63E7C1E2B02936400ECA81B /* MeasurementTypePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */; };
 		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
 		B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */; };
 		B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		B63E7C082AFFB33400ECA81B /* NotificationSoundPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSoundPickerView.swift; sourceTree = "<group>"; };
 		B63E7C0A2B02269F00ECA81B /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxiesDataModel.swift; sourceTree = "<group>"; };
+		B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementTypePickerView.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* TrailerWatchDog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailerWatchDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerWatchDogApp.swift; sourceTree = "<group>"; };
 		B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				B63E7C022AFE86AF00ECA81B /* DefaultSignleSliderView.swift */,
 				B63E7C062AFFA7B500ECA81B /* DefaultDoubleSliderView.swift */,
 				B63E7C082AFFB33400ECA81B /* NotificationSoundPickerView.swift */,
+				B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				B63E7BFA2AFE604500ECA81B /* TerminalView.swift in Sources */,
 				B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */,
 				B63E7C0D2B02297300ECA81B /* AxiesDataModel.swift in Sources */,
+				B63E7C1E2B02936400ECA81B /* MeasurementTypePickerView.swift in Sources */,
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
 				B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */,

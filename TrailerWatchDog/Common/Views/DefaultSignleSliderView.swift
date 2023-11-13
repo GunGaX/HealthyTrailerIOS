@@ -9,11 +9,26 @@ import SwiftUI
 
 struct DefaultSignleSliderView: View {
     @Binding var value: Double
+    @Binding var selectedTemperatureType: TemperatureType
     @State var lastCoordinateValue: CGFloat = 50
     
     let titleText: String
     let minValue: Double
     let maxValue: Double
+    
+    var minBound: Double {
+        switch selectedTemperatureType {
+        case .fahrenheit: return self.minValue
+        case .celsius: return self.minValue.fromFahrenheitToCelsius() < 0 ? 0 : self.minValue.fromFahrenheitToCelsius()
+        }
+    }
+    
+    var maxBound: Double {
+        switch selectedTemperatureType {
+        case .fahrenheit: return self.maxValue
+        case .celsius: return self.maxValue.fromFahrenheitToCelsius()
+        }
+    }
     
     var body: some View {
         VStack(spacing: 14) {
@@ -72,11 +87,11 @@ struct DefaultSignleSliderView: View {
     
     private var bubleValue: some View {
         HStack(alignment: .bottom, spacing: 4) {
-            Text("\(Double(value * maxValue).formattedToOneDecimalPlace())")
+            Text("\(Double(value * maxBound).formattedToOneDecimalPlace())")
                 .foregroundStyle(Color.mainBlue)
                 .font(.roboto700, size: 20)
             
-            Text("°F")
+            Text(selectedTemperatureType.measureMark)
                 .foregroundStyle(Color.mainBlue)
                 .font(.roboto700, size: 12)
                 .padding(.bottom, 3)
@@ -91,9 +106,9 @@ struct DefaultSignleSliderView: View {
     
     private var bottomLegend: some View {
         HStack {
-            Text("\(minValue.formattedToOneDecimalPlace()) °F")
+            Text("\(minBound.formattedToOneDecimalPlace()) \(selectedTemperatureType.measureMark)")
             Spacer()
-            Text("\(maxValue.formattedToOneDecimalPlace()) °F")
+            Text("\(maxBound.formattedToOneDecimalPlace()) \(selectedTemperatureType.measureMark)")
         }
         .font(.roboto500, size: 16)
         .foregroundStyle(Color.mainGrey)
@@ -102,7 +117,7 @@ struct DefaultSignleSliderView: View {
 
 
 #Preview {
-    DefaultSignleSliderView(value: .constant(0.5), titleText: "MAX temperature", minValue: 0, maxValue: 160)
+    DefaultSignleSliderView(value: .constant(0.5), selectedTemperatureType: .constant(.celsius), titleText: "MAX temperature", minValue: 0, maxValue: 160)
         .frame(height: 20)
         .padding(.horizontal)
 }
