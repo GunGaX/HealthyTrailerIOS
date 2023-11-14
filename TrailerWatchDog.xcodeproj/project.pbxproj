@@ -27,6 +27,7 @@
 		B63E7C0B2B02269F00ECA81B /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C0A2B02269F00ECA81B /* ViewModifiers.swift */; };
 		B63E7C0D2B02297300ECA81B /* AxiesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */; };
 		B63E7C1E2B02936400ECA81B /* MeasurementTypePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */; };
+		B63E7C212B0387E300ECA81B /* AlertTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C202B0387E300ECA81B /* AlertTypeEnum.swift */; };
 		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
 		B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */; };
 		B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */; };
@@ -62,6 +63,7 @@
 		B63E7C0A2B02269F00ECA81B /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxiesDataModel.swift; sourceTree = "<group>"; };
 		B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementTypePickerView.swift; sourceTree = "<group>"; };
+		B63E7C202B0387E300ECA81B /* AlertTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTypeEnum.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* TrailerWatchDog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailerWatchDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerWatchDogApp.swift; sourceTree = "<group>"; };
 		B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -148,6 +150,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		B63E7C1F2B0387D200ECA81B /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				B63E7C202B0387E300ECA81B /* AlertTypeEnum.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		B68CE69C2AFBD5EB0047E644 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +179,7 @@
 			children = (
 				B68CE6CD2AFD0D180047E644 /* Info.plist */,
 				B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */,
+				B63E7C1F2B0387D200ECA81B /* Enums */,
 				B63E7BF22AFD79E400ECA81B /* Helpers */,
 				B63E7BED2AFD78DD00ECA81B /* Managers */,
 				B63E7BE22AFD153800ECA81B /* Extensions */,
@@ -323,6 +334,7 @@
 				B63E7C1E2B02936400ECA81B /* MeasurementTypePickerView.swift in Sources */,
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
+				B63E7C212B0387E300ECA81B /* AlertTypeEnum.swift in Sources */,
 				B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */,
 				B63E7C092AFFB33400ECA81B /* NotificationSoundPickerView.swift in Sources */,
 				B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */,
