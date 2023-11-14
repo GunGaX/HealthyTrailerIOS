@@ -14,9 +14,20 @@ struct TrailerWatchDogApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainScreenView()
+//            if bluetoothAccess {
+//                rootView()
+//            } else {
+//                grandAccessView
+//            }
+            RootView()
                 .environmentObject(navigationManager)
                 .environmentObject(viewModel)
+                .preferredColorScheme(.light)
+                .onAppear {
+                    if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() {
+                        navigationManager.appState = .app
+                    }
+                }
         }
     }
 }

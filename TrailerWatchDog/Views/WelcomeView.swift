@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+    @ObservedObject var locationManager = LocationManager.shared
+    @ObservedObject var bluetoothManager = BluetoothManager.shared
+    
     var body: some View {
         VStack(spacing: 20) {
             Spacer()
@@ -56,7 +60,11 @@ struct WelcomeView: View {
     
     private var gotItButton: some View {
         Button {
-            
+            if locationManager.checkIfAccessIsGranted() && bluetoothManager.checkBluetooth() {
+                navigationManager.appState = .app
+            } else {
+                navigationManager.appState = .allowPermissions
+            }
         } label: {
             Text("Ok, got it")
                 .padding(.horizontal)
@@ -67,4 +75,5 @@ struct WelcomeView: View {
 
 #Preview {
     WelcomeView()
+        .environmentObject(NavigationManager())
 }
