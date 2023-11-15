@@ -10,12 +10,29 @@ import SwiftUI
 struct DefaultDoubleSliderView: View {
     @Binding var firstValue: Double
     @Binding var secondValue: Double
+    @Binding var selectedPreassureType: PreasureType
     @State var lastCoordinateFirstValue: CGFloat = 70
     @State var lastCoordinateSecondValue: CGFloat = 30
     
     let titleText: String
     let minValue: Double
     let maxValue: Double
+    
+    var minBound: Double {
+        switch selectedPreassureType {
+        case .kpa: minValue * 6.89476000045014
+        case .bar: minValue * 0.0689476000045014
+        case .psi: minValue * 1
+        }
+    }
+    
+    var maxBound: Double {
+        switch selectedPreassureType {
+        case .kpa: maxValue * 6.89476000045014
+        case .bar: maxValue * 0.0689476000045014
+        case .psi: maxValue * 1
+        }
+    }
     
     var body: some View {
         VStack(spacing: 14) {
@@ -94,9 +111,9 @@ struct DefaultDoubleSliderView: View {
     
     @ViewBuilder
     private var title: some View {
-        let from = ((maxValue - minValue) * firstValue + minValue).formattedToOneDecimalPlace()
-        let to = ((maxValue - minValue) * secondValue + minValue).formattedToOneDecimalPlace()
-        Text("\(titleText) \(from) Psi to \(to) Psi")
+        let from = ((maxBound - minBound) * firstValue + minBound).formattedToOneDecimalPlace()
+        let to = ((maxBound - minBound) * secondValue + minBound).formattedToOneDecimalPlace()
+        Text("\(titleText) \(from) \(selectedPreassureType.measureMark) to \(to) \(selectedPreassureType.measureMark)")
             .foregroundStyle(Color.textDark)
             .font(.roboto500, size: 16)
             .multilineTextAlignment(.leading)
@@ -104,9 +121,9 @@ struct DefaultDoubleSliderView: View {
     
     private var bottomLegend: some View {
         HStack {
-            Text("\(minValue.formattedToOneDecimalPlace()) Psi")
+            Text("\(minBound.formattedToOneDecimalPlace()) \(selectedPreassureType.measureMark)")
             Spacer()
-            Text("\(maxValue.formattedToOneDecimalPlace()) Psi")
+            Text("\(maxBound.formattedToOneDecimalPlace()) \(selectedPreassureType.measureMark)")
         }
         .font(.roboto500, size: 16)
         .foregroundStyle(Color.mainGrey)
@@ -122,7 +139,7 @@ struct DefaultDoubleSliderView: View {
 }
 
 #Preview {
-    DefaultDoubleSliderView(firstValue: .constant(0.3), secondValue: .constant(0.7), titleText: "MAX temperature", minValue: 0, maxValue: 160)
+    DefaultDoubleSliderView(firstValue: .constant(0.3), secondValue: .constant(0.7), selectedPreassureType: .constant(.bar), titleText: "MAX temperature", minValue: 0, maxValue: 160)
         .frame(height: 20)
         .padding(.horizontal)
 }

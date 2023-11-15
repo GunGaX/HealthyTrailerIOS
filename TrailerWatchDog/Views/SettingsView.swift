@@ -17,23 +17,28 @@ struct SettingsView: View {
     @State private var maxDifferenceTWDSensorTemperature = 0.3
     @State private var preassureMinValue = 0.2
     @State private var preassureMaxValue = 0.8
-    @State private var selectedSound: NotificationSound = .chime
+    @State private var ixExpandedTemperature = false
+    @State private var isExpnadedPreassure = false
         
     var body: some View {
         VStack(spacing: 0) {
             SecondaryHeaderView(titleText: "Settings")
             ScrollView {
-                VStack(spacing: 40) {
+                VStack(spacing: 30) {
+                    measurementPickers
+                        .zIndex(2.0)
+                        .padding(.top, 30)
+                    
                     axlesInfo
-                        .padding(.top, 20)
+                        .padding(.vertical, -10)
+                       
+                    DefaultSignleSliderView(value: $maxTPMSSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed TPMS sensor temperature", minValue: 32, maxValue: 220)
+                    DefaultSignleSliderView(value: $maxDifferenceTPMSSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed difference in TPMS sensor temperature", minValue: 0, maxValue: 100)
                     
-                    DefaultSignleSliderView(value: $maxTPMSSensorTemperature, titleText: "Max allowed TPMS sensor temperature (default 170)", minValue: 32, maxValue: 220)
-                    DefaultSignleSliderView(value: $maxDifferenceTPMSSensorTemperature, titleText: "Max allowed difference in TPMS sensor temperature (default 30)", minValue: 0, maxValue: 100)
+                    DefaultSignleSliderView(value: $maxTWDSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed TWD sensor temperature", minValue: 32, maxValue: 220)
+                    DefaultSignleSliderView(value: $maxDifferenceTWDSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed difference in TWD sensor temperature", minValue: 0, maxValue: 100)
                     
-                    DefaultSignleSliderView(value: $maxTWDSensorTemperature, titleText: "Max allowed TWD sensor temperature (default 170)", minValue: 32, maxValue: 220)
-                    DefaultSignleSliderView(value: $maxDifferenceTWDSensorTemperature, titleText: "Max allowed difference in TWD sensor temperature (default 30)", minValue: 0, maxValue: 100)
-                    
-                    DefaultDoubleSliderView(firstValue: $preassureMinValue, secondValue: $preassureMaxValue, titleText: "Expected pressure range:", minValue: 1.45, maxValue: 72.52)
+                    DefaultDoubleSliderView(firstValue: $preassureMinValue, secondValue: $preassureMaxValue, selectedPreassureType: $viewModel.selectedPreassureType, titleText: "Expected pressure range:", minValue: 1.45, maxValue: 72.52)
                     
                     notificationSection
                         .padding(.bottom, 30)
@@ -77,7 +82,14 @@ struct SettingsView: View {
                 .foregroundStyle(Color.textDark)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            NotificationSoundPickerView(selectedSound: $selectedSound)
+            NotificationSoundPickerView(selectedSound: $viewModel.selectedSound)
+        }
+    }
+    
+    private var measurementPickers: some View {
+        HStack {
+            PreassureTypePickerView(selectedPreassureType: $viewModel.selectedPreassureType)
+            TemperatureTypePickerView(selectedPreassureType: $viewModel.selectedTemperatureType)
         }
     }
 }

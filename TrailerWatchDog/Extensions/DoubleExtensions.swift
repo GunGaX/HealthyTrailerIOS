@@ -11,4 +11,8 @@ extension Double {
     func formattedToOneDecimalPlace() -> String {
         return String(format: "%.1f", self)
     }
+    
+    func fromFahrenheitToCelsius() -> Double {
+        return (Double(self - 32) / 1.8)
+    }
 }

@@ -173,6 +173,7 @@ struct MainScreenView: View {
 }
 
 fileprivate struct AxisBarView: View {
+    @EnvironmentObject var viewModel: MainViewModel
     let axis: AxiesData
     
     var body: some View {
@@ -192,8 +193,8 @@ fileprivate struct AxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(axis.leftTire.avgTemperature.description)
-                            Text("°C")
+                            Text(applyMeasureType(value: axis.leftTire.avgTemperature))
+                            Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
                         }
@@ -207,8 +208,8 @@ fileprivate struct AxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(axis.rightTire.avgTemperature.description)
-                            Text("°C")
+                            Text(applyMeasureType(value: axis.rightTire.avgTemperature))
+                            Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
                         }
@@ -232,10 +233,10 @@ fileprivate struct AxisBarView: View {
                 .padding(.bottom, 1)
             
             HStack(alignment: .bottom, spacing: 5) {
-                Text(tireValue.description)
+                Text(applyMeasureType(value:tireValue))
                     .font(.roboto700, size: 18)
                 
-                Text("°C")
+                Text(viewModel.selectedTemperatureType.measureMark)
                     .font(.roboto700, size: 10)
                     .padding(.bottom, 3)
             }
@@ -243,9 +244,17 @@ fileprivate struct AxisBarView: View {
             .padding(isRight ? .trailing : .leading, -10)
         }
     }
+    
+    private func applyMeasureType(value: Double) -> String {
+        switch viewModel.selectedTemperatureType {
+        case .celsius: return value.fromFahrenheitToCelsius().formattedToOneDecimalPlace().description
+        case .fahrenheit: return value.formattedToOneDecimalPlace().description
+        }
+    }
 }
 
 fileprivate struct FlatAxisBarView: View {
+    @EnvironmentObject var viewModel: MainViewModel
     let axis: AxiesData
     
     var body: some View {
@@ -265,8 +274,8 @@ fileprivate struct FlatAxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(axis.leftTire.avgTemperature.description)
-                            Text("°C")
+                            Text(applyMeasureType(value: axis.leftTire.avgTemperature))
+                            Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
                         }
@@ -284,8 +293,8 @@ fileprivate struct FlatAxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(axis.rightTire.avgTemperature.description)
-                            Text("°C")
+                            Text(applyMeasureType(value: axis.rightTire.avgTemperature))
+                            Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
                         }
@@ -321,10 +330,10 @@ fileprivate struct FlatAxisBarView: View {
             
             VStack(spacing: 10) {
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text(tireValues.last?.value.description ?? "0.0")
+                    Text(applyMeasureType(value: tireValues.last?.value ?? 0.0))
                         .font(.roboto700, size: 18)
                     
-                    Text("°C")
+                    Text(viewModel.selectedTemperatureType.measureMark)
                         .font(.roboto700, size: 10)
                         .padding(.bottom, 3)
                 }
@@ -337,6 +346,13 @@ fileprivate struct FlatAxisBarView: View {
             .padding(.vertical, 6)
         }
         .padding(isRight ? .leading : .trailing, -10)
+    }
+    
+    private func applyMeasureType(value: Double) -> String {
+        switch viewModel.selectedTemperatureType {
+        case .celsius: return value.fromFahrenheitToCelsius().formattedToOneDecimalPlace().description
+        case .fahrenheit: return value.formattedToOneDecimalPlace().description
+        }
     }
 }
 
