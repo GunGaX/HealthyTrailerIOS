@@ -14,11 +14,6 @@ struct TrailerWatchDogApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            if bluetoothAccess {
-//                rootView()
-//            } else {
-//                grandAccessView
-//            }
             RootView()
                 .environmentObject(navigationManager)
                 .environmentObject(viewModel)

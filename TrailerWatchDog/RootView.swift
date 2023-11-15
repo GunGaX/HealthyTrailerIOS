@@ -9,8 +9,8 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var navigationManager: NavigationManager
-    @ObservedObject var locationManager = LocationManager.shared
-    @ObservedObject var bluetoothManager = BluetoothManager.shared
+    @StateObject var locationManager = LocationManager.shared
+    @StateObject var bluetoothManager = BluetoothManager.shared
     
     @State private var isLoading = true
     
