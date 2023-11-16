@@ -15,6 +15,8 @@ final class MainViewModel: ObservableObject {
     @Published var selectedTemperatureType: TemperatureType = .celsius
     @Published var selectedPreassureType: PreasureType = .bar
     
+    @Published var terminalLogs: [TerminalLog] = TerminalLog.mockLogs
+    
     @Published var axis = [
         AxiesData(axisNumber: 1, leftTire: TireData(temperature: 34.2, avgTemperature: 43.6), rightTire: TireData(temperature: 32.9, avgTemperature: 41.3)),
         AxiesData(axisNumber: 2, leftTire: TireData(temperature: 34.2, avgTemperature: 43.6), rightTire: TireData(temperature: 32.9, avgTemperature: 41.3)),

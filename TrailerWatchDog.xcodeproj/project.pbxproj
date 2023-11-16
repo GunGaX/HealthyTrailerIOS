@@ -46,6 +46,8 @@
 		B68CE6CB2AFD0C2A0047E644 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6C52AFD0C2A0047E644 /* Roboto-Bold.ttf */; };
 		B68CE6CC2AFD0C2A0047E644 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6C62AFD0C2A0047E644 /* Roboto-Light.ttf */; };
 		B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6CF2AFD0DCC0047E644 /* CustomFonts.swift */; };
+		B6DB0B292B06418100DEF890 /* TerminalLogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DB0B282B06418100DEF890 /* TerminalLogModel.swift */; };
+		B6DB0B2B2B06452A00DEF890 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DB0B2A2B06452A00DEF890 /* DateExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +92,8 @@
 		B68CE6C62AFD0C2A0047E644 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		B68CE6CD2AFD0D180047E644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B68CE6CF2AFD0DCC0047E644 /* CustomFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFonts.swift; sourceTree = "<group>"; };
+		B6DB0B282B06418100DEF890 /* TerminalLogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalLogModel.swift; sourceTree = "<group>"; };
+		B6DB0B2A2B06452A00DEF890 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,7 @@
 				B63E7BEB2AFD23ED00ECA81B /* UIApplicationExtensions.swift */,
 				B63E7BF02AFD79CC00ECA81B /* ViewExtensions.swift */,
 				B63E7C042AFF9DD800ECA81B /* DoubleExtensions.swift */,
+				B6DB0B2A2B06452A00DEF890 /* DateExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 			children = (
 				B63E7C002AFE67E000ECA81B /* ChartDataModel.swift */,
 				B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */,
+				B6DB0B282B06418100DEF890 /* TerminalLogModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -346,10 +352,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6DB0B292B06418100DEF890 /* TerminalLogModel.swift in Sources */,
 				B63E7BFA2AFE604500ECA81B /* TerminalView.swift in Sources */,
 				B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */,
 				B63E7C0D2B02297300ECA81B /* AxiesDataModel.swift in Sources */,
 				B63E7C1E2B02936400ECA81B /* MeasurementTypePickerView.swift in Sources */,
+				B6DB0B2B2B06452A00DEF890 /* DateExtensions.swift in Sources */,
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
 				B63E7C212B0387E300ECA81B /* AlertTypeEnum.swift in Sources */,
