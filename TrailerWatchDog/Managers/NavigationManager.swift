@@ -34,3 +34,9 @@ final class NavigationManager: ObservableObject {
 struct SettingPathItem: PathItem { }
 struct TerminalPathItem: PathItem { }
 struct HistoryPathItem: PathItem { }
+struct FolderDetailsPathItem: PathItem { 
+    let folderPath: String
+}
+struct LogFileDetailsPathItem: PathItem {    
+    let file: HistoryFileModel
+}

@@ -20,5 +20,11 @@ struct NavigationDestinationsViewModifier: ViewModifier {
             .navigationDestination(for: HistoryPathItem.self) { pathItem in
                 LoggedHistoryView()
             }
+            .navigationDestination(for: FolderDetailsPathItem.self) { pathItem in
+                FolderDetailsView(folderPath: pathItem.folderPath)
+            }
+            .navigationDestination(for: LogFileDetailsPathItem.self) { pathItem in
+                LogFileDetailsView(file: pathItem.file)
+            }
     }
 }
