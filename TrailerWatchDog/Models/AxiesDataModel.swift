@@ -24,7 +24,7 @@ struct AxiesData: Identifiable, Hashable {
 }
 
 struct TireData {
-    var temperature: String
-    var preassure: String
-    var screenTime: String
+    var temperature: Double
+    var preassure: Double
+    var screenTime: Double
 }

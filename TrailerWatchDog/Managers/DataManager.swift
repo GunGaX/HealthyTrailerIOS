@@ -42,25 +42,17 @@ let csvHeader:String = "timestamp," +
     "\n"
 
 class DataManager: NSObject, ObservableObject {
-    @Published var latestRow: String = csvHeader
+    static let shared = DataManager()
     
+    @Published var latestRow: String = csvHeader
     @Published var screenText: String = "..."
-//    @Published var screenTire1Temp: String = "..."
-//    @Published var screenTire1Pres: String = "..."
-//    @Published var screenTire1Time: String = "..."
-//    @Published var screenTire2Temp: String = "..."
-//    @Published var screenTire2Pres: String = "..."
-//    @Published var screenTire2Time: String = "..."
-//    @Published var screenTire3Temp: String = "..."
-//    @Published var screenTire3Pres: String = "..."
-//    @Published var screenTire3Time: String = "..."
-//    @Published var screenTire4Temp: String = "..."
-//    @Published var screenTire4Pres: String = "..."
-//    @Published var screenTire4Time: String = "..."
+    
+    @Published var selectedTempMeasure: TemperatureType = .fahrenheit
+    @Published var selectedPresMeasure: PreasureType = .psi
     
     @Published var axies = [
-        AxiesData(axisNumber: 1, leftTire: TireData(temperature: "-", preassure: "-", screenTime: "-"), rightTire: TireData(temperature: "-", preassure: "-", screenTime: "-")),
-        AxiesData(axisNumber: 2, leftTire: TireData(temperature: "-", preassure: "-", screenTime: "-"), rightTire: TireData(temperature: "-", preassure: "-", screenTime: "-"))
+        AxiesData(axisNumber: 1, leftTire: TireData(temperature: 0, preassure: 0, screenTime: 0), rightTire: TireData(temperature: 0, preassure: 0, screenTime: 0)),
+        AxiesData(axisNumber: 2, leftTire: TireData(temperature: 0, preassure: 0, screenTime: 0), rightTire: TireData(temperature: 0, preassure: 0, screenTime: 0))
     ]
     
     let locationManager = CLLocationManager()
@@ -162,13 +154,12 @@ class DataManager: NSObject, ObservableObject {
     
     override init() {
         super.init()
-//        setup()
         //Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (t) in
         //    self.newData()
         //}
     }
     
-    func setup() {
+    func setup(tempSystem: TemperatureType, preassureSystem: PreasureType) {
         let path = try? FileManager.default.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: false)
         if (path != nil) {
             let dateFormatter = DateFormatter()
@@ -194,6 +185,19 @@ class DataManager: NSObject, ObservableObject {
         locationManager.delegate = self
         
         centralManager = CBCentralManager(delegate: self, queue: nil)
+        
+        updateTemperatureSystem(newTempType: tempSystem)
+        updatePreassureSystem(newPresType: preassureSystem)
+    }
+    
+    func updateTemperatureSystem(newTempType: TemperatureType) {
+        selectedTempMeasure = newTempType
+        newData()
+    }
+    
+    func updatePreassureSystem(newPresType: PreasureType) {
+        selectedPresMeasure = newPresType
+        newData()
     }
     
     func newData() {
@@ -264,19 +268,19 @@ class DataManager: NSObject, ObservableObject {
             let temperature_f = ((temperature_c * 9/5) + 32)
             let temperature_f_persist = ((temperature_c_persist * 9/5) + 32)
             
-            print("kpa: \(pressure_kpa) psi: \(pressure_psi)")
-            print("*C: \(temperature_c) *F: \(temperature_f)")
-            
-            print("persistant kpa: \(pressure_kpa_persist) psi: \(pressure_psi_persist)")
-            print("persistant *C: \(temperature_c_persist) *F: \(temperature_f_persist)")
+//            print("kpa: \(pressure_kpa) psi: \(pressure_psi)")
+//            print("*C: \(temperature_c) *F: \(temperature_f)")
+//            
+//            print("persistant kpa: \(pressure_kpa_persist) psi: \(pressure_psi_persist)")
+//            print("persistant *C: \(temperature_c_persist) *F: \(temperature_f_persist)")
 
-            var f_pressure_kpa = ""
-            var f_pressure_psi = ""
-            var f_temperature_c = ""
-            var f_temperature_f = ""
+            let f_pressure_kpa: Double = 0
+            let f_pressure_psi: Double = 0
+            let f_temperature_c: Double = 0
+            let f_temperature_f: Double = 0
             
-            var f_pressure_psi_screen = ""
-            var f_temperature_f_screen = ""
+            var f_pressure_psi_screen: Double = 0
+            var f_temperature_f_screen: Double = 0
             
             let formatPsi = NumberFormatter()
             formatPsi.minimumFractionDigits = 2
@@ -296,11 +300,22 @@ class DataManager: NSObject, ObservableObject {
 //                f_pressure_psi_screen = String(format:"%.2f", pressure_psi).padding(toLength: 5, withPad: " ", startingAt: 0)
 //                haveVal = true
 //            } else
+            var finalPreassure = 0.0
+            
             if (pressure_kpa_persist >= 0.5) && (pressure_kpa_persist < 300.0) {
-                f_pressure_psi_screen = String(format:"%.2f", pressure_psi_persist).padding(toLength: 5, withPad: " ", startingAt: 0)
+                switch selectedPresMeasure {
+                case .kpa:
+                    finalPreassure = Double(pressure_psi_persist).fromPsiToKpa()
+                case .bar:
+                    finalPreassure = Double(pressure_psi_persist).fromPsiToBar()
+                case .psi:
+                    f_pressure_psi_screen = Double(pressure_psi_persist)
+                }
+                
+                
                 haveVal = true
             } else {
-                f_pressure_psi_screen = "--.--"
+                f_pressure_psi_screen = 0
             }
 //            if (temperature_c != 0.0) {
 //                f_temperature_c = String(format: "%.4f", temperature_c)
@@ -309,40 +324,45 @@ class DataManager: NSObject, ObservableObject {
 //                f_temperature_f_screen = String(format:"%.1f", f_temperature_c).padding(toLength: 5, withPad: " ", startingAt: 0)
 //                haveVal = true
 //            } else
+            var finalTemperature = 0.0
+            
             if (temperature_c_persist != 0.0) {
 //                f_temperature_f_screen = String(format:"%.1f", temperature_f_persist).padding(toLength: 5, withPad: " ", startingAt: 0)
-                f_temperature_f_screen = String(format:"%.1f", temperature_c_persist).padding(toLength: 5, withPad: " ", startingAt: 0)
-                haveVal = true
+                switch selectedTempMeasure {
+                case .fahrenheit:
+                    finalTemperature = temperature_f_persist
+                case .celsius:
+                    finalTemperature = temperature_c_persist
+                }
             } else {
-                f_temperature_f_screen = "---.-"
+                f_temperature_f_screen = 0
             }
-            let secSinceLastTick:Double = abs(tpms_last_tick[index].timeIntervalSinceNow)
-//            let secSinceLastTick = Double.random(in: 0.0 ..< 1000.0)
-            var f_sec_screen = ""
+            let secSinceLastTick: Double = abs(tpms_last_tick[index].timeIntervalSinceNow)
+            var f_sec_screen: Double = 0
             if (haveVal) {
-                f_sec_screen = String(format:"%.1f", secSinceLastTick).padding(toLength: 6, withPad: " ", startingAt: 0)
+                f_sec_screen = secSinceLastTick
             } else {
-                f_sec_screen = "----.-"
+                f_sec_screen = 0
             }
             
             latestRow += ",\(f_pressure_kpa),\(f_pressure_psi),\(f_temperature_c),\(f_temperature_f)"
             switch index {
             case 0:
-                axies[0].leftTire.temperature = f_temperature_f_screen
-                axies[0].leftTire.preassure = f_pressure_psi_screen
+                axies[0].leftTire.temperature = finalTemperature
+                axies[0].leftTire.preassure = finalPreassure
                 axies[0].leftTire.screenTime = f_sec_screen
             case 1:
-                axies[0].rightTire.temperature = f_temperature_f_screen
-                axies[0].rightTire.preassure = f_pressure_psi_screen
+                axies[0].rightTire.temperature = finalTemperature
+                axies[0].rightTire.preassure = finalPreassure
                 axies[0].rightTire.screenTime = f_sec_screen
                 
             case 2:
-                axies[1].leftTire.temperature = f_temperature_f_screen
-                axies[1].leftTire.preassure = f_pressure_psi_screen
+                axies[1].leftTire.temperature = finalTemperature
+                axies[1].leftTire.preassure = finalPreassure
                 axies[1].leftTire.screenTime = f_sec_screen
             case 3:
-                axies[1].rightTire.temperature = f_temperature_f_screen
-                axies[1].rightTire.preassure = f_pressure_psi_screen
+                axies[1].rightTire.temperature = finalTemperature
+                axies[1].rightTire.preassure = finalPreassure
                 axies[1].rightTire.screenTime = f_sec_screen
             default:
                 continue

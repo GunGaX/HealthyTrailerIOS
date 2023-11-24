@@ -15,4 +15,12 @@ extension Double {
     func fromFahrenheitToCelsius() -> Double {
         return (Double(self - 32) / 1.8)
     }
+    
+    func fromPsiToKpa() -> Double {
+        return Double(self * 6.89476000045014)
+    }
+    
+    func fromPsiToBar() -> Double {
+        return Double(self * 0.0689476000045014)
+    }
 }

@@ -11,10 +11,8 @@ struct MainScreenView: View {
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var viewModel: MainViewModel
     
-    @StateObject private var dataManager = DataManager()
-    
-//    @State var axies: [AxiesData] = []
-    
+    @StateObject private var dataManager = DataManager.shared
+        
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
             VStack(spacing: 0) {
@@ -157,7 +155,7 @@ struct MainScreenView: View {
     
     private var tryToConnectButton: some View {
         Button {
-            dataManager.setup()
+            dataManager.setup(tempSystem: viewModel.selectedTemperatureType, preassureSystem: viewModel.selectedPreassureType)
             withAnimation {
                 viewModel.isTWDConnected = true
             }
@@ -235,7 +233,7 @@ fileprivate struct AxisBarView: View {
         }
     }
     
-    private func valueBar(tireValue: String, isRight: Bool) -> some View {
+    private func valueBar(tireValue: Double, isRight: Bool) -> some View {
         ZStack {
             Rectangle()
                 .foregroundStyle(Color.lightGreen)
@@ -243,7 +241,7 @@ fileprivate struct AxisBarView: View {
                 .padding(.bottom, 1)
             
             HStack(alignment: .bottom, spacing: 5) {
-                Text(tireValue)
+                Text(applyMeasureType(value: tireValue))
                     .font(.roboto700, size: 18)
                 
                 Text(viewModel.selectedTemperatureType.measureMark)
@@ -257,8 +255,8 @@ fileprivate struct AxisBarView: View {
     
     private func applyMeasureType(value: Double) -> String {
         switch viewModel.selectedTemperatureType {
-        case .celsius: return value.fromFahrenheitToCelsius().formattedToOneDecimalPlace().description
-        case .fahrenheit: return value.formattedToOneDecimalPlace().description
+        case .celsius: return value.formattedToOneDecimalPlace()
+        case .fahrenheit: return value.formattedToOneDecimalPlace()
         }
     }
 }

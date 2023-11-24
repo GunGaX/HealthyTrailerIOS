@@ -92,6 +92,12 @@ struct SettingsView: View {
             PreassureTypePickerView(selectedPreassureType: $viewModel.selectedPreassureType)
             TemperatureTypePickerView(selectedPreassureType: $viewModel.selectedTemperatureType)
         }
+        .onChange(of: viewModel.selectedTemperatureType) {
+            DataManager.shared.updateTemperatureSystem(newTempType: viewModel.selectedTemperatureType)
+        }
+        .onChange(of: viewModel.selectedPreassureType) {
+            DataManager.shared.updatePreassureSystem(newPresType: viewModel.selectedPreassureType)
+        }
     }
 }
 
