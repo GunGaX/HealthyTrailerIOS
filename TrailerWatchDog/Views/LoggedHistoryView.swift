@@ -24,6 +24,7 @@ struct LoggedHistoryView: View {
         .ignoresSafeArea(.container, edges: .top)
         .navigationBarBackButtonHidden()
         .onAppear {
+//            viewModel.createDirectory()
             viewModel.getLogDirectories()
         }
     }

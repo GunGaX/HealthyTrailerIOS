@@ -14,9 +14,9 @@ struct AxiesData: Identifiable, Hashable {
     
     var id: Int { axisNumber }
     
-    let axisNumber: Int
-    let leftTire: TireData
-    let rightTire: TireData
+    var axisNumber: Int
+    var leftTire: TireData
+    var rightTire: TireData
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -24,6 +24,7 @@ struct AxiesData: Identifiable, Hashable {
 }
 
 struct TireData {
-    var temperature: Double
-    var avgTemperature: Double
+    var temperature: String
+    var preassure: String
+    var screenTime: String
 }
