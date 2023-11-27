@@ -154,9 +154,6 @@ class DataManager: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        //Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (t) in
-        //    self.newData()
-        //}
     }
     
     func setup(tempSystem: TemperatureType, preassureSystem: PreasureType) {
@@ -236,7 +233,6 @@ class DataManager: NSObject, ObservableObject {
         let f_vel_mph = String(format: "%.1f", c_vel_mph)
         let f_vel_mph_acc = String(format: "%.1f", c_vel_mph_acc)
         
-        // let f_latlon_acc = String(format: "%d", Int(latlon_acc))
         let f_latlon_acc_ft = String(format: "%d", Int(c_latlon_acc_ft))
 
         latestRow = "\(timeStr),\(lat),\(lon),\(latlon_acc),\(c_latlon_acc_ft),\(elevation),\(elevation_acc),\(c_elevation_ft),\(c_elevation_ft_acc),\(vel),\(vel_acc),\(c_vel_mph),\(c_vel_mph_acc)"
@@ -257,22 +253,14 @@ class DataManager: NSObject, ObservableObject {
         latestRow += ",\(haveTire)"
 
         for index in 0...3 {
-//            let pressure_kpa = Double.random(in: 100.0 ..< 300.0)
             let pressure_kpa = tpms_pressure_kpa[index]
             let pressure_kpa_persist = tpms_pressure_kpa_persist[index]
             let pressure_psi = (pressure_kpa * 0.14503773779)
             let pressure_psi_persist = (pressure_kpa_persist * 0.14503773779)
             let temperature_c = tpms_temperature_c[index]
-//            let temperature_c = Double.random(in: 15.0 ..< 40.0)
             let temperature_c_persist = tpms_temperature_c_persist[index]
             let temperature_f = ((temperature_c * 9/5) + 32)
             let temperature_f_persist = ((temperature_c_persist * 9/5) + 32)
-            
-//            print("kpa: \(pressure_kpa) psi: \(pressure_psi)")
-//            print("*C: \(temperature_c) *F: \(temperature_f)")
-//            
-//            print("persistant kpa: \(pressure_kpa_persist) psi: \(pressure_psi_persist)")
-//            print("persistant *C: \(temperature_c_persist) *F: \(temperature_f_persist)")
 
             let f_pressure_kpa: Double = 0
             let f_pressure_psi: Double = 0
@@ -293,13 +281,7 @@ class DataManager: NSObject, ObservableObject {
             formatSeconds.maximumFractionDigits = 1
             
             var haveVal = false
-            // If we have a valid pressure
-//            if (pressure_kpa >= 5.0) && (pressure_kpa < 300.0) {
-//                f_pressure_kpa = String(format: "%.4f", pressure_kpa)
-//                f_pressure_psi = String(format: "%.4f", pressure_psi)
-//                f_pressure_psi_screen = String(format:"%.2f", pressure_psi).padding(toLength: 5, withPad: " ", startingAt: 0)
-//                haveVal = true
-//            } else
+            
             var finalPreassure = 0.0
             
             if (pressure_kpa_persist >= 0.5) && (pressure_kpa_persist < 300.0) {
@@ -317,17 +299,10 @@ class DataManager: NSObject, ObservableObject {
             } else {
                 f_pressure_psi_screen = 0
             }
-//            if (temperature_c != 0.0) {
-//                f_temperature_c = String(format: "%.4f", temperature_c)
-////                f_temperature_f = String(format: "%.4f", temperature_f)
-////                f_temperature_f_screen = String(format:"%.1f", temperature_f).padding(toLength: 5, withPad: " ", startingAt: 0)
-//                f_temperature_f_screen = String(format:"%.1f", f_temperature_c).padding(toLength: 5, withPad: " ", startingAt: 0)
-//                haveVal = true
-//            } else
+            
             var finalTemperature = 0.0
             
             if (temperature_c_persist != 0.0) {
-//                f_temperature_f_screen = String(format:"%.1f", temperature_f_persist).padding(toLength: 5, withPad: " ", startingAt: 0)
                 switch selectedTempMeasure {
                 case .fahrenheit:
                     finalTemperature = temperature_f_persist
@@ -442,11 +417,6 @@ extension DataManager: CBCentralManagerDelegate {
         let pressureConv:Double = pressureRaw.withUnsafeBytes { Double($0.load(as: UInt32.self)) } / 1000.0
         let temperatureRaw = rawData.subdata(in: Range(12...15))
         let temperatureConv:Double = temperatureRaw.withUnsafeBytes { Double($0.load(as: UInt32.self)) } / 100.0
-
-//        let pressureRaw = rawData.subdata(in: Range(6...9))
-//        let pressureConv:Double = pressureRaw.withUnsafeBytes { Double($0.load(as: UInt32.self)) } / 1000.0
-//        let temperatureRaw = rawData.subdata(in: Range(10...13))
-//        let temperatureConv:Double = temperatureRaw.withUnsafeBytes { Double($0.load(as: UInt32.self)) } / 100.0
         
         print("pressure: \(pressureConv) temp: \(temperatureConv)")
 

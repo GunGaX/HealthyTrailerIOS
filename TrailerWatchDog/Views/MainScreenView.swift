@@ -228,9 +228,6 @@ fileprivate struct AxisBarView: View {
             
             valueBar(tireValue: axis.rightTire.temperature, isRight: true)
         }
-        .onChange(of: axis) {
-            print("changed")
-        }
     }
     
     private func valueBar(tireValue: Double, isRight: Bool) -> some View {
