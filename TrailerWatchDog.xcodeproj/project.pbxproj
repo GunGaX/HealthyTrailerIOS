@@ -46,6 +46,12 @@
 		B68CE6CB2AFD0C2A0047E644 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6C52AFD0C2A0047E644 /* Roboto-Bold.ttf */; };
 		B68CE6CC2AFD0C2A0047E644 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6C62AFD0C2A0047E644 /* Roboto-Light.ttf */; };
 		B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6CF2AFD0DCC0047E644 /* CustomFonts.swift */; };
+		B6DB0B292B06418100DEF890 /* TerminalLogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DB0B282B06418100DEF890 /* TerminalLogModel.swift */; };
+		B6DB0B2B2B06452A00DEF890 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DB0B2A2B06452A00DEF890 /* DateExtensions.swift */; };
+		B6DB0B2D2B065C9F00DEF890 /* FileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DB0B2C2B065C9F00DEF890 /* FileRepository.swift */; };
+		B6DB0B2F2B07926C00DEF890 /* HistoryFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DB0B2E2B07926C00DEF890 /* HistoryFileModel.swift */; };
+		B6DB0B312B079E4700DEF890 /* FolderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DB0B302B079E4700DEF890 /* FolderDetailsView.swift */; };
+		B6DB0B332B07AB0800DEF890 /* LogFileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DB0B322B07AB0800DEF890 /* LogFileDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +96,12 @@
 		B68CE6C62AFD0C2A0047E644 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		B68CE6CD2AFD0D180047E644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B68CE6CF2AFD0DCC0047E644 /* CustomFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFonts.swift; sourceTree = "<group>"; };
+		B6DB0B282B06418100DEF890 /* TerminalLogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalLogModel.swift; sourceTree = "<group>"; };
+		B6DB0B2A2B06452A00DEF890 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		B6DB0B2C2B065C9F00DEF890 /* FileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRepository.swift; sourceTree = "<group>"; };
+		B6DB0B2E2B07926C00DEF890 /* HistoryFileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFileModel.swift; sourceTree = "<group>"; };
+		B6DB0B302B079E4700DEF890 /* FolderDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDetailsView.swift; sourceTree = "<group>"; };
+		B6DB0B322B07AB0800DEF890 /* LogFileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +122,7 @@
 				B63E7BEB2AFD23ED00ECA81B /* UIApplicationExtensions.swift */,
 				B63E7BF02AFD79CC00ECA81B /* ViewExtensions.swift */,
 				B63E7C042AFF9DD800ECA81B /* DoubleExtensions.swift */,
+				B6DB0B2A2B06452A00DEF890 /* DateExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -143,6 +156,7 @@
 				B63E7C282B039F2A00ECA81B /* LocationManager.swift */,
 				B63E7C2C2B03B98F00ECA81B /* BluetoothManager.swift */,
 				B63E7BEE2AFD78EC00ECA81B /* NavigationManager.swift */,
+				B6DB0B2C2B065C9F00DEF890 /* FileRepository.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -161,6 +175,8 @@
 			children = (
 				B63E7C002AFE67E000ECA81B /* ChartDataModel.swift */,
 				B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */,
+				B6DB0B282B06418100DEF890 /* TerminalLogModel.swift */,
+				B6DB0B2E2B07926C00DEF890 /* HistoryFileModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -226,6 +242,8 @@
 				B63E7BF72AFE5F1100ECA81B /* SettingsView.swift */,
 				B63E7BF92AFE604500ECA81B /* TerminalView.swift */,
 				B63E7BFB2AFE606500ECA81B /* LoggedHistoryView.swift */,
+				B6DB0B302B079E4700DEF890 /* FolderDetailsView.swift */,
+				B6DB0B322B07AB0800DEF890 /* LogFileDetailsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -346,14 +364,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6DB0B292B06418100DEF890 /* TerminalLogModel.swift in Sources */,
 				B63E7BFA2AFE604500ECA81B /* TerminalView.swift in Sources */,
 				B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */,
+				B6DB0B2F2B07926C00DEF890 /* HistoryFileModel.swift in Sources */,
 				B63E7C0D2B02297300ECA81B /* AxiesDataModel.swift in Sources */,
 				B63E7C1E2B02936400ECA81B /* MeasurementTypePickerView.swift in Sources */,
+				B6DB0B2B2B06452A00DEF890 /* DateExtensions.swift in Sources */,
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
 				B63E7C212B0387E300ECA81B /* AlertTypeEnum.swift in Sources */,
 				B63E7C232B0389CE00ECA81B /* WelcomeView.swift in Sources */,
+				B6DB0B312B079E4700DEF890 /* FolderDetailsView.swift in Sources */,
 				B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */,
 				B63E7C092AFFB33400ECA81B /* NotificationSoundPickerView.swift in Sources */,
 				B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */,
@@ -367,11 +389,13 @@
 				B63E7C272B038E2400ECA81B /* MainGreenButtonStyle.swift in Sources */,
 				B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */,
 				B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */,
+				B6DB0B2D2B065C9F00DEF890 /* FileRepository.swift in Sources */,
 				B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */,
 				B68CE6BE2AFD0A040047E644 /* MainViewModel.swift in Sources */,
 				B63E7BF12AFD79CC00ECA81B /* ViewExtensions.swift in Sources */,
 				B63E7C032AFE86AF00ECA81B /* DefaultSignleSliderView.swift in Sources */,
 				B63E7C2D2B03B98F00ECA81B /* BluetoothManager.swift in Sources */,
+				B6DB0B332B07AB0800DEF890 /* LogFileDetailsView.swift in Sources */,
 				B63E7BF42AFD79FB00ECA81B /* NavigationDestinationModifier.swift in Sources */,
 				B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */,
 				B63E7BF82AFE5F1100ECA81B /* SettingsView.swift in Sources */,

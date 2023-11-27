@@ -15,10 +15,32 @@ final class MainViewModel: ObservableObject {
     @Published var selectedTemperatureType: TemperatureType = .celsius
     @Published var selectedPreassureType: PreasureType = .bar
     
+    @Published var terminalLogs: [TerminalLog] = TerminalLog.mockLogs
+    
+    @Published var logFoldersPaths: [String] = []
+    @Published var logFiles: [String: HistoryFileModel] = [:]
+    
     @Published var axis = [
         AxiesData(axisNumber: 1, leftTire: TireData(temperature: 34.2, avgTemperature: 43.6), rightTire: TireData(temperature: 32.9, avgTemperature: 41.3)),
         AxiesData(axisNumber: 2, leftTire: TireData(temperature: 34.2, avgTemperature: 43.6), rightTire: TireData(temperature: 32.9, avgTemperature: 41.3)),
         AxiesData(axisNumber: 3, leftTire: TireData(temperature: 34.2, avgTemperature: 43.6), rightTire: TireData(temperature: 32.9, avgTemperature: 41.3)),
         AxiesData(axisNumber: 4, leftTire: TireData(temperature: 34.2, avgTemperature: 43.6), rightTire: TireData(temperature: 32.9, avgTemperature: 41.3))
     ]
+    
+    public func getLogDirectories() {
+        if let folderPaths = FileRepository.shared.getSubdirectoriesPaths() {
+            logFoldersPaths = folderPaths
+        }
+    }
+    
+    public func getFilesIdDirecory(path: String) {
+        logFiles = [:]
+        if let filesPaths = FileRepository.shared.getFilesPathsInDirectory(directoryPath: path) {
+            for path in filesPaths {
+                if let file = FileRepository.shared.readFromFile(filePath: path) {
+                    logFiles[path] = file
+                }
+            }
+        }
+    }
 }
