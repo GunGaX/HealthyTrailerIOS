@@ -8,10 +8,15 @@
 import Foundation
 import SwiftUI
 
+enum AppState {
+    case welcome, allowPermissions, app
+}
+
 protocol PathItem: Hashable, Codable { }
 
 final class NavigationManager: ObservableObject {
-    @Published var path = NavigationPath()
+    @Published var appState: AppState = .welcome
+    @Published var path: NavigationPath = NavigationPath()
     
     func append<T: PathItem>(_ pathItem: T) {
         path.append(pathItem)
