@@ -20,13 +20,6 @@ final class MainViewModel: ObservableObject {
     @Published var logFoldersPaths: [String] = []
     @Published var logFiles: [String: HistoryFileModel] = [:]
     
-    @Published var axis = [
-        AxiesData(axisNumber: 1, leftTire: TireData(temperature: 34.2, avgTemperature: 43.6), rightTire: TireData(temperature: 32.9, avgTemperature: 41.3)),
-        AxiesData(axisNumber: 2, leftTire: TireData(temperature: 34.2, avgTemperature: 43.6), rightTire: TireData(temperature: 32.9, avgTemperature: 41.3)),
-        AxiesData(axisNumber: 3, leftTire: TireData(temperature: 34.2, avgTemperature: 43.6), rightTire: TireData(temperature: 32.9, avgTemperature: 41.3)),
-        AxiesData(axisNumber: 4, leftTire: TireData(temperature: 34.2, avgTemperature: 43.6), rightTire: TireData(temperature: 32.9, avgTemperature: 41.3))
-    ]
-    
     public func getLogDirectories() {
         if let folderPaths = FileRepository.shared.getSubdirectoriesPaths() {
             logFoldersPaths = folderPaths
@@ -43,4 +36,27 @@ final class MainViewModel: ObservableObject {
             }
         }
     }
+//    
+//    public func createDirectory() {
+//        FileRepository.shared.createSubdirectory(withName: "Folder 1")
+//        FileRepository.shared.createSubdirectory(withName: "Folder 2")
+//        FileRepository.shared.createSubdirectory(withName: "Folder 3")
+//    }
+//    
+//    public func createFiles(path: String) {
+//        var file = HistoryFileModel(title: "file for test", content: "content \n content \n content \n fajlskjdflkja iofjqiwhdf askdjf kajksdjf ajskd jfkasjldkf jioqwjdfioj akdsljfk lajsldf ", creationDate: Date.now)
+//        FileRepository.shared.writeToFile(file: file, atFolder: path)
+//        
+//        file = HistoryFileModel(title: "file for test one ", content: "3fasdfkfjkaj skldf ajsdf ladf ", creationDate: Date.now)
+//        FileRepository.shared.writeToFile(file: file, atFolder: path)
+//        
+//        file = HistoryFileModel(title: "some logs will be here", content: "content \n content \n content \n fajlskjdflkja iofjqiwhdf askdjf kajksdjf ajskd jfkasjldkf jioqwjdfioj akdsljfk lajsldf ", creationDate: Date.now)
+//        FileRepository.shared.writeToFile(file: file, atFolder: path)
+//        
+//        file = HistoryFileModel(title: "ijijfi  fdf", content: "content \n content \n content \n fajlskjdflkja iofjqiwhdf askdjf kajksdjf ajskd jfkasjldkf jioqwjdfioj akdsljfk lajsldf ", creationDate: Date.now)
+//        FileRepository.shared.writeToFile(file: file, atFolder: path)
+//        
+//        file = HistoryFileModel(title: "file for test 1 more", content: "content \n content \n content \n fajlskjdflkja iofjqiwhdf askdjf kajksdjf ajskd jfkasjldkf jioqwjdfioj akdsljfk lajsldf ", creationDate: Date.now)
+//        FileRepository.shared.writeToFile(file: file, atFolder: path)
+//    }
 }

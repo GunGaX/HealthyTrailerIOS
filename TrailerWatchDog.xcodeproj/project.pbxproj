@@ -34,6 +34,7 @@
 		B63E7C292B039F2A00ECA81B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C282B039F2A00ECA81B /* LocationManager.swift */; };
 		B63E7C2B2B03A37700ECA81B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C2A2B03A37700ECA81B /* RootView.swift */; };
 		B63E7C2D2B03B98F00ECA81B /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C2C2B03B98F00ECA81B /* BluetoothManager.swift */; };
+		B671C0572B0F9A940034DE77 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C0562B0F9A940034DE77 /* DataManager.swift */; };
 		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
 		B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */; };
 		B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */; };
@@ -82,6 +83,7 @@
 		B63E7C282B039F2A00ECA81B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B63E7C2A2B03A37700ECA81B /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B63E7C2C2B03B98F00ECA81B /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		B671C0562B0F9A940034DE77 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* TrailerWatchDog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailerWatchDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerWatchDogApp.swift; sourceTree = "<group>"; };
 		B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				B63E7C2C2B03B98F00ECA81B /* BluetoothManager.swift */,
 				B63E7BEE2AFD78EC00ECA81B /* NavigationManager.swift */,
 				B6DB0B2C2B065C9F00DEF890 /* FileRepository.swift */,
+				B671C0562B0F9A940034DE77 /* DataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				B63E7C2D2B03B98F00ECA81B /* BluetoothManager.swift in Sources */,
 				B6DB0B332B07AB0800DEF890 /* LogFileDetailsView.swift in Sources */,
 				B63E7BF42AFD79FB00ECA81B /* NavigationDestinationModifier.swift in Sources */,
+				B671C0572B0F9A940034DE77 /* DataManager.swift in Sources */,
 				B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */,
 				B63E7BF82AFE5F1100ECA81B /* SettingsView.swift in Sources */,
 				B63E7C072AFFA7B500ECA81B /* DefaultDoubleSliderView.swift in Sources */,

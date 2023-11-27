@@ -25,6 +25,7 @@ struct FolderDetailsView: View {
         .ignoresSafeArea(.container, edges: .top)
         .navigationBarBackButtonHidden()
         .onAppear {
+//            viewModel.createFiles(path: folderPath)
             viewModel.getFilesIdDirecory(path: folderPath)
         }
     }

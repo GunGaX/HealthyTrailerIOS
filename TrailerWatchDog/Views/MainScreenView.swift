@@ -11,6 +11,8 @@ struct MainScreenView: View {
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var viewModel: MainViewModel
     
+    @StateObject private var dataManager = DataManager.shared
+        
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
             VStack(spacing: 0) {
@@ -35,7 +37,6 @@ struct MainScreenView: View {
                     trailer
                 }
             }
-            .environmentObject(viewModel)
             .ignoresSafeArea(.container, edges: .top)
             .navigationDestinations()
         }
@@ -91,9 +92,9 @@ struct MainScreenView: View {
                 .scaledToFit()
                 .frame(width: 220)
             
-            ForEach(viewModel.axis) { axis in
+            ForEach(dataManager.axies, id: \.axisNumber) { axis in
                 AxisBarView(axis: axis)
-                if axis != viewModel.axis.last {
+                if axis.axisNumber != dataManager.axies.last?.axisNumber {
                     separatingAxisBar
                 }
             }
@@ -153,6 +154,7 @@ struct MainScreenView: View {
     
     private var tryToConnectButton: some View {
         Button {
+            dataManager.setup(tempSystem: viewModel.selectedTemperatureType, preassureSystem: viewModel.selectedPreassureType)
             withAnimation {
                 viewModel.isTWDConnected = true
             }
@@ -165,7 +167,7 @@ struct MainScreenView: View {
     private var flatTrailer: some View {
         VStack(spacing: 10) {
             
-            ForEach(viewModel.axis, id: \.self) { axis in
+            ForEach(dataManager.axies, id: \.axisNumber) { axis in
                 FlatAxisBarView(axis: axis)
             }
         }
@@ -174,7 +176,8 @@ struct MainScreenView: View {
 
 fileprivate struct AxisBarView: View {
     @EnvironmentObject var viewModel: MainViewModel
-    let axis: AxiesData
+    
+    var axis: AxiesData
     
     var body: some View {
         HStack(spacing: -20) {
@@ -186,20 +189,20 @@ fileprivate struct AxisBarView: View {
                     .scaledToFit()
                     .frame(width: 220)
                 
-                
                 HStack {
                     VStack {
                         Text("\(axis.axisNumber * 2 - 1)")
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: axis.leftTire.avgTemperature))
+                            Text(applyMeasureType(value: 0))
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
                         }
                     }
-                    .font(.roboto500, size: 14)
+                    .fixedSize()
+                    .font(.roboto500, size: 12)
                     .foregroundStyle(Color.white)
                     .frame(width: 44)
                     Spacer()
@@ -208,13 +211,14 @@ fileprivate struct AxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: axis.rightTire.avgTemperature))
+                            Text(applyMeasureType(value: 0))
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
                         }
                     }
-                    .font(.roboto500, size: 14)
+                    .fixedSize()
+                    .font(.roboto500, size: 12)
                     .foregroundStyle(Color.white)
                     .frame(width: 44)
                 }
@@ -233,7 +237,7 @@ fileprivate struct AxisBarView: View {
                 .padding(.bottom, 1)
             
             HStack(alignment: .bottom, spacing: 5) {
-                Text(applyMeasureType(value:tireValue))
+                Text(applyMeasureType(value: tireValue))
                     .font(.roboto700, size: 18)
                 
                 Text(viewModel.selectedTemperatureType.measureMark)
@@ -247,15 +251,16 @@ fileprivate struct AxisBarView: View {
     
     private func applyMeasureType(value: Double) -> String {
         switch viewModel.selectedTemperatureType {
-        case .celsius: return value.fromFahrenheitToCelsius().formattedToOneDecimalPlace().description
-        case .fahrenheit: return value.formattedToOneDecimalPlace().description
+        case .celsius: return value.formattedToOneDecimalPlace()
+        case .fahrenheit: return value.formattedToOneDecimalPlace()
         }
     }
 }
 
 fileprivate struct FlatAxisBarView: View {
     @EnvironmentObject var viewModel: MainViewModel
-    let axis: AxiesData
+    
+    var axis: AxiesData
     
     var body: some View {
         VStack(spacing: 8) {
@@ -274,7 +279,7 @@ fileprivate struct FlatAxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: axis.leftTire.avgTemperature))
+                            Text(applyMeasureType(value: 0))
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
@@ -293,7 +298,7 @@ fileprivate struct FlatAxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: axis.rightTire.avgTemperature))
+                            Text(applyMeasureType(value: 0))
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)

@@ -20,17 +20,17 @@ struct DefaultDoubleSliderView: View {
     
     var minBound: Double {
         switch selectedPreassureType {
-        case .kpa: minValue * 6.89476000045014
-        case .bar: minValue * 0.0689476000045014
-        case .psi: minValue * 1
+        case .kpa: minValue.fromPsiToKpa()
+        case .bar: minValue.fromPsiToBar()
+        case .psi: minValue
         }
     }
     
     var maxBound: Double {
         switch selectedPreassureType {
-        case .kpa: maxValue * 6.89476000045014
-        case .bar: maxValue * 0.0689476000045014
-        case .psi: maxValue * 1
+        case .kpa: maxValue.fromPsiToKpa()
+        case .bar: maxValue.fromPsiToBar()
+        case .psi: maxValue
         }
     }
     
