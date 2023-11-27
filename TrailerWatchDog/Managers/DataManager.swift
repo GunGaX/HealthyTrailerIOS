@@ -51,8 +51,8 @@ class DataManager: NSObject, ObservableObject {
     @Published var selectedPresMeasure: PreasureType = .psi
     
     @Published var axies = [
-        AxiesData(axisNumber: 1, leftTire: TireData(temperature: 0, preassure: 0, screenTime: 0), rightTire: TireData(temperature: 0, preassure: 0, screenTime: 0)),
-        AxiesData(axisNumber: 2, leftTire: TireData(temperature: 0, preassure: 0, screenTime: 0), rightTire: TireData(temperature: 0, preassure: 0, screenTime: 0))
+        AxiesData(axisNumber: 1, leftTire: TireData(temperature: 0, preassure: 0, screenTime: 0, lastTemperatures: []), rightTire: TireData(temperature: 0, preassure: 0, screenTime: 0, lastTemperatures: [])),
+        AxiesData(axisNumber: 2, leftTire: TireData(temperature: 0, preassure: 0, screenTime: 0, lastTemperatures: []), rightTire: TireData(temperature: 0, preassure: 0, screenTime: 0, lastTemperatures: []))
     ]
     
     let locationManager = CLLocationManager()
@@ -189,12 +189,27 @@ class DataManager: NSObject, ObservableObject {
     
     func updateTemperatureSystem(newTempType: TemperatureType) {
         selectedTempMeasure = newTempType
+        updateLatestDataWithMeasurements()
         newData()
     }
     
     func updatePreassureSystem(newPresType: PreasureType) {
         selectedPresMeasure = newPresType
         newData()
+    }
+    
+    func updateLatestDataWithMeasurements() {
+        if selectedTempMeasure == .celsius {
+            for index in 0..<axies.count {
+                axies[index].leftTire.lastTemperatures = axies[index].leftTire.lastTemperatures?.map({ $0.fromFahrenheitToCelsius() })
+                axies[index].rightTire.lastTemperatures = axies[index].rightTire.lastTemperatures?.map({ $0.fromFahrenheitToCelsius() })
+            }
+        } else {
+            for index in 0..<axies.count {
+                axies[index].leftTire.lastTemperatures = axies[index].leftTire.lastTemperatures?.map({ $0.fromCelciusToFarenheit() })
+                axies[index].rightTire.lastTemperatures = axies[index].rightTire.lastTemperatures?.map({ $0.fromCelciusToFarenheit() })
+            }
+        }
     }
     
     func newData() {
@@ -418,7 +433,7 @@ extension DataManager: CBCentralManagerDelegate {
         let temperatureRaw = rawData.subdata(in: Range(12...15))
         let temperatureConv:Double = temperatureRaw.withUnsafeBytes { Double($0.load(as: UInt32.self)) } / 100.0
         
-        print("pressure: \(pressureConv) temp: \(temperatureConv)")
+//        print("pressure: \(pressureConv) temp: \(temperatureConv)")
 
         
         var idx:Int = -1

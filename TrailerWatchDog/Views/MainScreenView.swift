@@ -92,7 +92,7 @@ struct MainScreenView: View {
                 .scaledToFit()
                 .frame(width: 220)
             
-            ForEach(dataManager.axies, id: \.axisNumber) { axis in
+            ForEach(dataManager.axies, id: \.id) { axis in
                 AxisBarView(axis: axis)
                 if axis.axisNumber != dataManager.axies.last?.axisNumber {
                     separatingAxisBar
@@ -158,6 +158,8 @@ struct MainScreenView: View {
             withAnimation {
                 viewModel.isTWDConnected = true
             }
+            
+            startTimerAndUploadingData()
         } label: {
             Text("Try to connect")
         }
@@ -166,10 +168,22 @@ struct MainScreenView: View {
     
     private var flatTrailer: some View {
         VStack(spacing: 10) {
-            
-            ForEach(dataManager.axies, id: \.axisNumber) { axis in
+            ForEach(dataManager.axies, id: \.id) { axis in
                 FlatAxisBarView(axis: axis)
             }
+        }
+    }
+    
+    private func startTimerAndUploadingData() {
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
+            updateLastValuesData()
+        }
+    }
+    
+    private func updateLastValuesData() {
+        for index in 0..<dataManager.axies.count {
+            dataManager.axies[index].leftTire.appendNewTemperature(temperature: dataManager.axies[index].leftTire.temperature)
+            dataManager.axies[index].rightTire.appendNewTemperature(temperature: dataManager.axies[index].rightTire.temperature)
         }
     }
 }
@@ -271,7 +285,7 @@ fileprivate struct FlatAxisBarView: View {
                 .padding(.leading)
             
             HStack(spacing: 0) {
-                flatValueBar(tireValues: ChartData.mockArray, isRight: false)
+                flatValueBar(tireValues: axis.leftTire.lastTemperatures ?? [], isRight: false)
                 ZStack {
                     tireImage
                     VStack {
@@ -279,13 +293,13 @@ fileprivate struct FlatAxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: 0))
+                            Text("0")
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
                         }
                     }
-                    .font(.roboto500, size: 14)
+                    .font(.roboto500, size: 12)
                     .foregroundStyle(Color.white)
                     .frame(width: 44)
                 }
@@ -298,18 +312,18 @@ fileprivate struct FlatAxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: 0))
+                            Text("0")
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
                         }
                     }
-                    .font(.roboto500, size: 14)
+                    .font(.roboto500, size: 12)
                     .foregroundStyle(Color.white)
                     .frame(width: 44)
                 }
                 .zIndex(2.0)
-                flatValueBar(tireValues: ChartData.mockArray, isRight: true)
+                flatValueBar(tireValues: axis.rightTire.lastTemperatures ?? [], isRight: true)
             }
         }
     }
@@ -326,7 +340,7 @@ fileprivate struct FlatAxisBarView: View {
         .frame(height: 64)
     }
     
-    private func flatValueBar(tireValues: [ChartData], isRight: Bool) -> some View {
+    private func flatValueBar(tireValues: [Double], isRight: Bool) -> some View {
         ZStack {
             Rectangle()
                 .foregroundStyle(Color.lightGreen)
@@ -335,7 +349,7 @@ fileprivate struct FlatAxisBarView: View {
             
             VStack(spacing: 10) {
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text(applyMeasureType(value: tireValues.last?.value ?? 0.0))
+                    Text((tireValues.last?.formattedToOneDecimalPlace() ?? "0.0"))
                         .font(.roboto700, size: 18)
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
@@ -351,13 +365,6 @@ fileprivate struct FlatAxisBarView: View {
             .padding(.vertical, 6)
         }
         .padding(isRight ? .leading : .trailing, -10)
-    }
-    
-    private func applyMeasureType(value: Double) -> String {
-        switch viewModel.selectedTemperatureType {
-        case .celsius: return value.fromFahrenheitToCelsius().formattedToOneDecimalPlace().description
-        case .fahrenheit: return value.formattedToOneDecimalPlace().description
-        }
     }
 }
 

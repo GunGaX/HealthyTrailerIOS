@@ -9,27 +9,28 @@ import SwiftUI
 import Charts
 
 struct TireTemperaturePlotView: View {
-    let data: [ChartData]
+    let data: [Double]
     
     var maxValue: Double {
-        return data.reduce(-10000, { max($0, $1.value) })
+        return data.reduce(0, { max($0, $1) })
     }
     
     var minValue: Double {
-        return data.reduce(1000, { min($0, $1.value) })
+        return data.reduce(0, { min($0, $1) })
     }
     
     var body: some View {
         Chart {
-            ForEach(data) { item in
-                LineMark(x: .value("time", item.time), y: .value("value", item.value))
+            ForEach(data.indices, id: \.self) { index in
+                let value = data[index]
+                LineMark(x: .value("time", index), y: .value("value", value))
                     .foregroundStyle(Color.mainGreen)
                     .interpolationMethod(.catmullRom)
                 
-                if item == data.last {
+                if index == data.indices.last {
                     PointMark(
-                        x: .value("time", item.time),
-                        y: .value("value", item.value)
+                        x: .value("time", index),
+                        y: .value("value", value)
                     )
                     .foregroundStyle(Color.black)
                 }
@@ -39,12 +40,11 @@ struct TireTemperaturePlotView: View {
         .chartYScale(domain: minValue...maxValue)
         .chartYAxis(.hidden)
         .chartXAxis(.hidden)
-        
     }
 }
 
 #Preview {
-    TireTemperaturePlotView(data: ChartData.mockArray)
+    TireTemperaturePlotView(data: [56.1, 72.5, 74.5, 24.2, 26.1, 34.1, 36.5])
         .frame(height: 100)
         .padding()
 }

@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct AxiesData: Identifiable, Hashable {
     static func == (lhs: AxiesData, rhs: AxiesData) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id &&
+        lhs.leftTire == rhs.leftTire &&
+        lhs.rightTire == rhs.rightTire
     }
     
     var id: Int { axisNumber }
@@ -18,13 +21,25 @@ struct AxiesData: Identifiable, Hashable {
     var leftTire: TireData
     var rightTire: TireData
     
+    init(axisNumber: Int, leftTire: TireData, rightTire: TireData) {
+        self.axisNumber = axisNumber
+        self.leftTire = leftTire
+        self.rightTire = rightTire
+    }
+    
+    init(object: AxiesDataObject) {
+        self.axisNumber = object.axisNumber
+        self.leftTire = object.leftTire.toDTO()
+        self.rightTire = object.rightTire.toDTO()
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
 
-struct TireData {
-    var temperature: Double
-    var preassure: Double
-    var screenTime: Double
+extension AxiesData {
+    func toObject() -> AxiesDataObject {
+        AxiesDataObject(dto: self)
+    }
 }
