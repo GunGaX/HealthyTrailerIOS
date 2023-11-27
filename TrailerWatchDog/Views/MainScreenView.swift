@@ -92,9 +92,8 @@ struct MainScreenView: View {
                 .scaledToFit()
                 .frame(width: 220)
             
-            ForEach($dataManager.axies, id: \.axisNumber) { axisBinding in
-                let axis = axisBinding.wrappedValue
-                AxisBarView(axis: axisBinding)
+            ForEach(dataManager.axies, id: \.axisNumber) { axis in
+                AxisBarView(axis: axis)
                 if axis.axisNumber != dataManager.axies.last?.axisNumber {
                     separatingAxisBar
                 }
@@ -168,7 +167,7 @@ struct MainScreenView: View {
     private var flatTrailer: some View {
         VStack(spacing: 10) {
             
-            ForEach($dataManager.axies, id: \.axisNumber) { axis in
+            ForEach(dataManager.axies, id: \.axisNumber) { axis in
                 FlatAxisBarView(axis: axis)
             }
         }
@@ -178,7 +177,7 @@ struct MainScreenView: View {
 fileprivate struct AxisBarView: View {
     @EnvironmentObject var viewModel: MainViewModel
     
-    @Binding var axis: AxiesData
+    var axis: AxiesData
     
     var body: some View {
         HStack(spacing: -20) {
@@ -261,7 +260,7 @@ fileprivate struct AxisBarView: View {
 fileprivate struct FlatAxisBarView: View {
     @EnvironmentObject var viewModel: MainViewModel
     
-    @Binding var axis: AxiesData
+    var axis: AxiesData
     
     var body: some View {
         VStack(spacing: 8) {
