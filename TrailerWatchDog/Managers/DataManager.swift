@@ -47,9 +47,6 @@ class DataManager: NSObject, ObservableObject {
     @Published var latestRow: String = csvHeader
     @Published var screenText: String = "..."
     
-    @Published var selectedTempMeasure: TemperatureType = .fahrenheit
-    @Published var selectedPresMeasure: PreasureType = .psi
-    
     @Published var axies = [
         AxiesData(axisNumber: 1, leftTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now), rightTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now)),
         AxiesData(axisNumber: 2, leftTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now), rightTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now))
@@ -157,7 +154,6 @@ class DataManager: NSObject, ObservableObject {
     }
     
     func setup(tempSystem: TemperatureType, preassureSystem: PreasureType) {
-        loadMeasurementSystems()
         loadLastData()
         
         let path = try? FileManager.default.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: false)
@@ -185,33 +181,6 @@ class DataManager: NSObject, ObservableObject {
         locationManager.delegate = self
         
         centralManager = CBCentralManager(delegate: self, queue: nil)
-        
-        updateTemperatureSystem(newTempType: tempSystem)
-        updatePreassureSystem(newPresType: preassureSystem)
-    }
-    
-    func updateTemperatureSystem(newTempType: TemperatureType) {
-        selectedTempMeasure = newTempType
-        
-        switch newTempType {
-        case .celsius:
-            for index in 0..<axies.count {
-                axies[index].leftTire.temperature = axies[index].leftTire.temperature.fromFahrenheitToCelsius()
-                axies[index].rightTire.temperature = axies[index].leftTire.temperature.fromFahrenheitToCelsius()
-            }
-        case .fahrenheit:
-            for index in 0..<axies.count {
-                axies[index].leftTire.temperature = axies[index].leftTire.temperature.fromCelciusToFarenheit()
-                axies[index].rightTire.temperature = axies[index].leftTire.temperature.fromFahrenheitToCelsius()
-            }
-        }
-    }
-    
-    func updatePreassureSystem(newPresType: PreasureType) {
-        selectedPresMeasure = newPresType
-        
-        //Need to update if sensors even offline ????
-        newData()
     }
     
     func loadLastData() {
@@ -223,32 +192,6 @@ class DataManager: NSObject, ObservableObject {
                         
             axies[index - 1].leftTire = leftTire!
             axies[index - 1].rightTire = rightTire!
-        }
-    }
-    
-    func loadMeasurementSystems() {
-        let tempSys = UserDefaults.standard.getObject(forKey: "temperatureSystem", castTo: TemperatureType.self)
-        let presSys = UserDefaults.standard.getObject(forKey: "preassureSystem", castTo: PreasureType.self)
-        
-        guard tempSys != nil, presSys != nil else { return }
-        print(tempSys)
-        
-        selectedTempMeasure = tempSys!
-        selectedPresMeasure = presSys!
-    }
-    
-    // Use it later for TWD devices
-    func updateLatestDataWithMeasurements() {
-        if selectedTempMeasure == .celsius {
-//            for index in 0..<axies.count {
-//                axies[index].leftTire.lastTemperatures = axies[index].leftTire.lastTemperatures?.map({ $0.fromFahrenheitToCelsius() })
-//                axies[index].rightTire.lastTemperatures = axies[index].rightTire.lastTemperatures?.map({ $0.fromFahrenheitToCelsius() })
-//            }
-        } else {
-//            for index in 0..<axies.count {
-//                axies[index].leftTire.lastTemperatures = axies[index].leftTire.lastTemperatures?.map({ $0.fromCelciusToFarenheit() })
-//                axies[index].rightTire.lastTemperatures = axies[index].rightTire.lastTemperatures?.map({ $0.fromCelciusToFarenheit() })
-//            }
         }
     }
     
@@ -340,15 +283,7 @@ class DataManager: NSObject, ObservableObject {
             var finalPreassure = -1000.0
             
             if (pressure_kpa_persist >= 0.5) && (pressure_kpa_persist < 300.0) {
-                switch selectedPresMeasure {
-                case .kpa:
-                    finalPreassure = Double(pressure_psi_persist).fromPsiToKpa()
-                case .bar:
-                    finalPreassure = Double(pressure_psi_persist).fromPsiToBar()
-                case .psi:
-                    f_pressure_psi_screen = Double(pressure_psi_persist)
-                }
-                
+                finalPreassure = Double(pressure_psi_persist)
                 
                 haveVal = true
             } else {
@@ -358,12 +293,7 @@ class DataManager: NSObject, ObservableObject {
             var finalTemperature = -1000.0
             
             if (temperature_c_persist != 0.0) {
-                switch selectedTempMeasure {
-                case .fahrenheit:
-                    finalTemperature = temperature_f_persist
-                case .celsius:
-                    finalTemperature = temperature_c_persist
-                }
+                finalTemperature = temperature_f_persist
             } else {
                 f_temperature_f_screen = 0
             }

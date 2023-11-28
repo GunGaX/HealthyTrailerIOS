@@ -202,7 +202,7 @@ fileprivate struct AxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: 0))
+                            Text("0")
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
@@ -218,7 +218,7 @@ fileprivate struct AxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: 0))
+                            Text("0")
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
@@ -244,7 +244,7 @@ fileprivate struct AxisBarView: View {
                 .padding(.bottom, 1)
             
             HStack(alignment: .bottom, spacing: 5) {
-                Text(applyMeasureType(value: tireValue))
+                Text(tireValue.applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType).formattedToOneDecimalPlace().description)
                     .font(.roboto700, size: 18)
                 
                 Text(viewModel.selectedTemperatureType.measureMark)
@@ -253,13 +253,6 @@ fileprivate struct AxisBarView: View {
             }
             .foregroundStyle(Color.mainGreen)
             .padding(isRight ? .trailing : .leading, -10)
-        }
-    }
-    
-    private func applyMeasureType(value: Double) -> String {
-        switch viewModel.selectedTemperatureType {
-        case .celsius: return value.formattedToOneDecimalPlace()
-        case .fahrenheit: return value.formattedToOneDecimalPlace()
         }
     }
 }
