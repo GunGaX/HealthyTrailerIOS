@@ -7,36 +7,14 @@
 
 import Foundation
 
-struct TireData: Equatable {
+struct TireData: Equatable, Codable {
     var temperature: Double
     var preassure: Double
-    var screenTime: Double
-    var lastTemperatures: [Double]?
+    var updateDate: Date
     
-    init(temperature: Double, preassure: Double, screenTime: Double, lastTemperatures: [Double]? = nil) {
+    init(temperature: Double, preassure: Double, updateDate: Date) {
         self.temperature = temperature
         self.preassure = preassure
-        self.screenTime = screenTime
-        self.lastTemperatures = lastTemperatures
-    }
-    
-    init(object: TireDataObject) {
-        self.temperature = object.temperature
-        self.preassure = object.preassure
-        self.screenTime = object.screenTime
-    }
-    
-    mutating func appendNewTemperature(temperature: Double) {
-        if lastTemperatures?.count ?? 0 > 20 {
-            lastTemperatures?.removeFirst()
-        }
-        
-        self.lastTemperatures?.append(temperature)
-    }
-}
-
-extension TireData {
-    func toObject() -> TireDataObject {
-        TireDataObject(dto: self)
+        self.updateDate = updateDate
     }
 }

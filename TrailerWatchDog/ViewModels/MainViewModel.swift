@@ -36,7 +36,17 @@ final class MainViewModel: ObservableObject {
             }
         }
     }
-//    
+    
+    ///Temporary via indexes with hardcoded TPMS ids, because we don't have them yet (need TWDs)
+    public func updateLastValuesData() {
+        let dataManager = DataManager.shared
+        
+        for index in 1...dataManager.axies.count {
+            UserDefaults.standard.setObject(dataManager.axies[index - 1].leftTire, forKey: "lastLog_TPMS\(index * 2 - 1)")
+            UserDefaults.standard.setObject(dataManager.axies[index - 1].rightTire, forKey: "lastLog_TPMS\(index * 2)")
+        }
+    }
+//
 //    public func createDirectory() {
 //        FileRepository.shared.createSubdirectory(withName: "Folder 1")
 //        FileRepository.shared.createSubdirectory(withName: "Folder 2")

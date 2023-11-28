@@ -176,14 +176,7 @@ struct MainScreenView: View {
     
     private func startTimerAndUploadingData() {
         Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
-            updateLastValuesData()
-        }
-    }
-    
-    private func updateLastValuesData() {
-        for index in 0..<dataManager.axies.count {
-            dataManager.axies[index].leftTire.appendNewTemperature(temperature: dataManager.axies[index].leftTire.temperature)
-            dataManager.axies[index].rightTire.appendNewTemperature(temperature: dataManager.axies[index].rightTire.temperature)
+            viewModel.updateLastValuesData()
         }
     }
 }
@@ -285,7 +278,7 @@ fileprivate struct FlatAxisBarView: View {
                 .padding(.leading)
             
             HStack(spacing: 0) {
-                flatValueBar(tireValues: axis.leftTire.lastTemperatures ?? [], isRight: false)
+                flatValueBar(tireValues: ChartData.tempArray, isRight: false)
                 ZStack {
                     tireImage
                     VStack {
@@ -323,7 +316,7 @@ fileprivate struct FlatAxisBarView: View {
                     .frame(width: 44)
                 }
                 .zIndex(2.0)
-                flatValueBar(tireValues: axis.rightTire.lastTemperatures ?? [], isRight: true)
+                flatValueBar(tireValues: ChartData.tempArray, isRight: true)
             }
         }
     }

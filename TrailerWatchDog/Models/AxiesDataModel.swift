@@ -27,19 +27,7 @@ struct AxiesData: Identifiable, Hashable {
         self.rightTire = rightTire
     }
     
-    init(object: AxiesDataObject) {
-        self.axisNumber = object.axisNumber
-        self.leftTire = object.leftTire.toDTO()
-        self.rightTire = object.rightTire.toDTO()
-    }
-    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-    }
-}
-
-extension AxiesData {
-    func toObject() -> AxiesDataObject {
-        AxiesDataObject(dto: self)
     }
 }

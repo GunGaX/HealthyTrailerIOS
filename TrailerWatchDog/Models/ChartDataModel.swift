@@ -22,4 +22,8 @@ struct ChartData: Identifiable, Equatable {
          ChartData(time: 6, value: 36.5)
         ]
     }
+    
+    static var tempArray: [Double] {
+        [56.1, 72.5, 74.5, 24.2, 26.1, 34.1, 36.5]
+    }
 }

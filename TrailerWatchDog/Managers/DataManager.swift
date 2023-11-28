@@ -51,8 +51,8 @@ class DataManager: NSObject, ObservableObject {
     @Published var selectedPresMeasure: PreasureType = .psi
     
     @Published var axies = [
-        AxiesData(axisNumber: 1, leftTire: TireData(temperature: 0, preassure: 0, screenTime: 0, lastTemperatures: []), rightTire: TireData(temperature: 0, preassure: 0, screenTime: 0, lastTemperatures: [])),
-        AxiesData(axisNumber: 2, leftTire: TireData(temperature: 0, preassure: 0, screenTime: 0, lastTemperatures: []), rightTire: TireData(temperature: 0, preassure: 0, screenTime: 0, lastTemperatures: []))
+        AxiesData(axisNumber: 1, leftTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now), rightTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now)),
+        AxiesData(axisNumber: 2, leftTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now), rightTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now))
     ]
     
     let locationManager = CLLocationManager()
@@ -157,6 +157,9 @@ class DataManager: NSObject, ObservableObject {
     }
     
     func setup(tempSystem: TemperatureType, preassureSystem: PreasureType) {
+        loadMeasurementSystems()
+        loadLastData()
+        
         let path = try? FileManager.default.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: false)
         if (path != nil) {
             let dateFormatter = DateFormatter()
@@ -189,26 +192,63 @@ class DataManager: NSObject, ObservableObject {
     
     func updateTemperatureSystem(newTempType: TemperatureType) {
         selectedTempMeasure = newTempType
-        updateLatestDataWithMeasurements()
-        newData()
+        
+        switch newTempType {
+        case .celsius:
+            for index in 0..<axies.count {
+                axies[index].leftTire.temperature = axies[index].leftTire.temperature.fromFahrenheitToCelsius()
+                axies[index].rightTire.temperature = axies[index].leftTire.temperature.fromFahrenheitToCelsius()
+            }
+        case .fahrenheit:
+            for index in 0..<axies.count {
+                axies[index].leftTire.temperature = axies[index].leftTire.temperature.fromCelciusToFarenheit()
+                axies[index].rightTire.temperature = axies[index].leftTire.temperature.fromFahrenheitToCelsius()
+            }
+        }
     }
     
     func updatePreassureSystem(newPresType: PreasureType) {
         selectedPresMeasure = newPresType
+        
+        //Need to update if sensors even offline ????
         newData()
     }
     
+    func loadLastData() {
+        for index in 1...axies.count {
+            let leftTire = UserDefaults.standard.getObject(forKey: "lastLog_TPMS\(index * 2 - 1)", castTo: TireData.self)
+            let rightTire = UserDefaults.standard.getObject(forKey: "lastLog_TPMS\(index * 2)", castTo: TireData.self)
+            
+            guard leftTire != nil, rightTire != nil else { return }
+                        
+            axies[index - 1].leftTire = leftTire!
+            axies[index - 1].rightTire = rightTire!
+        }
+    }
+    
+    func loadMeasurementSystems() {
+        let tempSys = UserDefaults.standard.getObject(forKey: "temperatureSystem", castTo: TemperatureType.self)
+        let presSys = UserDefaults.standard.getObject(forKey: "preassureSystem", castTo: PreasureType.self)
+        
+        guard tempSys != nil, presSys != nil else { return }
+        print(tempSys)
+        
+        selectedTempMeasure = tempSys!
+        selectedPresMeasure = presSys!
+    }
+    
+    // Use it later for TWD devices
     func updateLatestDataWithMeasurements() {
         if selectedTempMeasure == .celsius {
-            for index in 0..<axies.count {
-                axies[index].leftTire.lastTemperatures = axies[index].leftTire.lastTemperatures?.map({ $0.fromFahrenheitToCelsius() })
-                axies[index].rightTire.lastTemperatures = axies[index].rightTire.lastTemperatures?.map({ $0.fromFahrenheitToCelsius() })
-            }
+//            for index in 0..<axies.count {
+//                axies[index].leftTire.lastTemperatures = axies[index].leftTire.lastTemperatures?.map({ $0.fromFahrenheitToCelsius() })
+//                axies[index].rightTire.lastTemperatures = axies[index].rightTire.lastTemperatures?.map({ $0.fromFahrenheitToCelsius() })
+//            }
         } else {
-            for index in 0..<axies.count {
-                axies[index].leftTire.lastTemperatures = axies[index].leftTire.lastTemperatures?.map({ $0.fromCelciusToFarenheit() })
-                axies[index].rightTire.lastTemperatures = axies[index].rightTire.lastTemperatures?.map({ $0.fromCelciusToFarenheit() })
-            }
+//            for index in 0..<axies.count {
+//                axies[index].leftTire.lastTemperatures = axies[index].leftTire.lastTemperatures?.map({ $0.fromCelciusToFarenheit() })
+//                axies[index].rightTire.lastTemperatures = axies[index].rightTire.lastTemperatures?.map({ $0.fromCelciusToFarenheit() })
+//            }
         }
     }
     
@@ -297,7 +337,7 @@ class DataManager: NSObject, ObservableObject {
             
             var haveVal = false
             
-            var finalPreassure = 0.0
+            var finalPreassure = -1000.0
             
             if (pressure_kpa_persist >= 0.5) && (pressure_kpa_persist < 300.0) {
                 switch selectedPresMeasure {
@@ -315,7 +355,7 @@ class DataManager: NSObject, ObservableObject {
                 f_pressure_psi_screen = 0
             }
             
-            var finalTemperature = 0.0
+            var finalTemperature = -1000.0
             
             if (temperature_c_persist != 0.0) {
                 switch selectedTempMeasure {
@@ -338,22 +378,38 @@ class DataManager: NSObject, ObservableObject {
             latestRow += ",\(f_pressure_kpa),\(f_pressure_psi),\(f_temperature_c),\(f_temperature_f)"
             switch index {
             case 0:
-                axies[0].leftTire.temperature = finalTemperature
-                axies[0].leftTire.preassure = finalPreassure
-                axies[0].leftTire.screenTime = f_sec_screen
+                if finalTemperature != -1000.0 {
+                    axies[0].leftTire.temperature = finalTemperature
+                }
+                if finalPreassure != -1000.0 {
+                    axies[0].leftTire.preassure = finalPreassure
+                }
+                axies[0].leftTire.updateDate = Date.now
             case 1:
-                axies[0].rightTire.temperature = finalTemperature
-                axies[0].rightTire.preassure = finalPreassure
-                axies[0].rightTire.screenTime = f_sec_screen
+                if finalTemperature != -1000.0 {
+                    axies[0].rightTire.temperature = finalTemperature
+                }
+                if finalPreassure != -1000.0 {
+                    axies[0].rightTire.preassure = finalPreassure
+                }
+                axies[0].rightTire.updateDate = Date.now
                 
             case 2:
-                axies[1].leftTire.temperature = finalTemperature
-                axies[1].leftTire.preassure = finalPreassure
-                axies[1].leftTire.screenTime = f_sec_screen
+                if finalTemperature != -1000.0 {
+                    axies[1].leftTire.temperature = finalTemperature
+                }
+                if finalPreassure != -1000.0 {
+                    axies[1].leftTire.preassure = finalPreassure
+                }
+                axies[1].leftTire.updateDate = Date.now
             case 3:
-                axies[1].rightTire.temperature = finalTemperature
-                axies[1].rightTire.preassure = finalPreassure
-                axies[1].rightTire.screenTime = f_sec_screen
+                if finalTemperature != -1000.0 {
+                    axies[1].rightTire.temperature = finalTemperature
+                }
+                if finalPreassure != -1000.0 {
+                    axies[1].rightTire.preassure = finalPreassure
+                }
+                axies[1].rightTire.updateDate = Date.now
             default:
                 continue
             }

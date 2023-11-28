@@ -57,8 +57,7 @@ struct SettingsView: View {
                 .font(.roboto500, size: 18)
                 .padding(.trailing, 20)
             
-            //Update it later
-            Text("2")
+            Text(DataManager.shared.axies.count.description)
                 .foregroundStyle(Color.mainGrey)
                 .font(.roboto500, size: 26)
                 .padding(30)
@@ -94,9 +93,13 @@ struct SettingsView: View {
         }
         .onChange(of: viewModel.selectedTemperatureType) {
             DataManager.shared.updateTemperatureSystem(newTempType: viewModel.selectedTemperatureType)
+            viewModel.updateLastValuesData()
+            UserDefaults.standard.setObject(viewModel.selectedTemperatureType, forKey: "temperatureSystem")
         }
         .onChange(of: viewModel.selectedPreassureType) {
             DataManager.shared.updatePreassureSystem(newPresType: viewModel.selectedPreassureType)
+            viewModel.updateLastValuesData()
+            UserDefaults.standard.setObject(viewModel.selectedPreassureType, forKey: "preassureSystem")
         }
     }
 }
