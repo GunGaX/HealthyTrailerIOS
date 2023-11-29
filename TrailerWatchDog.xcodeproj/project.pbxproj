@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B6058EF02B163B0300D84AD3 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6058EEF2B163B0300D84AD3 /* UserDefaultsExtension.swift */; };
+		B6058EF32B17651500D84AD3 /* ConnectTMPSDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
 		B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */; };
 		B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */; };
@@ -59,6 +60,7 @@
 
 /* Begin PBXFileReference section */
 		B6058EEF2B163B0300D84AD3 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
+		B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTMPSDevicesView.swift; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBlueButtonStyle.swift; sourceTree = "<group>"; };
 		B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
@@ -121,6 +123,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B6058EF12B1764DF00D84AD3 /* AlertViews */ = {
+			isa = PBXGroup;
+			children = (
+				B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */,
+			);
+			path = AlertViews;
+			sourceTree = "<group>";
+		};
 		B63E7BE22AFD153800ECA81B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +156,7 @@
 		B63E7BE82AFD1E0500ECA81B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B6058EF12B1764DF00D84AD3 /* AlertViews */,
 				B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */,
 				B63E7BF52AFE5D1900ECA81B /* SecondaryHeaderView.swift */,
 				B63E7BFD2AFE659C00ECA81B /* TireTemperaturePlotView.swift */,
@@ -382,6 +393,7 @@
 				B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */,
 				B6DB0B2F2B07926C00DEF890 /* HistoryFileModel.swift in Sources */,
 				B63E7C0D2B02297300ECA81B /* AxiesDataModel.swift in Sources */,
+				B6058EF32B17651500D84AD3 /* ConnectTMPSDevicesView.swift in Sources */,
 				B6C862A12B14F73400698ADC /* TireDataModel.swift in Sources */,
 				B63E7C1E2B02936400ECA81B /* MeasurementTypePickerView.swift in Sources */,
 				B6DB0B2B2B06452A00DEF890 /* DateExtensions.swift in Sources */,

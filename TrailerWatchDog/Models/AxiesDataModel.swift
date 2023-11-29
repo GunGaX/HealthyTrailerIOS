@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 struct AxiesData: Identifiable, Hashable {
     static func == (lhs: AxiesData, rhs: AxiesData) -> Bool {
