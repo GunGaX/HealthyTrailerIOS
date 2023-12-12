@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B6058EF02B163B0300D84AD3 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6058EEF2B163B0300D84AD3 /* UserDefaultsExtension.swift */; };
 		B6058EF32B17651500D84AD3 /* ConnectTMPSDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */; };
+		B62928502B210C4A0044B011 /* TWDModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B629284F2B210C4A0044B011 /* TWDModel.swift */; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
 		B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */; };
 		B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */; };
@@ -36,6 +37,7 @@
 		B63E7C292B039F2A00ECA81B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C282B039F2A00ECA81B /* LocationManager.swift */; };
 		B63E7C2B2B03A37700ECA81B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C2A2B03A37700ECA81B /* RootView.swift */; };
 		B63E7C2D2B03B98F00ECA81B /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C2C2B03B98F00ECA81B /* BluetoothManager.swift */; };
+		B66F4B1D2B2799DA0001E143 /* TPMSModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */; };
 		B671C0572B0F9A940034DE77 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C0562B0F9A940034DE77 /* DataManager.swift */; };
 		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
 		B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */; };
@@ -61,6 +63,7 @@
 /* Begin PBXFileReference section */
 		B6058EEF2B163B0300D84AD3 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTMPSDevicesView.swift; sourceTree = "<group>"; };
+		B629284F2B210C4A0044B011 /* TWDModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWDModel.swift; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBlueButtonStyle.swift; sourceTree = "<group>"; };
 		B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
@@ -88,6 +91,7 @@
 		B63E7C282B039F2A00ECA81B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B63E7C2A2B03A37700ECA81B /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B63E7C2C2B03B98F00ECA81B /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPMSModel.swift; sourceTree = "<group>"; };
 		B671C0562B0F9A940034DE77 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* TrailerWatchDog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailerWatchDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerWatchDogApp.swift; sourceTree = "<group>"; };
@@ -197,6 +201,8 @@
 				B6DB0B2E2B07926C00DEF890 /* HistoryFileModel.swift */,
 				B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */,
 				B6C862A02B14F73400698ADC /* TireDataModel.swift */,
+				B629284F2B210C4A0044B011 /* TWDModel.swift */,
+				B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -397,6 +403,7 @@
 				B6C862A12B14F73400698ADC /* TireDataModel.swift in Sources */,
 				B63E7C1E2B02936400ECA81B /* MeasurementTypePickerView.swift in Sources */,
 				B6DB0B2B2B06452A00DEF890 /* DateExtensions.swift in Sources */,
+				B66F4B1D2B2799DA0001E143 /* TPMSModel.swift in Sources */,
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
 				B63E7C212B0387E300ECA81B /* AlertTypeEnum.swift in Sources */,
@@ -423,6 +430,7 @@
 				B63E7C2D2B03B98F00ECA81B /* BluetoothManager.swift in Sources */,
 				B6DB0B332B07AB0800DEF890 /* LogFileDetailsView.swift in Sources */,
 				B63E7BF42AFD79FB00ECA81B /* NavigationDestinationModifier.swift in Sources */,
+				B62928502B210C4A0044B011 /* TWDModel.swift in Sources */,
 				B671C0572B0F9A940034DE77 /* DataManager.swift in Sources */,
 				B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */,
 				B63E7BF82AFE5F1100ECA81B /* SettingsView.swift in Sources */,

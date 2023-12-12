@@ -9,6 +9,8 @@ import Foundation
 
 final class MainViewModel: ObservableObject {
     @Published var isTWDConnected = false
+    @Published var connectedTWD: TWDModel?
+    
     @Published var displayingMode = true
     
     @Published var selectedSound: NotificationSound = .chime

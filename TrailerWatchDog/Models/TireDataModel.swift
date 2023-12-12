@@ -7,6 +7,7 @@
 
 import Foundation
 
+//TPMS
 struct TireData: Equatable, Codable {
     var temperature: Double
     var preassure: Double
@@ -16,5 +17,9 @@ struct TireData: Equatable, Codable {
         self.temperature = temperature
         self.preassure = preassure
         self.updateDate = updateDate
+    }
+    
+    static var emptyData: TireData {
+        TireData(temperature: 0, preassure: 0, updateDate: Date.now)
     }
 }

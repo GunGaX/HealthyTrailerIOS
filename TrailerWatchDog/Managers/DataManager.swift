@@ -47,10 +47,14 @@ class DataManager: NSObject, ObservableObject {
     @Published var latestRow: String = csvHeader
     @Published var screenText: String = "..."
     
-    @Published var axies = [
+    @Published var connectedTWD: TWDModel?
+    
+    @Published var axies: [AxiesData] = [
         AxiesData(axisNumber: 1, leftTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now), rightTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now)),
         AxiesData(axisNumber: 2, leftTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now), rightTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now))
     ]
+    
+    @Published var tpms_ids : [String] = []
     
     let locationManager = CLLocationManager()
     var centralManager: CBCentralManager!
@@ -153,7 +157,10 @@ class DataManager: NSObject, ObservableObject {
         super.init()
     }
     
-    func setup(tempSystem: TemperatureType, preassureSystem: PreasureType) {
+    func setup(connectedTWD: TWDModel?, tempSystem: TemperatureType, preassureSystem: PreasureType) {
+        guard let connectedTWD else { return }
+        self.connectedTWD = connectedTWD
+        
         loadLastData()
         
         let path = try? FileManager.default.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: false)
@@ -421,7 +428,10 @@ extension DataManager: CBCentralManagerDelegate {
         
 //        print("pressure: \(pressureConv) temp: \(temperatureConv)")
 
-        
+        if !tpms_ids.contains(name) {
+            tpms_ids.append(name)
+        }
+                        
         var idx:Int = -1
         if (name.starts(with: "TPMS1")) {
             idx = 0

@@ -7,12 +7,51 @@
 
 import SwiftUI
 
-struct ConnectTMPSDevicesView: View {
-    // Temporary array of Strings, update with TPMS models later
+struct ConnectTPMSAlertView: ViewModifier {
+    @Binding public var showAlert: Bool
+    
     var discoveredTMPSDevices: [String]
     var tireToConnect: String
     
+    var onButtonTap: (String) -> Void
+    
+    func body(content: Content) -> some View { content
+        .overlay(contentOverlay)
+        .overlay(alert)
+        .animation(.spring(), value: showAlert)
+    }
+    
+    @ViewBuilder
+    private var contentOverlay: some View {
+        if showAlert {
+            Color.black
+                .opacity(0.5)
+                .ignoresSafeArea()
+        }
+    }
+    
+    @ViewBuilder
+    private var alert: some View {
+        if showAlert {
+            ConnectTMPSDevicesView(showAlert: $showAlert, discoveredTMPSDevices: discoveredTMPSDevices, tireToConnect: tireToConnect, onButtonTap: onButtonTap)
+                .background(Color.white)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .transition(.opacity.combined(with: .scale(scale: 0.5)))
+                .padding(.horizontal)
+        }
+    }
+}
+
+struct ConnectTMPSDevicesView: View {
+    @StateObject private var dataManager = DataManager.shared
     @State private var selectedDevice: String?
+    
+    @Binding var showAlert: Bool
+    
+    var discoveredTMPSDevices: [String]
+    var tireToConnect: String
+    
+    var onButtonTap: (String) -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -33,6 +72,9 @@ struct ConnectTMPSDevicesView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
+        .onAppear {
+            selectedDevice = nil
+        }
     }
     
     private var title: some View {
@@ -70,7 +112,7 @@ struct ConnectTMPSDevicesView: View {
     private var deviceItems: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
             ForEach(discoveredTMPSDevices, id: \.self) { device in
-                LastTMPSCardView(device: device, selectedDevice: .constant(nil))
+                LastTMPSCardView(selectedDevice: $selectedDevice, device: device)
             }
         }
     }
@@ -87,7 +129,7 @@ struct ConnectTMPSDevicesView: View {
     
     private var cancelButton: some View {
         Button {
-            
+            showAlert = false
         } label: {
             Text("Cancel")
                 .font(.roboto500, size: 16)
@@ -97,7 +139,8 @@ struct ConnectTMPSDevicesView: View {
     
     private var yesButton: some View {
         Button {
-            
+            guard let selectedDevice else { return }
+            onButtonTap(selectedDevice)
         } label: {
             Text("Yes")
                 .font(.roboto500, size: 16)
@@ -107,26 +150,30 @@ struct ConnectTMPSDevicesView: View {
 }
 
 fileprivate struct LastTMPSCardView: View {
-    var device: String
     @Binding var selectedDevice: String?
     
+    var device: String
+    
     var body: some View {
-        Text(device)
-            .font(.roboto500, size: 16)
-            .foregroundStyle(Color.textDark)
-            .frame(maxWidth: .infinity)
-            .frame(height: 42)
-            .background(
-                RoundedRectangle(cornerRadius: 6)
-                    .foregroundStyle(selectedDevice == device ? Color.mainBlue : Color.white)
-                    .shadow(color: Color.black.opacity(0.15), radius: 2, x: 0, y: 2)
-            )
-            .onTapGesture {
+        Button {
+            withAnimation {
                 selectedDevice = device
             }
+        } label: {
+            Text(device)
+                .font(.roboto500, size: 16)
+                .foregroundStyle(Color.textDark)
+                .frame(maxWidth: .infinity)
+                .frame(height: 42)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .foregroundStyle(selectedDevice == device ? Color.mainBlue : Color.white)
+                        .shadow(color: Color.black.opacity(0.15), radius: 2, x: 0, y: 2)
+                )
+        }
     }
 }
 
 #Preview {
-    ConnectTMPSDevicesView(discoveredTMPSDevices: ["#131323", "#412343", "#941342"], tireToConnect: "RIGHT 1")
+    ConnectTMPSDevicesView(showAlert: .constant(true), discoveredTMPSDevices: ["#131323", "#412343", "#941342"], tireToConnect: "RIGHT 1", onButtonTap: { _ in })
 }

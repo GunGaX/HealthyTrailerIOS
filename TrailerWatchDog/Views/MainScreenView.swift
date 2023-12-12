@@ -12,6 +12,10 @@ struct MainScreenView: View {
     @EnvironmentObject var viewModel: MainViewModel
     
     @StateObject private var dataManager = DataManager.shared
+    
+    @State private var showConnectingTPMSAlert = false
+    @State private var tireToConnectText = "connect smth"
+    @State private var connectedTPMSCount = 0
         
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
@@ -39,6 +43,7 @@ struct MainScreenView: View {
             }
             .ignoresSafeArea(.container, edges: .top)
             .navigationDestinations()
+            .connectingTPMSAlertView($showConnectingTPMSAlert, discoveredTPMSDevices: dataManager.tpms_ids, tireToConnect: tireToConnectText, onButtonTap: startConnectingTPMS)
         }
     }
     
@@ -135,7 +140,11 @@ struct MainScreenView: View {
     @ViewBuilder
     private var connectionSection: some View {
         if viewModel.isTWDConnected {
-            connectedDeviceInfo
+            VStack(alignment: .trailing) {
+                connectedDeviceInfo
+                connectTMPSButton
+            }
+            .frame(maxWidth: 150)
         } else {
             tryToConnectButton
         }
@@ -146,7 +155,7 @@ struct MainScreenView: View {
             Text("Connected:")
                 .foregroundStyle(Color.textDark)
             
-            Text("TWD-DEVICE-NAME")
+            Text(viewModel.connectedTWD?.name ?? "TWD-Name")
                 .foregroundStyle(Color.mainBlue)
         }
         .font(.roboto500, size: 16)
@@ -154,14 +163,28 @@ struct MainScreenView: View {
     
     private var tryToConnectButton: some View {
         Button {
-            dataManager.setup(tempSystem: viewModel.selectedTemperatureType, preassureSystem: viewModel.selectedPreassureType)
+            viewModel.connectedTWD = TWDModel.mockTWD
+            
+            dataManager.setup(connectedTWD: viewModel.connectedTWD, tempSystem: viewModel.selectedTemperatureType, preassureSystem: viewModel.selectedPreassureType)
+            
             withAnimation {
                 viewModel.isTWDConnected = true
             }
             
-            startTimerAndUploadingData()
+//            startTimerAndUploadingData()
         } label: {
             Text("Try to connect")
+        }
+        .buttonStyle(.mainBlueButton)
+    }
+    
+    private var connectTMPSButton: some View {
+        Button {
+            showConnectingTPMSAlert = true
+        } label: {
+            Text("Add TPMS sensors to trailer")
+                .multilineTextAlignment(.center)
+                .padding(.vertical, -6)
         }
         .buttonStyle(.mainBlueButton)
     }
@@ -177,6 +200,19 @@ struct MainScreenView: View {
     private func startTimerAndUploadingData() {
         Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
             viewModel.updateLastValuesData()
+        }
+    }
+    
+    private func startConnectingTPMS(text: String) {
+        showConnectingTPMSAlert = false
+        connectedTPMSCount += 1
+        
+        print(text)
+        
+        if connectedTPMSCount < 4 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                showConnectingTPMSAlert = true
+            }
         }
     }
 }
