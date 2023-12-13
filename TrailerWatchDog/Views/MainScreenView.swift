@@ -14,8 +14,9 @@ struct MainScreenView: View {
     @StateObject private var dataManager = DataManager.shared
     
     @State private var showConnectingTPMSAlert = false
-    @State private var tireToConnectText = "connect smth"
-    @State private var connectedTPMSCount = 0
+    @State private var tireToConnectText = "LEFT 1"
+    @State private var connectedTPMSCount: Int = 0
+    @State private var connectedTPMSDevices: [String] = []
         
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
@@ -171,7 +172,9 @@ struct MainScreenView: View {
                 viewModel.isTWDConnected = true
             }
             
-//            startTimerAndUploadingData()
+            if !dataManager.connectedTPMSIds.isEmpty {
+                startTimerAndUploadingData()
+            }
         } label: {
             Text("Try to connect")
         }
@@ -205,14 +208,33 @@ struct MainScreenView: View {
     
     private func startConnectingTPMS(text: String) {
         showConnectingTPMSAlert = false
+        
+        guard let connectedTWD = dataManager.connectedTWD else { return }
+        
         connectedTPMSCount += 1
+        tireToConnectText = viewModel.connectingTextArray[connectedTPMSCount]
         
-        print(text)
+        connectedTPMSDevices.append(text)
+        let newTPMS = TPMSModel(id: text, connectedToTWDWithId: connectedTWD.id, tireData: TireData.emptyData)
         
-        if connectedTPMSCount < 4 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+        let axleIndex = Int((connectedTPMSCount - 1) / 2)
+        if connectedTPMSCount % 2 == 1 {
+            dataManager.axies[axleIndex].leftTire = newTPMS
+        } else {
+            dataManager.axies[axleIndex].rightTire = newTPMS
+        }
+        
+        if connectedTPMSCount < (dataManager.connectedTWD?.axisCount ?? 0) * 2 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 showConnectingTPMSAlert = true
             }
+        } else {
+            tireToConnectText = viewModel.connectingTextArray[0]
+            
+            dataManager.connectedTPMSIds = connectedTPMSDevices
+            dataManager.saveConnectedTPMStoTWD()
+            
+            startTimerAndUploadingData()
         }
     }
 }
@@ -224,7 +246,7 @@ fileprivate struct AxisBarView: View {
     
     var body: some View {
         HStack(spacing: -20) {
-            valueBar(tireValue: axis.leftTire.temperature, isRight: false)
+            valueBar(tireValue: axis.leftTire.tireData.temperature, isRight: false)
             
             ZStack {
                 Image("fillAxisImage")
@@ -268,7 +290,7 @@ fileprivate struct AxisBarView: View {
             }
             .zIndex(2.0)
             
-            valueBar(tireValue: axis.rightTire.temperature, isRight: true)
+            valueBar(tireValue: axis.rightTire.tireData.temperature, isRight: true)
         }
     }
     

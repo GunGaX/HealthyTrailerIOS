@@ -17,10 +17,10 @@ struct AxiesData: Identifiable, Hashable {
     var id: Int { axisNumber }
     
     var axisNumber: Int
-    var leftTire: TireData
-    var rightTire: TireData
+    var leftTire: TPMSModel
+    var rightTire: TPMSModel
     
-    init(axisNumber: Int, leftTire: TireData, rightTire: TireData) {
+    init(axisNumber: Int, leftTire: TPMSModel, rightTire: TPMSModel) {
         self.axisNumber = axisNumber
         self.leftTire = leftTire
         self.rightTire = rightTire

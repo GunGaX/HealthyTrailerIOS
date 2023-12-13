@@ -10,5 +10,9 @@ import Foundation
 struct TPMSModel: Codable, Equatable {
     let id: String
     let connectedToTWDWithId: String
-    let tireData: TireData
+    var tireData: TireData
+    
+    static var emptyState: TPMSModel {
+        TPMSModel(id: "", connectedToTWDWithId: "", tireData: TireData.emptyData)
+    }
 }

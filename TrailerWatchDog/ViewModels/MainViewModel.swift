@@ -22,6 +22,8 @@ final class MainViewModel: ObservableObject {
     @Published var logFoldersPaths: [String] = []
     @Published var logFiles: [String: HistoryFileModel] = [:]
     
+    let connectingTextArray: [String] = ["LEFT 1", "RIGHT 1", "LEFT 2", "RIGHT 2", "LEFT 3", "RIGHT 3", "LEFT 4", "RIGHT 4",]
+    
     public func getLogDirectories() {
         if let folderPaths = FileRepository.shared.getSubdirectoriesPaths() {
             logFoldersPaths = folderPaths
@@ -39,13 +41,12 @@ final class MainViewModel: ObservableObject {
         }
     }
     
-    ///Temporary via indexes with hardcoded TPMS ids, because we don't have them yet (need TWDs)
     public func updateLastValuesData() {
         let dataManager = DataManager.shared
-        
-        for index in 1...dataManager.axies.count {
-            UserDefaults.standard.setObject(dataManager.axies[index - 1].leftTire, forKey: "lastLog_TPMS\(index * 2 - 1)")
-            UserDefaults.standard.setObject(dataManager.axies[index - 1].rightTire, forKey: "lastLog_TPMS\(index * 2)")
+                
+        for index in 0..<dataManager.axies.count {
+            UserDefaults.standard.setObject(dataManager.axies[index].leftTire, forKey: "lastLog_TPMS\(dataManager.axies[index].leftTire.id)")
+            UserDefaults.standard.setObject(dataManager.axies[index].rightTire, forKey: "lastLog_TPMS\(dataManager.axies[index].rightTire.id)")
         }
     }
 //

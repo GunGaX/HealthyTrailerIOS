@@ -50,11 +50,12 @@ class DataManager: NSObject, ObservableObject {
     @Published var connectedTWD: TWDModel?
     
     @Published var axies: [AxiesData] = [
-        AxiesData(axisNumber: 1, leftTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now), rightTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now)),
-        AxiesData(axisNumber: 2, leftTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now), rightTire: TireData(temperature: 0, preassure: 0, updateDate: Date.now))
+        AxiesData(axisNumber: 1, leftTire: TPMSModel.emptyState, rightTire: TPMSModel.emptyState),
+        AxiesData(axisNumber: 2, leftTire: TPMSModel.emptyState, rightTire: TPMSModel.emptyState)
     ]
     
     @Published var tpms_ids : [String] = []
+    var connectedTPMSIds: [String] = []
     
     let locationManager = CLLocationManager()
     var centralManager: CBCentralManager!
@@ -62,11 +63,11 @@ class DataManager: NSObject, ObservableObject {
     var latestLoc:CLLocation = CLLocation(latitude: 0, longitude: 0)
     var latestUpdate:Date = Date.init()
     
-    var tpms_pressure_kpa : [Double] = [0.0, 0.0, 0.0, 0.0]
-    var tpms_temperature_c : [Double] = [0.0, 0.0, 0.0, 0.0]
-    var tpms_pressure_kpa_persist : [Double] = [0.0, 0.0, 0.0, 0.0]
-    var tpms_temperature_c_persist : [Double] = [0.0, 0.0, 0.0, 0.0]
-    var tpms_last_tick : [Date] = [Date(), Date(), Date(), Date()]
+    var tpms_pressure_kpa : [String: Double] = [:]
+    var tpms_temperature_c : [String: Double] = [:]
+    var tpms_pressure_kpa_persist : [String: Double] = [:]
+    var tpms_temperature_c_persist : [String: Double] = [:]
+    var tpms_last_tick : [String: Date] = [:]
     
     var logPath:URL = URL.init(fileURLWithPath: "/dev/null")
     var haveLog = false
@@ -161,6 +162,8 @@ class DataManager: NSObject, ObservableObject {
         guard let connectedTWD else { return }
         self.connectedTWD = connectedTWD
         
+        fetchConnectedTPMStoTWD()
+        
         loadLastData()
         
         let path = try? FileManager.default.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: false)
@@ -191,15 +194,38 @@ class DataManager: NSObject, ObservableObject {
     }
     
     func loadLastData() {
-        for index in 1...axies.count {
-            let leftTire = UserDefaults.standard.getObject(forKey: "lastLog_TPMS\(index * 2 - 1)", castTo: TireData.self)
-            let rightTire = UserDefaults.standard.getObject(forKey: "lastLog_TPMS\(index * 2)", castTo: TireData.self)
+        for index in 1...connectedTPMSIds.count {
+            let tpms = UserDefaults.standard.getObject(forKey: "lastLog_TPMS\(connectedTPMSIds[index - 1])", castTo: TPMSModel.self)
             
-            guard leftTire != nil, rightTire != nil else { return }
-                        
-            axies[index - 1].leftTire = leftTire!
-            axies[index - 1].rightTire = rightTire!
+            guard let tpms else { return }
+            
+            let axleIndex: Int = Int((index - 1) / 2)
+            print(axleIndex)
+            
+            if index % 2 == 0 {
+                axies[axleIndex].rightTire = tpms
+            } else {
+                axies[axleIndex].leftTire = tpms
+            }
         }
+        
+        print(axies)
+    }
+    
+    func saveConnectedTPMStoTWD() {
+        guard let connectedTWD else { return }
+        
+        UserDefaults.standard.setObject(connectedTPMSIds, forKey: "TPMSDevicesForTWD\(connectedTWD.id)")
+    }
+    
+    func fetchConnectedTPMStoTWD() {
+        guard let connectedTWD else { return }
+        
+        if let retrievedIds = UserDefaults.standard.getObject(forKey: "TPMSDevicesForTWD\(connectedTWD.id)", castTo: [String].self) {
+            connectedTPMSIds = retrievedIds
+        }
+        
+        print(connectedTPMSIds)
     }
     
     func newData() {
@@ -245,10 +271,10 @@ class DataManager: NSObject, ObservableObject {
         screenText = "\(timeStr)\n\(f_lat), \(f_lon) (± \(f_latlon_acc_ft) ft)\n@ \(f_ele_ft) ft (± \(f_ele_ft_acc))\n\n\(f_vel_mph) mph (± \(f_vel_mph_acc))\n\n"
         
         var haveTire = "0"
-        for index in 0...3 {
-            let pressure_kpa = tpms_pressure_kpa[index]
-            let temperature_c = tpms_temperature_c[index]
-            if (pressure_kpa >= 50.0) && (pressure_kpa < 300.0) {
+        for key in tpms_last_tick.keys {
+            let pressure_kpa = tpms_pressure_kpa[key]
+            let temperature_c = tpms_temperature_c[key]
+            if (pressure_kpa ?? 0 >= 50.0) && (pressure_kpa ?? 0 < 300.0) {
                 haveTire = "1"
             }
             if (temperature_c != 0.0) {
@@ -257,15 +283,15 @@ class DataManager: NSObject, ObservableObject {
         }
         latestRow += ",\(haveTire)"
 
-        for index in 0...3 {
-            let pressure_kpa = tpms_pressure_kpa[index]
-            let pressure_kpa_persist = tpms_pressure_kpa_persist[index]
-            let pressure_psi = (pressure_kpa * 0.14503773779)
-            let pressure_psi_persist = (pressure_kpa_persist * 0.14503773779)
-            let temperature_c = tpms_temperature_c[index]
-            let temperature_c_persist = tpms_temperature_c_persist[index]
-            let temperature_f = ((temperature_c * 9/5) + 32)
-            let temperature_f_persist = ((temperature_c_persist * 9/5) + 32)
+        for key in tpms_last_tick.keys {
+            let pressure_kpa = tpms_pressure_kpa[key]
+            let pressure_kpa_persist = tpms_pressure_kpa_persist[key]
+            let pressure_psi = (pressure_kpa ?? 0 * 0.14503773779)
+            let pressure_psi_persist = (pressure_kpa_persist ?? 0 * 0.14503773779)
+            let temperature_c = tpms_temperature_c[key]
+            let temperature_c_persist = tpms_temperature_c_persist[key]
+            let temperature_f = ((temperature_c ?? 0 * 9/5) + 32)
+            let temperature_f_persist = ((temperature_c_persist ?? 0 * 9/5) + 32)
 
             let f_pressure_kpa: Double = 0
             let f_pressure_psi: Double = 0
@@ -289,7 +315,7 @@ class DataManager: NSObject, ObservableObject {
             
             var finalPreassure = -1000.0
             
-            if (pressure_kpa_persist >= 0.5) && (pressure_kpa_persist < 300.0) {
+            if (pressure_kpa_persist ?? 0 >= 0.5) && (pressure_kpa_persist ?? 0 < 300.0) {
                 finalPreassure = Double(pressure_psi_persist)
                 
                 haveVal = true
@@ -304,7 +330,7 @@ class DataManager: NSObject, ObservableObject {
             } else {
                 f_temperature_f_screen = 0
             }
-            let secSinceLastTick: Double = abs(tpms_last_tick[index].timeIntervalSinceNow)
+            let secSinceLastTick: Double = abs(tpms_last_tick[key]?.timeIntervalSinceNow ?? 0)
             var f_sec_screen: Double = 0
             if (haveVal) {
                 f_sec_screen = secSinceLastTick
@@ -313,44 +339,30 @@ class DataManager: NSObject, ObservableObject {
             }
             
             latestRow += ",\(f_pressure_kpa),\(f_pressure_psi),\(f_temperature_c),\(f_temperature_f)"
-            switch index {
-            case 0:
-                if finalTemperature != -1000.0 {
-                    axies[0].leftTire.temperature = finalTemperature
+            
+            for index in 0..<axies.count {
+                if axies[index].leftTire.id == key {
+                    if finalTemperature != -1000.0 {
+                        axies[index].leftTire.tireData.temperature = finalTemperature
+                    }
+                    if finalPreassure != -1000.0 {
+                        axies[index].leftTire.tireData.preassure = finalPreassure
+                    }
+                    axies[index].leftTire.tireData.updateDate = Date.now
                 }
-                if finalPreassure != -1000.0 {
-                    axies[0].leftTire.preassure = finalPreassure
-                }
-                axies[0].leftTire.updateDate = Date.now
-            case 1:
-                if finalTemperature != -1000.0 {
-                    axies[0].rightTire.temperature = finalTemperature
-                }
-                if finalPreassure != -1000.0 {
-                    axies[0].rightTire.preassure = finalPreassure
-                }
-                axies[0].rightTire.updateDate = Date.now
                 
-            case 2:
-                if finalTemperature != -1000.0 {
-                    axies[1].leftTire.temperature = finalTemperature
+                if axies[index].rightTire.id == key {
+                    if finalTemperature != -1000.0 {
+                        axies[index].rightTire.tireData.temperature = finalTemperature
+                    }
+                    if finalPreassure != -1000.0 {
+                        axies[index].rightTire.tireData.preassure = finalPreassure
+                    }
+                    axies[index].rightTire.tireData.updateDate = Date.now
                 }
-                if finalPreassure != -1000.0 {
-                    axies[1].leftTire.preassure = finalPreassure
-                }
-                axies[1].leftTire.updateDate = Date.now
-            case 3:
-                if finalTemperature != -1000.0 {
-                    axies[1].rightTire.temperature = finalTemperature
-                }
-                if finalPreassure != -1000.0 {
-                    axies[1].rightTire.preassure = finalPreassure
-                }
-                axies[1].rightTire.updateDate = Date.now
-            default:
-                continue
             }
         }
+                
         latestRow += "\n"
         
         self.log_debug("\(self.latestRow)")
@@ -358,8 +370,10 @@ class DataManager: NSObject, ObservableObject {
             self.write_csv(latestRow)
         }
 
-        tpms_pressure_kpa = [0.0, 0.0, 0.0, 0.0]
-        tpms_temperature_c = [0.0, 0.0, 0.0, 0.0]
+        for key in tpms_pressure_kpa.keys {
+            tpms_pressure_kpa[key] = 0.0
+            tpms_temperature_c[key] = 0.0
+        }
 
         if ((centralManager.state == .poweredOn) && !centralManager.isScanning) {
             centralManager.scanForPeripherals(withServices: [tpmsServiceCBUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
@@ -426,37 +440,24 @@ extension DataManager: CBCentralManagerDelegate {
         let temperatureRaw = rawData.subdata(in: Range(12...15))
         let temperatureConv:Double = temperatureRaw.withUnsafeBytes { Double($0.load(as: UInt32.self)) } / 100.0
         
-//        print("pressure: \(pressureConv) temp: \(temperatureConv)")
-
         if !tpms_ids.contains(name) {
             tpms_ids.append(name)
         }
-                        
-        var idx:Int = -1
-        if (name.starts(with: "TPMS1")) {
-            idx = 0
-        } else if (name.starts(with: "TPMS2")) {
-            idx = 1
-        } else if (name.starts(with: "TPMS3")) {
-            idx = 2
-        } else if (name.starts(with: "TPMS4")) {
-            idx = 3
-        }
 
-        if (idx != -1) {
+        if connectedTPMSIds.contains(name) {
             let haveGoodTick = ((pressureConv != 0.0) || (temperatureConv != 0.0))
             if (haveGoodTick) {
                 didGetTireData = true
-                tpms_pressure_kpa[idx] = pressureConv
-                tpms_temperature_c[idx] = temperatureConv
+                tpms_pressure_kpa[name] = pressureConv
+                tpms_temperature_c[name] = temperatureConv
                 if pressureConv != 0.0 {
-                    tpms_pressure_kpa_persist[idx] = pressureConv
+                    tpms_pressure_kpa_persist[name] = pressureConv
                 }
                 if temperatureConv != 0.0 {
-                    tpms_temperature_c_persist[idx] = temperatureConv
+                    tpms_temperature_c_persist[name] = temperatureConv
                 }
                 latestUpdate = Date()
-                tpms_last_tick[idx] = Date()
+                tpms_last_tick[name] = Date()
             
                 self.newData()
             }

@@ -141,6 +141,7 @@ struct ConnectTMPSDevicesView: View {
         Button {
             guard let selectedDevice else { return }
             onButtonTap(selectedDevice)
+            self.selectedDevice = nil
         } label: {
             Text("Yes")
                 .font(.roboto500, size: 16)
