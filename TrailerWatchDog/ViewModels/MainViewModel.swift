@@ -9,6 +9,8 @@ import Foundation
 
 final class MainViewModel: ObservableObject {
     @Published var isTWDConnected = false
+    @Published var connectedTWD: TWDModel?
+    
     @Published var displayingMode = true
     
     @Published var selectedSound: NotificationSound = .chime
@@ -19,6 +21,8 @@ final class MainViewModel: ObservableObject {
     
     @Published var logFoldersPaths: [String] = []
     @Published var logFiles: [String: HistoryFileModel] = [:]
+    
+    let connectingTextArray: [String] = ["LEFT 1", "RIGHT 1", "LEFT 2", "RIGHT 2", "LEFT 3", "RIGHT 3", "LEFT 4", "RIGHT 4",]
     
     public func getLogDirectories() {
         if let folderPaths = FileRepository.shared.getSubdirectoriesPaths() {
@@ -36,7 +40,16 @@ final class MainViewModel: ObservableObject {
             }
         }
     }
-//    
+    
+    public func updateLastValuesData() {
+        let dataManager = DataManager.shared
+                
+        for index in 0..<dataManager.axies.count {
+            UserDefaults.standard.setObject(dataManager.axies[index].leftTire, forKey: "lastLog_TPMS\(dataManager.axies[index].leftTire.id)")
+            UserDefaults.standard.setObject(dataManager.axies[index].rightTire, forKey: "lastLog_TPMS\(dataManager.axies[index].rightTire.id)")
+        }
+    }
+//
 //    public func createDirectory() {
 //        FileRepository.shared.createSubdirectory(withName: "Folder 1")
 //        FileRepository.shared.createSubdirectory(withName: "Folder 2")

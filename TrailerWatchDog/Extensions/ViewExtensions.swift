@@ -14,6 +14,16 @@ extension View {
     }
     
     func defaultAlert(_ alert: Binding<AlertType?>) -> some View {
-            modifier(AlertView(alertStep: alert))
-        }
+        modifier(AlertView(alertStep: alert))
+    }
+    
+    func connectingTPMSAlertView(_ show: Binding<Bool>, discoveredTPMSDevices: [String], tireToConnect: String, onButtonTap: @escaping (String) -> Void) -> some View {
+        modifier(
+            ConnectTPMSAlertView(
+                showAlert: show, 
+                discoveredTMPSDevices: discoveredTPMSDevices,
+                tireToConnect: tireToConnect,
+                onButtonTap: onButtonTap)
+        )
+    }
 }

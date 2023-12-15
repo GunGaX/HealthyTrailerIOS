@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum PreasureType: CaseIterable {
+enum PreasureType: CaseIterable, Codable {
     case kpa, bar, psi
     
     var title: String {
@@ -27,7 +27,7 @@ enum PreasureType: CaseIterable {
     }
 }
 
-enum TemperatureType: CaseIterable {
+enum TemperatureType: CaseIterable, Codable {
     case fahrenheit
     case celsius
     

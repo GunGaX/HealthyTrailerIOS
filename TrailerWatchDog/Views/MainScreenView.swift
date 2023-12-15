@@ -12,6 +12,11 @@ struct MainScreenView: View {
     @EnvironmentObject var viewModel: MainViewModel
     
     @StateObject private var dataManager = DataManager.shared
+    
+    @State private var showConnectingTPMSAlert = false
+    @State private var tireToConnectText = "LEFT 1"
+    @State private var connectedTPMSCount: Int = 0
+    @State private var connectedTPMSDevices: [String] = []
         
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
@@ -39,6 +44,7 @@ struct MainScreenView: View {
             }
             .ignoresSafeArea(.container, edges: .top)
             .navigationDestinations()
+            .connectingTPMSAlertView($showConnectingTPMSAlert, discoveredTPMSDevices: dataManager.tpms_ids, tireToConnect: tireToConnectText, onButtonTap: startConnectingTPMS)
         }
     }
     
@@ -92,7 +98,7 @@ struct MainScreenView: View {
                 .scaledToFit()
                 .frame(width: 220)
             
-            ForEach(dataManager.axies, id: \.axisNumber) { axis in
+            ForEach(dataManager.axies, id: \.id) { axis in
                 AxisBarView(axis: axis)
                 if axis.axisNumber != dataManager.axies.last?.axisNumber {
                     separatingAxisBar
@@ -135,7 +141,11 @@ struct MainScreenView: View {
     @ViewBuilder
     private var connectionSection: some View {
         if viewModel.isTWDConnected {
-            connectedDeviceInfo
+            VStack(alignment: .trailing) {
+                connectedDeviceInfo
+                connectTMPSButton
+            }
+            .frame(maxWidth: 150)
         } else {
             tryToConnectButton
         }
@@ -146,7 +156,7 @@ struct MainScreenView: View {
             Text("Connected:")
                 .foregroundStyle(Color.textDark)
             
-            Text("TWD-DEVICE-NAME")
+            Text(viewModel.connectedTWD?.name ?? "TWD-Name")
                 .foregroundStyle(Color.mainBlue)
         }
         .font(.roboto500, size: 16)
@@ -154,9 +164,16 @@ struct MainScreenView: View {
     
     private var tryToConnectButton: some View {
         Button {
-            dataManager.setup(tempSystem: viewModel.selectedTemperatureType, preassureSystem: viewModel.selectedPreassureType)
+            viewModel.connectedTWD = TWDModel.mockTWD
+            
+            dataManager.setup(connectedTWD: viewModel.connectedTWD, tempSystem: viewModel.selectedTemperatureType, preassureSystem: viewModel.selectedPreassureType)
+            
             withAnimation {
                 viewModel.isTWDConnected = true
+            }
+            
+            if !dataManager.connectedTPMSIds.isEmpty {
+                startTimerAndUploadingData()
             }
         } label: {
             Text("Try to connect")
@@ -164,12 +181,60 @@ struct MainScreenView: View {
         .buttonStyle(.mainBlueButton)
     }
     
+    private var connectTMPSButton: some View {
+        Button {
+            showConnectingTPMSAlert = true
+        } label: {
+            Text("Add TPMS sensors to trailer")
+                .multilineTextAlignment(.center)
+                .padding(.vertical, -6)
+        }
+        .buttonStyle(.mainBlueButton)
+    }
+    
     private var flatTrailer: some View {
         VStack(spacing: 10) {
-            
-            ForEach(dataManager.axies, id: \.axisNumber) { axis in
+            ForEach(dataManager.axies, id: \.id) { axis in
                 FlatAxisBarView(axis: axis)
             }
+        }
+    }
+    
+    private func startTimerAndUploadingData() {
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
+            viewModel.updateLastValuesData()
+        }
+    }
+    
+    private func startConnectingTPMS(text: String) {
+        showConnectingTPMSAlert = false
+        
+        guard let connectedTWD = dataManager.connectedTWD else { return }
+        
+        connectedTPMSCount += 1
+        tireToConnectText = viewModel.connectingTextArray[connectedTPMSCount]
+        
+        connectedTPMSDevices.append(text)
+        let newTPMS = TPMSModel(id: text, connectedToTWDWithId: connectedTWD.id, tireData: TireData.emptyData)
+        
+        let axleIndex = Int((connectedTPMSCount - 1) / 2)
+        if connectedTPMSCount % 2 == 1 {
+            dataManager.axies[axleIndex].leftTire = newTPMS
+        } else {
+            dataManager.axies[axleIndex].rightTire = newTPMS
+        }
+        
+        if connectedTPMSCount < (dataManager.connectedTWD?.axisCount ?? 0) * 2 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                showConnectingTPMSAlert = true
+            }
+        } else {
+            tireToConnectText = viewModel.connectingTextArray[0]
+            
+            dataManager.connectedTPMSIds = connectedTPMSDevices
+            dataManager.saveConnectedTPMStoTWD()
+            
+            startTimerAndUploadingData()
         }
     }
 }
@@ -181,7 +246,7 @@ fileprivate struct AxisBarView: View {
     
     var body: some View {
         HStack(spacing: -20) {
-            valueBar(tireValue: axis.leftTire.temperature, isRight: false)
+            valueBar(tireValue: axis.leftTire.tireData.temperature, isRight: false)
             
             ZStack {
                 Image("fillAxisImage")
@@ -195,7 +260,7 @@ fileprivate struct AxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: 0))
+                            Text("0")
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
@@ -211,7 +276,7 @@ fileprivate struct AxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: 0))
+                            Text("0")
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
@@ -225,7 +290,7 @@ fileprivate struct AxisBarView: View {
             }
             .zIndex(2.0)
             
-            valueBar(tireValue: axis.rightTire.temperature, isRight: true)
+            valueBar(tireValue: axis.rightTire.tireData.temperature, isRight: true)
         }
     }
     
@@ -237,7 +302,7 @@ fileprivate struct AxisBarView: View {
                 .padding(.bottom, 1)
             
             HStack(alignment: .bottom, spacing: 5) {
-                Text(applyMeasureType(value: tireValue))
+                Text(tireValue.applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType).formattedToOneDecimalPlace().description)
                     .font(.roboto700, size: 18)
                 
                 Text(viewModel.selectedTemperatureType.measureMark)
@@ -246,13 +311,6 @@ fileprivate struct AxisBarView: View {
             }
             .foregroundStyle(Color.mainGreen)
             .padding(isRight ? .trailing : .leading, -10)
-        }
-    }
-    
-    private func applyMeasureType(value: Double) -> String {
-        switch viewModel.selectedTemperatureType {
-        case .celsius: return value.formattedToOneDecimalPlace()
-        case .fahrenheit: return value.formattedToOneDecimalPlace()
         }
     }
 }
@@ -271,7 +329,7 @@ fileprivate struct FlatAxisBarView: View {
                 .padding(.leading)
             
             HStack(spacing: 0) {
-                flatValueBar(tireValues: ChartData.mockArray, isRight: false)
+                flatValueBar(tireValues: ChartData.tempArray, isRight: false)
                 ZStack {
                     tireImage
                     VStack {
@@ -279,13 +337,13 @@ fileprivate struct FlatAxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: 0))
+                            Text("0")
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
                         }
                     }
-                    .font(.roboto500, size: 14)
+                    .font(.roboto500, size: 12)
                     .foregroundStyle(Color.white)
                     .frame(width: 44)
                 }
@@ -298,18 +356,18 @@ fileprivate struct FlatAxisBarView: View {
                         Text("Avg:")
                             .opacity(0.8)
                         HStack(alignment: .bottom, spacing: 5) {
-                            Text(applyMeasureType(value: 0))
+                            Text("0")
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
                         }
                     }
-                    .font(.roboto500, size: 14)
+                    .font(.roboto500, size: 12)
                     .foregroundStyle(Color.white)
                     .frame(width: 44)
                 }
                 .zIndex(2.0)
-                flatValueBar(tireValues: ChartData.mockArray, isRight: true)
+                flatValueBar(tireValues: ChartData.tempArray, isRight: true)
             }
         }
     }
@@ -326,7 +384,7 @@ fileprivate struct FlatAxisBarView: View {
         .frame(height: 64)
     }
     
-    private func flatValueBar(tireValues: [ChartData], isRight: Bool) -> some View {
+    private func flatValueBar(tireValues: [Double], isRight: Bool) -> some View {
         ZStack {
             Rectangle()
                 .foregroundStyle(Color.lightGreen)
@@ -335,7 +393,7 @@ fileprivate struct FlatAxisBarView: View {
             
             VStack(spacing: 10) {
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text(applyMeasureType(value: tireValues.last?.value ?? 0.0))
+                    Text((tireValues.last?.formattedToOneDecimalPlace() ?? "0.0"))
                         .font(.roboto700, size: 18)
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
@@ -351,13 +409,6 @@ fileprivate struct FlatAxisBarView: View {
             .padding(.vertical, 6)
         }
         .padding(isRight ? .leading : .trailing, -10)
-    }
-    
-    private func applyMeasureType(value: Double) -> String {
-        switch viewModel.selectedTemperatureType {
-        case .celsius: return value.fromFahrenheitToCelsius().formattedToOneDecimalPlace().description
-        case .fahrenheit: return value.formattedToOneDecimalPlace().description
-        }
     }
 }
 
