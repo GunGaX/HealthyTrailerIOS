@@ -233,6 +233,7 @@ struct MainScreenView: View {
             
             dataManager.connectedTPMSIds = connectedTPMSDevices
             dataManager.saveConnectedTPMStoTWD()
+            dataManager.saveLastConnectedTPMSDevices()
             
             startTimerAndUploadingData()
         }

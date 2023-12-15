@@ -218,6 +218,20 @@ class DataManager: NSObject, ObservableObject {
         UserDefaults.standard.setObject(connectedTPMSIds, forKey: "TPMSDevicesForTWD\(connectedTWD.id)")
     }
     
+    func saveLastConnectedTPMSDevices() {
+        guard let connectedTWD else { return }
+        
+        UserDefaults.standard.setObject(connectedTPMSIds, forKey: "LastConnectedTPMSDevices")
+    }
+    
+    func getLastConnectedTPMSDevices() -> [String] {
+        if let lastConnectedTPMSDevices = UserDefaults.standard.getObject(forKey: "LastConnectedTPMSDevices", castTo: [String].self) {
+            return lastConnectedTPMSDevices
+        } else {
+            return []
+        }
+    }
+    
     func fetchConnectedTPMStoTWD() {
         guard let connectedTWD else { return }
         
