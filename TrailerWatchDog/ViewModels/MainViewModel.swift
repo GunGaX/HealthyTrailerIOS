@@ -45,8 +45,12 @@ final class MainViewModel: ObservableObject {
         let dataManager = DataManager.shared
                 
         for index in 0..<dataManager.axies.count {
-            UserDefaults.standard.setObject(dataManager.axies[index].leftTire, forKey: "lastLog_TPMS\(dataManager.axies[index].leftTire.id)")
-            UserDefaults.standard.setObject(dataManager.axies[index].rightTire, forKey: "lastLog_TPMS\(dataManager.axies[index].rightTire.id)")
+            if !dataManager.axies[index].leftTire.id.isEmpty {
+                UserDefaults.standard.setObject(dataManager.axies[index].leftTire, forKey: "lastLog_TPMS\(dataManager.axies[index].leftTire.id)")
+            }
+            if !dataManager.axies[index].rightTire.id.isEmpty {
+                UserDefaults.standard.setObject(dataManager.axies[index].rightTire, forKey: "lastLog_TPMS\(dataManager.axies[index].rightTire.id)")
+            }
         }
     }
 //
