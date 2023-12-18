@@ -14,6 +14,7 @@ struct ConnectTPMSAlertView: ViewModifier {
     var tireToConnect: String
     
     var onButtonTap: (String) -> Void
+    var onCancelTap: () -> Void
     
     func body(content: Content) -> some View { content
         .overlay(contentOverlay)
@@ -33,7 +34,7 @@ struct ConnectTPMSAlertView: ViewModifier {
     @ViewBuilder
     private var alert: some View {
         if showAlert {
-            ConnectTMPSDevicesView(showAlert: $showAlert, discoveredTMPSDevices: discoveredTMPSDevices, tireToConnect: tireToConnect, onButtonTap: onButtonTap)
+            ConnectTMPSDevicesView(showAlert: $showAlert, discoveredTMPSDevices: discoveredTMPSDevices, tireToConnect: tireToConnect, onButtonTap: onButtonTap, onCancelTap: onCancelTap)
                 .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .transition(.opacity.combined(with: .scale(scale: 0.5)))
@@ -44,14 +45,29 @@ struct ConnectTPMSAlertView: ViewModifier {
 
 struct ConnectTMPSDevicesView: View {
     @StateObject private var dataManager = DataManager.shared
+    
     @State private var selectedDevice: String?
+    @State private var lastConnectedTPMSDevices: [String] = []
     
     @Binding var showAlert: Bool
     
     var discoveredTMPSDevices: [String]
+    var enableTPMSDevices: [String] {
+        let valuesNotInDiscoveredDevices = discoveredTMPSDevices
+            .filter { !dataManager.connectedTPMSIds.contains($0) }
+            .filter { !lastConnectedTPMSDevices.contains($0) }
+        return valuesNotInDiscoveredDevices
+    }
+    var enableLastConnectedTPMSDevices: [String] {
+        let valuesNotInDiscoveredDevices = lastConnectedTPMSDevices
+            .filter { !dataManager.connectedTPMSIds.contains($0) }
+        return valuesNotInDiscoveredDevices
+    }
+    
     var tireToConnect: String
     
     var onButtonTap: (String) -> Void
+    var onCancelTap: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -73,7 +89,7 @@ struct ConnectTMPSDevicesView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
         .onAppear {
-            selectedDevice = nil
+            lastConnectedTPMSDevices = dataManager.getLastConnectedTPMSDevices()
         }
     }
     
@@ -111,15 +127,19 @@ struct ConnectTMPSDevicesView: View {
     
     private var deviceItems: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-            ForEach(discoveredTMPSDevices, id: \.self) { device in
-                LastTMPSCardView(selectedDevice: $selectedDevice, device: device)
+            ForEach(enableLastConnectedTPMSDevices, id: \.self) { device in
+                LastTMPSCardView(selectedDevice: $selectedDevice, wasConnected: true, device: device)
+            }
+            ForEach(enableTPMSDevices, id: \.self) { device in
+                LastTMPSCardView(selectedDevice: $selectedDevice, wasConnected: false, device: device)
             }
         }
     }
     
     private var forgetKnownDevicesButton: some View {
         Button {
-            
+            dataManager.forgetLastConnectedTPMSDevices()
+            lastConnectedTPMSDevices = []
         } label: {
             Text("Forget known sensors")
                 .font(.roboto500, size: 14)
@@ -129,6 +149,7 @@ struct ConnectTMPSDevicesView: View {
     
     private var cancelButton: some View {
         Button {
+            onCancelTap()
             showAlert = false
         } label: {
             Text("Cancel")
@@ -153,6 +174,7 @@ struct ConnectTMPSDevicesView: View {
 fileprivate struct LastTMPSCardView: View {
     @Binding var selectedDevice: String?
     
+    let wasConnected: Bool
     var device: String
     
     var body: some View {
@@ -161,9 +183,9 @@ fileprivate struct LastTMPSCardView: View {
                 selectedDevice = device
             }
         } label: {
-            Text(device)
+            Text(deviceNameFormatter(name: device))
                 .font(.roboto500, size: 16)
-                .foregroundStyle(Color.textDark)
+                .foregroundStyle(wasConnected ? Color.textDark : Color.red)
                 .frame(maxWidth: .infinity)
                 .frame(height: 42)
                 .background(
@@ -173,8 +195,19 @@ fileprivate struct LastTMPSCardView: View {
                 )
         }
     }
+    
+    private func deviceNameFormatter(name: String) -> String {
+        if let underscoreRange = name.range(of: "_") {
+            let substring = name.suffix(from: underscoreRange.upperBound)
+            let formattedString = "#" + String(substring)
+            
+            return formattedString
+        }
+        
+        return ""
+    }
 }
 
 #Preview {
-    ConnectTMPSDevicesView(showAlert: .constant(true), discoveredTMPSDevices: ["#131323", "#412343", "#941342"], tireToConnect: "RIGHT 1", onButtonTap: { _ in })
+    ConnectTMPSDevicesView(showAlert: .constant(true), discoveredTMPSDevices: ["#131323", "#412343", "#941342"], tireToConnect: "RIGHT 1", onButtonTap: { _ in }, onCancelTap: {})
 }

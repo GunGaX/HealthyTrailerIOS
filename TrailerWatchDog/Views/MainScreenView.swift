@@ -13,6 +13,8 @@ struct MainScreenView: View {
     
     @StateObject private var dataManager = DataManager.shared
     
+    @State private var uploadingTimer: Timer?
+    
     @State private var showConnectingTPMSAlert = false
     @State private var tireToConnectText = "LEFT 1"
     @State private var connectedTPMSCount: Int = 0
@@ -44,7 +46,7 @@ struct MainScreenView: View {
             }
             .ignoresSafeArea(.container, edges: .top)
             .navigationDestinations()
-            .connectingTPMSAlertView($showConnectingTPMSAlert, discoveredTPMSDevices: dataManager.tpms_ids, tireToConnect: tireToConnectText, onButtonTap: startConnectingTPMS)
+            .connectingTPMSAlertView($showConnectingTPMSAlert, discoveredTPMSDevices: dataManager.tpms_ids, tireToConnect: tireToConnectText, onButtonTap: startConnectingTPMS, onCancelTap: saveAndStartWorking)
         }
     }
     
@@ -183,9 +185,20 @@ struct MainScreenView: View {
     
     private var connectTMPSButton: some View {
         Button {
+            guard let connectedTWD = dataManager.connectedTWD else { return }
+            
+            stopUploadingData()
+            dataManager.connectedTPMSIds = []
+            dataManager.saveConnectedTPMStoTWD()
+            
+            for index in 0..<connectedTWD.axisCount {
+                dataManager.axies[index].leftTire = TPMSModel.emptyState
+                dataManager.axies[index].rightTire = TPMSModel.emptyState
+            }
+            
             showConnectingTPMSAlert = true
         } label: {
-            Text("Add TPMS sensors to trailer")
+            Text(dataManager.connectedTPMSIds.isEmpty ? "Add TPMS sensors to trailer" : "Forget connected TPMS sensors")
                 .multilineTextAlignment(.center)
                 .padding(.vertical, -6)
         }
@@ -201,9 +214,14 @@ struct MainScreenView: View {
     }
     
     private func startTimerAndUploadingData() {
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
+        uploadingTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
             viewModel.updateLastValuesData()
         }
+    }
+    
+    private func stopUploadingData() {
+        uploadingTimer?.invalidate()
+        uploadingTimer = nil
     }
     
     private func startConnectingTPMS(text: String) {
@@ -214,7 +232,8 @@ struct MainScreenView: View {
         connectedTPMSCount += 1
         tireToConnectText = viewModel.connectingTextArray[connectedTPMSCount]
         
-        connectedTPMSDevices.append(text)
+        dataManager.performLastConnectedTPMSAction(deviceId: text)
+        
         let newTPMS = TPMSModel(id: text, connectedToTWDWithId: connectedTWD.id, tireData: TireData.emptyData)
         
         let axleIndex = Int((connectedTPMSCount - 1) / 2)
@@ -229,13 +248,16 @@ struct MainScreenView: View {
                 showConnectingTPMSAlert = true
             }
         } else {
-            tireToConnectText = viewModel.connectingTextArray[0]
-            
-            dataManager.connectedTPMSIds = connectedTPMSDevices
-            dataManager.saveConnectedTPMStoTWD()
-            
-            startTimerAndUploadingData()
+            saveAndStartWorking()
         }
+    }
+    
+    private func saveAndStartWorking() {
+        tireToConnectText = viewModel.connectingTextArray[0]
+        connectedTPMSCount = 0
+        
+        dataManager.loadLastData()
+        startTimerAndUploadingData()
     }
 }
 

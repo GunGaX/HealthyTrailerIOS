@@ -49,10 +49,7 @@ class DataManager: NSObject, ObservableObject {
     
     @Published var connectedTWD: TWDModel?
     
-    @Published var axies: [AxiesData] = [
-        AxiesData(axisNumber: 1, leftTire: TPMSModel.emptyState, rightTire: TPMSModel.emptyState),
-        AxiesData(axisNumber: 2, leftTire: TPMSModel.emptyState, rightTire: TPMSModel.emptyState)
-    ]
+    @Published var axies: [AxiesData] = []
     
     @Published var tpms_ids : [String] = []
     var connectedTPMSIds: [String] = []
@@ -162,6 +159,10 @@ class DataManager: NSObject, ObservableObject {
         guard let connectedTWD else { return }
         self.connectedTWD = connectedTWD
         
+        for index in 0..<connectedTWD.axisCount {
+            axies.append(AxiesData(axisNumber: index + 1, leftTire: TPMSModel.emptyState, rightTire: TPMSModel.emptyState))
+        }
+        
         fetchConnectedTPMStoTWD()
         
         loadLastData()
@@ -194,6 +195,8 @@ class DataManager: NSObject, ObservableObject {
     }
     
     func loadLastData() {
+        guard !connectedTPMSIds.isEmpty else { return }
+        
         for index in 1...connectedTPMSIds.count {
             let tpms = UserDefaults.standard.getObject(forKey: "lastLog_TPMS\(connectedTPMSIds[index - 1])", castTo: TPMSModel.self)
             
@@ -218,6 +221,24 @@ class DataManager: NSObject, ObservableObject {
         UserDefaults.standard.setObject(connectedTPMSIds, forKey: "TPMSDevicesForTWD\(connectedTWD.id)")
     }
     
+    func saveLastConnectedTPMSDevices() {
+        guard connectedTWD != nil else { return }
+        
+        UserDefaults.standard.setObject(connectedTPMSIds, forKey: "LastConnectedTPMSDevices")
+    }
+    
+    func forgetLastConnectedTPMSDevices() {
+        UserDefaults.standard.removeObject(forKey: "LastConnectedTPMSDevices")
+    }
+    
+    func getLastConnectedTPMSDevices() -> [String] {
+        if let lastConnectedTPMSDevices = UserDefaults.standard.getObject(forKey: "LastConnectedTPMSDevices", castTo: [String].self) {
+            return lastConnectedTPMSDevices
+        } else {
+            return []
+        }
+    }
+    
     func fetchConnectedTPMStoTWD() {
         guard let connectedTWD else { return }
         
@@ -226,6 +247,14 @@ class DataManager: NSObject, ObservableObject {
         }
         
         print(connectedTPMSIds)
+    }
+    
+    func performLastConnectedTPMSAction(deviceId: String) {
+        guard !connectedTPMSIds.contains(deviceId) else { return }
+        
+        connectedTPMSIds.append(deviceId)
+        saveConnectedTPMStoTWD()
+        saveLastConnectedTPMSDevices()
     }
     
     func newData() {

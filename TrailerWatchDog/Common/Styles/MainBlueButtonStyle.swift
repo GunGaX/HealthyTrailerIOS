@@ -11,7 +11,7 @@ struct MainBlueButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .foregroundColor(.white)
-            .font(.roboto700, size: 14)
+            .font(.roboto500, size: 14)
             .padding(.vertical, 12)
             .padding(.horizontal, 20)
             .background (
