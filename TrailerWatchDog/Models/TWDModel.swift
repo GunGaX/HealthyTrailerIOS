@@ -14,6 +14,6 @@ struct TWDModel: Codable {
     let temperature: [Double]
     
     static var mockTWD: TWDModel {
-        TWDModel(id: "fkj4oirh48i", name: "HC-04", axisCount: 3, temperature: [23.1, 23.1, 23.4, 23.6, 25.2, 29.1])
+        TWDModel(id: "fkj4oirh48i", name: "HC-04", axisCount: 2, temperature: [23.1, 23.1, 23.4, 23.6, 25.2, 29.1])
     }
 }
