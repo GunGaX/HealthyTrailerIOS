@@ -53,6 +53,7 @@ struct MainScreenView: View {
     private var logOutButton: some View {
         Button {
             withAnimation {
+                dataManager.disconnectTWD()
                 viewModel.isTWDConnected = false
             }
         } label: {

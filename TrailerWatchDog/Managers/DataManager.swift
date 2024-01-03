@@ -52,6 +52,7 @@ class DataManager: NSObject, ObservableObject {
     @Published var axies: [AxiesData] = []
     
     @Published var tpms_ids : [String] = []
+    
     var connectedTPMSIds: [String] = []
     
     let locationManager = CLLocationManager()
@@ -213,6 +214,12 @@ class DataManager: NSObject, ObservableObject {
         }
         
         print(axies)
+    }
+    
+    func disconnectTWD() {
+        axies = []
+        connectedTWD = nil
+        connectedTPMSIds = []
     }
     
     func saveConnectedTPMStoTWD() {

@@ -56,6 +56,7 @@ struct ConnectTMPSDevicesView: View {
         let valuesNotInDiscoveredDevices = discoveredTMPSDevices
             .filter { !dataManager.connectedTPMSIds.contains($0) }
             .filter { !lastConnectedTPMSDevices.contains($0) }
+            .filter { !$0.isEmpty }
         return valuesNotInDiscoveredDevices
     }
     var enableLastConnectedTPMSDevices: [String] {
