@@ -23,7 +23,33 @@ final class MainViewModel: ObservableObject {
     @Published var logFoldersPaths: [String] = []
     @Published var logFiles: [String: HistoryFileModel] = [:]
     
-    let connectingTextArray: [String] = ["LEFT 1", "RIGHT 1", "LEFT 2", "RIGHT 2", "LEFT 3", "RIGHT 3", "LEFT 4", "RIGHT 4",]
+    var connectingTextArray: [String] = []
+    var orderedIndeces: [Int] = []
+    var connectedOrderedTPMSIds: [String] = []
+    
+    public func generateConnectingOrder(_ n: Int) {
+        orderedIndeces = []
+        connectingTextArray = []
+        connectedOrderedTPMSIds = []
+
+        for i in 1...(n * 2) where i % 2 != 0 {
+            orderedIndeces.append(i)
+        }
+        for i in 1...(n * 2) where i % 2 == 0 {
+            orderedIndeces.append(i)
+        }
+        
+        for i in 1...n {
+            connectingTextArray.append("LEFT \(i)")
+        }
+        for i in 1...n {
+            connectingTextArray.append("RIGHT \(i)")
+        }
+        
+        for _ in 1...(n * 2) {
+            connectedOrderedTPMSIds.append("")
+        }
+    }
     
     public func getLogDirectories() {
         if let folderPaths = FileRepository.shared.getSubdirectoriesPaths() {

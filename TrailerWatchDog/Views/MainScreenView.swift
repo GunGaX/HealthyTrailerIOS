@@ -21,6 +21,7 @@ struct MainScreenView: View {
     
     @State private var tireToConnectText = "LEFT 1"
     @State private var connectedTPMSCount: Int = 0
+    
     @State private var connectedTPMSDevices: [String] = []
         
     var body: some View {
@@ -245,20 +246,25 @@ struct MainScreenView: View {
         guard let connectedTWD = dataManager.connectedTWD else { return }
         
         connectedTPMSCount += 1
-        tireToConnectText = viewModel.connectingTextArray[connectedTPMSCount]
+        let connectedTPMSIndex = viewModel.orderedIndeces[connectedTPMSCount - 1]
         
-        dataManager.performLastConnectedTPMSAction(deviceId: text)
+        if tireToConnectText != viewModel.connectingTextArray.last {
+            tireToConnectText = viewModel.connectingTextArray[connectedTPMSCount]
+        }
+        
+        viewModel.connectedOrderedTPMSIds[connectedTPMSIndex - 1] = text
+        dataManager.performLastConnectedTPMSAction(connectedDevices: viewModel.connectedOrderedTPMSIds)
         
         let newTPMS = TPMSModel(id: text, connectedToTWDWithId: connectedTWD.id, tireData: TireData.emptyData)
         
-        let axleIndex = Int((connectedTPMSCount - 1) / 2)
-        if connectedTPMSCount % 2 == 1 {
+        let axleIndex = Int((connectedTPMSIndex - 1) / 2)
+        if connectedTPMSIndex % 2 == 1 {
             dataManager.axies[axleIndex].leftTire = newTPMS
         } else {
             dataManager.axies[axleIndex].rightTire = newTPMS
         }
         
-        if connectedTPMSCount < (dataManager.connectedTWD?.axisCount ?? 0) * 2 {
+        if connectedTPMSCount < ((dataManager.connectedTWD?.axisCount ?? 0) * 2) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 showConnectingTPMSAlert = true
             }
@@ -268,7 +274,7 @@ struct MainScreenView: View {
     }
     
     private func saveAndStartWorking() {
-        tireToConnectText = viewModel.connectingTextArray[0]
+        tireToConnectText = "LEFT 1"
         connectedTPMSCount = 0
         
         dataManager.loadLastData()
@@ -286,6 +292,8 @@ struct MainScreenView: View {
             dataManager.axies[index].leftTire = TPMSModel.emptyState
             dataManager.axies[index].rightTire = TPMSModel.emptyState
         }
+        
+        viewModel.generateConnectingOrder(connectedTWD.axisCount)
         
         showConnectingTPMSAlert = true
     }

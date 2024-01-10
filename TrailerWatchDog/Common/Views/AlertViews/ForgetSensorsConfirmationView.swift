@@ -60,7 +60,7 @@ struct ForgetSensorsConfirmationView: View {
     }
     
     private var title: some View {
-        Text("Add new TPMS sensors")
+        Text("Forget TPMS sensors")
             .font(.roboto500, size: 20)
             .foregroundStyle(Color.mainRed)
             .frame(maxWidth: .infinity, alignment: .leading)

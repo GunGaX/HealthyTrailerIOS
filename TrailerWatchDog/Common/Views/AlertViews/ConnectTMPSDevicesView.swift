@@ -210,5 +210,5 @@ fileprivate struct LastTMPSCardView: View {
 }
 
 #Preview {
-    ConnectTMPSDevicesView(showAlert: .constant(true), discoveredTMPSDevices: ["#131323", "#412343", "#941342"], tireToConnect: "RIGHT 1", onButtonTap: { _ in }, onCancelTap: {})
+    ConnectTMPSDevicesView(showAlert: .constant(true), discoveredTMPSDevices: ["_131323", "_412343", "_941342"], tireToConnect: "RIGHT 1", onButtonTap: { _ in }, onCancelTap: {})
 }
