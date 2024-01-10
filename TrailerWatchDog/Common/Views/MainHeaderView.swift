@@ -12,6 +12,7 @@ struct MainHeaderView: View {
     
     var body: some View {
         HStack(spacing: 20) {
+            twdLogo
             title
             threeDotsIcon
         }
@@ -23,10 +24,18 @@ struct MainHeaderView: View {
     }
     
     private var title: some View {
-        Text("Trailers WatchDog")
-            .foregroundStyle(Color.textDark)
-            .font(.roboto700, size: 20)
+        Image("TWDTitle")
+            .resizable()
+            .scaledToFit()
+            .frame(height: 22)
             .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var twdLogo: some View {
+        Image("TWDLogo")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 58, height: 58)
     }
     
     private var threeDotsIcon: some View {
