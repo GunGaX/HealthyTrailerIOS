@@ -16,6 +16,9 @@ struct MainScreenView: View {
     @State private var uploadingTimer: Timer?
     
     @State private var showConnectingTPMSAlert = false
+    @State private var showAddConfirmationAlert = false
+    @State private var showForgetSensorsConfirmationAlert = false
+    
     @State private var tireToConnectText = "LEFT 1"
     @State private var connectedTPMSCount: Int = 0
     @State private var connectedTPMSDevices: [String] = []
@@ -46,6 +49,8 @@ struct MainScreenView: View {
             }
             .ignoresSafeArea(.container, edges: .top)
             .navigationDestinations()
+            .confirmationAddNewSensorsAlert($showAddConfirmationAlert, onButtonTap: addNewTPMSSensorsAction)
+            .forgetSensorsConfirmationAlert($showForgetSensorsConfirmationAlert, onButtonTap: forgetTPMSSensorsAction)
             .connectingTPMSAlertView($showConnectingTPMSAlert, discoveredTPMSDevices: dataManager.tpms_ids, tireToConnect: tireToConnectText, onButtonTap: startConnectingTPMS, onCancelTap: saveAndStartWorking)
         }
     }
@@ -169,7 +174,7 @@ struct MainScreenView: View {
         Button {
             viewModel.connectedTWD = TWDModel.mockTWD
             
-            dataManager.setup(connectedTWD: viewModel.connectedTWD, tempSystem: viewModel.selectedTemperatureType, preassureSystem: viewModel.selectedPreassureType)
+            dataManager.setup(connectedTWD: viewModel.connectedTWD)
             
             withAnimation {
                 viewModel.isTWDConnected = true
@@ -184,22 +189,31 @@ struct MainScreenView: View {
         .buttonStyle(.mainBlueButton)
     }
     
+    @ViewBuilder
     private var connectTMPSButton: some View {
+        if dataManager.connectedTPMSIds.isEmpty {
+            addNewTPMSButton
+        } else {
+            forgetTPMSButtons
+        }
+    }
+    
+    private var addNewTPMSButton: some View {
         Button {
-            guard let connectedTWD = dataManager.connectedTWD else { return }
-            
-            stopUploadingData()
-            dataManager.connectedTPMSIds = []
-            dataManager.saveConnectedTPMStoTWD()
-            
-            for index in 0..<connectedTWD.axisCount {
-                dataManager.axies[index].leftTire = TPMSModel.emptyState
-                dataManager.axies[index].rightTire = TPMSModel.emptyState
-            }
-            
-            showConnectingTPMSAlert = true
+            showAddConfirmationAlert = true
         } label: {
-            Text(dataManager.connectedTPMSIds.isEmpty ? "Add TPMS sensors to trailer" : "Forget connected TPMS sensors")
+            Text("Add TPMS sensors to trailer")
+                .multilineTextAlignment(.center)
+                .padding(.vertical, -6)
+        }
+        .buttonStyle(.mainBlueButton)
+    }
+    
+    private var forgetTPMSButtons: some View {
+        Button {
+            showForgetSensorsConfirmationAlert = true
+        } label: {
+            Text("Forget connected TPMS sensors")
                 .multilineTextAlignment(.center)
                 .padding(.vertical, -6)
         }
@@ -259,6 +273,33 @@ struct MainScreenView: View {
         
         dataManager.loadLastData()
         startTimerAndUploadingData()
+    }
+    
+    private func addNewTPMSSensorsAction() {
+        guard let connectedTWD = dataManager.connectedTWD else { return }
+        
+        stopUploadingData()
+        dataManager.connectedTPMSIds = []
+        dataManager.saveConnectedTPMStoTWD()
+        
+        for index in 0..<connectedTWD.axisCount {
+            dataManager.axies[index].leftTire = TPMSModel.emptyState
+            dataManager.axies[index].rightTire = TPMSModel.emptyState
+        }
+        
+        showConnectingTPMSAlert = true
+    }
+    
+    private func forgetTPMSSensorsAction() {
+        guard let connectedTWD = dataManager.connectedTWD else { return }
+        
+        stopUploadingData()
+        dataManager.connectedTPMSIds = []
+        
+        for index in 0..<connectedTWD.axisCount {
+            dataManager.axies[index].leftTire = TPMSModel.emptyState
+            dataManager.axies[index].rightTire = TPMSModel.emptyState
+        }
     }
 }
 

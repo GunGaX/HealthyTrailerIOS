@@ -156,7 +156,7 @@ class DataManager: NSObject, ObservableObject {
         super.init()
     }
     
-    func setup(connectedTWD: TWDModel?, tempSystem: TemperatureType, preassureSystem: PreasureType) {
+    func setup(connectedTWD: TWDModel?) {
         guard let connectedTWD else { return }
         self.connectedTWD = connectedTWD
         

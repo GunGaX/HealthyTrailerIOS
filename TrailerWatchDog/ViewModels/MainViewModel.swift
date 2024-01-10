@@ -8,13 +8,14 @@
 import Foundation
 
 final class MainViewModel: ObservableObject {
+    var dataManager = DataManager.shared
     @Published var isTWDConnected = false
     @Published var connectedTWD: TWDModel?
     
     @Published var displayingMode = true
     
     @Published var selectedSound: NotificationSound = .chime
-    @Published var selectedTemperatureType: TemperatureType = .celsius
+    @Published var selectedTemperatureType: TemperatureType = .fahrenheit
     @Published var selectedPreassureType: PreasureType = .bar
     
     @Published var terminalLogs: [TerminalLog] = TerminalLog.mockLogs
@@ -53,6 +54,8 @@ final class MainViewModel: ObservableObject {
             }
         }
     }
+    
+    
 //
 //    public func createDirectory() {
 //        FileRepository.shared.createSubdirectory(withName: "Folder 1")

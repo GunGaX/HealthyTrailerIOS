@@ -13,9 +13,7 @@ struct MainHeaderView: View {
     var body: some View {
         HStack(spacing: 20) {
             title
-            loggedHistoryIcon
-            terminalIcon
-            settingsIcon
+            threeDotsIcon
         }
         .padding(.horizontal)
         .padding(.vertical, 20)
@@ -31,33 +29,42 @@ struct MainHeaderView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    private var loggedHistoryIcon: some View {
+    private var threeDotsIcon: some View {
+        Menu {
+            loggedHistoryButton
+            terminalButton
+            settingsButton
+        } label: {
+            Image(systemName: "ellipsis")
+                .resizable()
+                .scaledToFit()
+                .rotationEffect(.degrees(90))
+                .frame(width: 22, height: 22)
+                .foregroundColor(.black)
+        }
+    }
+    
+    private var loggedHistoryButton: some View {
         Button {
             navigationManager.append(HistoryPathItem())
         } label: {
-            Image("folderIcon")
-                .resizable()
-                .frame(width: 30, height: 30)
+            Text("Directory")
         }
     }
     
-    private var terminalIcon: some View {
+    private var terminalButton: some View {
         Button {
             navigationManager.append(TerminalPathItem())
         } label: {
-            Image("terminalIcon")
-                .resizable()
-                .frame(width: 30, height: 30)
+            Text("Terminal")
         }
     }
     
-    private var settingsIcon: some View {
+    private var settingsButton: some View {
         Button {
             navigationManager.append(SettingPathItem())
         } label: {
-            Image("settingsIcon")
-                .resizable()
-                .frame(width: 30, height: 30)
+            Text("Settings")
         }
     }
 }
