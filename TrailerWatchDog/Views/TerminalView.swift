@@ -89,10 +89,10 @@ struct TerminalView: View {
             ForEach(viewModel.terminalLogs, id: \.self) { log in
                 Group {
                     Text(log.time.formattedTime() + ":")
-                        .foregroundStyle(Color.mainBlue)
+                        .foregroundColor(Color.mainBlue)
                     +
                     Text(log.text)
-                        .foregroundStyle(Color.textDark)
+                        .foregroundColor(Color.textDark)
                 }
                 .font(.roboto400, size: 14)
             }

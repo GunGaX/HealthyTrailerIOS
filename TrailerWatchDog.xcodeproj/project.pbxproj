@@ -37,6 +37,8 @@
 		B63E7C292B039F2A00ECA81B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C282B039F2A00ECA81B /* LocationManager.swift */; };
 		B63E7C2B2B03A37700ECA81B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C2A2B03A37700ECA81B /* RootView.swift */; };
 		B63E7C2D2B03B98F00ECA81B /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C2C2B03B98F00ECA81B /* BluetoothManager.swift */; };
+		B65FADD22B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65FADD12B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift */; };
+		B65FADD42B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65FADD32B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift */; };
 		B66F4B1D2B2799DA0001E143 /* TPMSModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */; };
 		B671C0572B0F9A940034DE77 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C0562B0F9A940034DE77 /* DataManager.swift */; };
 		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
@@ -91,6 +93,8 @@
 		B63E7C282B039F2A00ECA81B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B63E7C2A2B03A37700ECA81B /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B63E7C2C2B03B98F00ECA81B /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		B65FADD12B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationAddNewTPMSView.swift; sourceTree = "<group>"; };
+		B65FADD32B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetSensorsConfirmationView.swift; sourceTree = "<group>"; };
 		B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPMSModel.swift; sourceTree = "<group>"; };
 		B671C0562B0F9A940034DE77 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* TrailerWatchDog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailerWatchDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +135,8 @@
 			isa = PBXGroup;
 			children = (
 				B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */,
+				B65FADD12B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift */,
+				B65FADD32B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift */,
 			);
 			path = AlertViews;
 			sourceTree = "<group>";
@@ -418,6 +424,8 @@
 				B63E7C2B2B03A37700ECA81B /* RootView.swift in Sources */,
 				B63E7C052AFF9DD800ECA81B /* DoubleExtensions.swift in Sources */,
 				B63E7C0B2B02269F00ECA81B /* ViewModifiers.swift in Sources */,
+				B65FADD42B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift in Sources */,
+				B65FADD22B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift in Sources */,
 				B63E7BF62AFE5D1900ECA81B /* SecondaryHeaderView.swift in Sources */,
 				B63E7C272B038E2400ECA81B /* MainGreenButtonStyle.swift in Sources */,
 				B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */,
@@ -570,7 +578,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"TrailerWatchDog/Preview Content\"";
 				DEVELOPMENT_TEAM = 7MD84T9WSA;
 				ENABLE_PREVIEWS = YES;
@@ -584,6 +592,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -606,7 +615,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"TrailerWatchDog/Preview Content\"";
 				DEVELOPMENT_TEAM = 7MD84T9WSA;
 				ENABLE_PREVIEWS = YES;
@@ -620,6 +629,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

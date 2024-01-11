@@ -44,10 +44,10 @@ struct DefaultDoubleSliderView: View {
             bottomLegend
                 .padding(.top, 10)
         }
-        .onChange(of: firstValue) {
+        .onChange(of: firstValue) { _ in
             valuesChanged()
         }
-        .onChange(of: secondValue) {
+        .onChange(of: secondValue) { _ in
             valuesChanged()
         }
     }

@@ -28,4 +28,12 @@ extension View {
             )
         )
     }
+    
+    func confirmationAddNewSensorsAlert(_ show: Binding<Bool>, onButtonTap: @escaping () -> Void) -> some View {
+        modifier(ConfirmationAddNewTPMSAlertView(showAlert: show, onButtonTap: onButtonTap))
+    }
+    
+    func forgetSensorsConfirmationAlert(_ show: Binding<Bool>, onButtonTap: @escaping () -> Void) -> some View {
+        modifier(ForgetSensorsConfirmationAlertView(showAlert: show, onButtonTap: onButtonTap))
+    }
 }

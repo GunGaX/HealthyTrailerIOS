@@ -36,7 +36,7 @@ struct RootView: View {
                 }
             }
         }
-        .onChange(of: bluetoothManager.bluetoothEnabled) {
+        .onChange(of: bluetoothManager.bluetoothEnabled) { _ in
             if bluetoothManager.checkBluetooth() {
                 locationPermissionSetup()
             }

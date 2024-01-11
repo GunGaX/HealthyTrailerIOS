@@ -52,6 +52,7 @@ class DataManager: NSObject, ObservableObject {
     @Published var axies: [AxiesData] = []
     
     @Published var tpms_ids : [String] = []
+    
     var connectedTPMSIds: [String] = []
     
     let locationManager = CLLocationManager()
@@ -155,7 +156,7 @@ class DataManager: NSObject, ObservableObject {
         super.init()
     }
     
-    func setup(connectedTWD: TWDModel?, tempSystem: TemperatureType, preassureSystem: PreasureType) {
+    func setup(connectedTWD: TWDModel?) {
         guard let connectedTWD else { return }
         self.connectedTWD = connectedTWD
         
@@ -198,6 +199,7 @@ class DataManager: NSObject, ObservableObject {
         guard !connectedTPMSIds.isEmpty else { return }
         
         for index in 1...connectedTPMSIds.count {
+            guard !connectedTPMSIds[index - 1].isEmpty else { return }
             let tpms = UserDefaults.standard.getObject(forKey: "lastLog_TPMS\(connectedTPMSIds[index - 1])", castTo: TPMSModel.self)
             
             guard let tpms else { return }
@@ -213,6 +215,12 @@ class DataManager: NSObject, ObservableObject {
         }
         
         print(axies)
+    }
+    
+    func disconnectTWD() {
+        axies = []
+        connectedTWD = nil
+        connectedTPMSIds = []
     }
     
     func saveConnectedTPMStoTWD() {
@@ -249,10 +257,8 @@ class DataManager: NSObject, ObservableObject {
         print(connectedTPMSIds)
     }
     
-    func performLastConnectedTPMSAction(deviceId: String) {
-        guard !connectedTPMSIds.contains(deviceId) else { return }
-        
-        connectedTPMSIds.append(deviceId)
+    func performLastConnectedTPMSAction(connectedDevices: [String]) {        
+        connectedTPMSIds = connectedDevices
         saveConnectedTPMStoTWD()
         saveLastConnectedTPMSDevices()
     }

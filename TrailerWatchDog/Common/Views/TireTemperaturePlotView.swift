@@ -32,7 +32,7 @@ struct TireTemperaturePlotView: View {
                         x: .value("time", index),
                         y: .value("value", value)
                     )
-                    .foregroundStyle(Color.black)
+                    .foregroundStyle(Color.mainGreen)
                 }
             }
         }
