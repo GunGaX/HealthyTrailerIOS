@@ -17,6 +17,10 @@ extension View {
         modifier(AlertView(alertStep: alert))
     }
     
+    func connectingTWDAlertView(_ show: Binding<Bool>) -> some View {
+        modifier(ConnectTWDAlertView(showAlert: show))
+    }
+    
     func connectingTPMSAlertView(_ show: Binding<Bool>, discoveredTPMSDevices: [String], tireToConnect: String, onButtonTap: @escaping (String) -> Void, onCancelTap: @escaping () -> Void) -> some View {
         modifier(
             ConnectTPMSAlertView(

@@ -18,6 +18,7 @@ struct MainScreenView: View {
     @State private var showConnectingTPMSAlert = false
     @State private var showAddConfirmationAlert = false
     @State private var showForgetSensorsConfirmationAlert = false
+    @State private var showConnecintTWDAlert = false
     
     @State private var tireToConnectText = "LEFT 1"
     @State private var connectedTPMSCount: Int = 0
@@ -53,6 +54,7 @@ struct MainScreenView: View {
             .confirmationAddNewSensorsAlert($showAddConfirmationAlert, onButtonTap: addNewTPMSSensorsAction)
             .forgetSensorsConfirmationAlert($showForgetSensorsConfirmationAlert, onButtonTap: forgetTPMSSensorsAction)
             .connectingTPMSAlertView($showConnectingTPMSAlert, discoveredTPMSDevices: dataManager.tpms_ids, tireToConnect: tireToConnectText, onButtonTap: startConnectingTPMS, onCancelTap: saveAndStartWorking)
+            .connectingTWDAlertView($showConnecintTWDAlert)
         }
     }
     
@@ -173,17 +175,18 @@ struct MainScreenView: View {
     
     private var tryToConnectButton: some View {
         Button {
-            viewModel.connectedTWD = TWDModel.mockTWD
-            
-            dataManager.setup(connectedTWD: viewModel.connectedTWD)
-            
-            withAnimation {
-                viewModel.isTWDConnected = true
-            }
-            
-            if !dataManager.connectedTPMSIds.isEmpty {
-                startTimerAndUploadingData()
-            }
+            showConnecintTWDAlert = true
+//            viewModel.connectedTWD = TWDModel.mockTWD
+//            
+//            dataManager.setup(connectedTWD: viewModel.connectedTWD)
+//            
+//            withAnimation {
+//                viewModel.isTWDConnected = true
+//            }
+//            
+//            if !dataManager.connectedTPMSIds.isEmpty {
+//                startTimerAndUploadingData()
+//            }
         } label: {
             Text("Try to connect")
         }
