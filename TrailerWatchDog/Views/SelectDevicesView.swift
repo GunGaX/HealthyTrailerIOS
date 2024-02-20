@@ -9,7 +9,10 @@ import SwiftUI
 import CoreBluetooth
 
 struct SelectDevicesView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
     @StateObject var twdManager = BluetoothTWDManager.shared
+    
+    @State var previouslyConnectedDevices: [UUID] = []
     
     var body: some View {
         VStack(spacing: 0) {
@@ -24,6 +27,7 @@ struct SelectDevicesView: View {
         .navigationBarBackButtonHidden()
         .onAppear {
             twdManager.setupBluetooth()
+            getConnectedDeviceIDs()
         }
     }
     
@@ -32,6 +36,8 @@ struct SelectDevicesView: View {
             ForEach(twdManager.discoveredPeripherals, id: \.name) { peripheral in
                 Button(action: {
                     twdManager.connectToDevice(peripheral: peripheral)
+                    saveConnectedDeviceID(connectedDeviceId: peripheral.identifier)
+                    navigationManager.removeLast()
                 }) {
                     deviceItemView(peripheral: peripheral)
                 }
@@ -66,7 +72,7 @@ struct SelectDevicesView: View {
                 Text("Previously connected to device:")
                     .font(.roboto500, size: 16)
                     .foregroundStyle(Color.black)
-                Text("Yes")
+                Text(wasPreviouslyConnected(deviceId: peripheral.identifier) ? "Yes" : "No")
                     .font(.roboto400, size: 16)
                     .foregroundStyle(Color.mainBlue)
             }
@@ -78,6 +84,23 @@ struct SelectDevicesView: View {
                 .foregroundStyle(Color.lightBlue)
         )
         .padding(.horizontal)
+    }
+    
+    private func wasPreviouslyConnected(deviceId: UUID) -> Bool {
+        previouslyConnectedDevices.contains(deviceId)
+    }
+    
+    private func saveConnectedDeviceID(connectedDeviceId: UUID) {
+        guard !previouslyConnectedDevices.contains(connectedDeviceId) else { return }
+        
+        var newConnectedDevicesArray = previouslyConnectedDevices
+        newConnectedDevicesArray.append(connectedDeviceId)
+        
+        UserDefaults.standard.setObject(newConnectedDevicesArray, forKey: "previouslyConnectedBluetoothDevices")
+    }
+    
+    private func getConnectedDeviceIDs() {
+        self.previouslyConnectedDevices = UserDefaults.standard.getObject(forKey: "previouslyConnectedBluetoothDevices", castTo: [UUID].self) ?? []
     }
 }
 
