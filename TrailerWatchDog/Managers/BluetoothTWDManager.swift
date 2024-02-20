@@ -12,7 +12,6 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
     static let shared = BluetoothTWDManager()
     
     private let temperature_characteristic = CBUUID(string: "FFE1")
-    private let tpms_count = CBUUID(string: "FFE12") // ???
     
     private var characteristicData: [CBCharacteristic] = []
     
@@ -45,10 +44,10 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        guard peripheral.name != nil, !discoveredPeripherals.contains(peripheral) else { return }
-
-            discoveredPeripherals.append(peripheral)
-        }
+        guard peripheral.name != nil, !discoveredPeripherals.map({ $0.identifier }).contains(peripheral.identifier) else { return }
+                
+        discoveredPeripherals.append(peripheral)
+    }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheral.discoverServices(nil)
@@ -58,7 +57,6 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let services = peripheral.services {
             for service in services {
-                print(service)
                 peripheral.discoverCharacteristics(nil, for: service)
             }
         }
@@ -66,7 +64,6 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         for charac in service.characteristics!{
-            print(charac.uuid)
             
             characteristicData.append(charac)
             if charac.uuid == temperature_characteristic {

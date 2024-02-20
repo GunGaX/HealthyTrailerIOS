@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		B6058EF02B163B0300D84AD3 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6058EEF2B163B0300D84AD3 /* UserDefaultsExtension.swift */; };
 		B6058EF32B17651500D84AD3 /* ConnectTMPSDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */; };
+		B61655652B84FCF000F4794B /* SelectDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61655642B84FCF000F4794B /* SelectDevicesView.swift */; };
 		B62928502B210C4A0044B011 /* TWDModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B629284F2B210C4A0044B011 /* TWDModel.swift */; };
 		B629550C2B7D43A800054E01 /* BluetoothTWDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B629550B2B7D43A800054E01 /* BluetoothTWDManager.swift */; };
-		B629550E2B7FE37A00054E01 /* ConnectTWDAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B629550D2B7FE37A00054E01 /* ConnectTWDAlertView.swift */; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
 		B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */; };
 		B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */; };
@@ -67,9 +67,9 @@
 /* Begin PBXFileReference section */
 		B6058EEF2B163B0300D84AD3 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTMPSDevicesView.swift; sourceTree = "<group>"; };
+		B61655642B84FCF000F4794B /* SelectDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDevicesView.swift; sourceTree = "<group>"; };
 		B629284F2B210C4A0044B011 /* TWDModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWDModel.swift; sourceTree = "<group>"; };
 		B629550B2B7D43A800054E01 /* BluetoothTWDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothTWDManager.swift; sourceTree = "<group>"; };
-		B629550D2B7FE37A00054E01 /* ConnectTWDAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTWDAlertView.swift; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBlueButtonStyle.swift; sourceTree = "<group>"; };
 		B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
@@ -141,7 +141,6 @@
 				B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */,
 				B65FADD12B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift */,
 				B65FADD32B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift */,
-				B629550D2B7FE37A00054E01 /* ConnectTWDAlertView.swift */,
 			);
 			path = AlertViews;
 			sourceTree = "<group>";
@@ -282,6 +281,7 @@
 				B63E7BFB2AFE606500ECA81B /* LoggedHistoryView.swift */,
 				B6DB0B302B079E4700DEF890 /* FolderDetailsView.swift */,
 				B6DB0B322B07AB0800DEF890 /* LogFileDetailsView.swift */,
+				B61655642B84FCF000F4794B /* SelectDevicesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -426,7 +426,6 @@
 				B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */,
 				B63E7C252B038D5400ECA81B /* AllowPermissionsView.swift in Sources */,
 				B63E7BEC2AFD23ED00ECA81B /* UIApplicationExtensions.swift in Sources */,
-				B629550E2B7FE37A00054E01 /* ConnectTWDAlertView.swift in Sources */,
 				B63E7C292B039F2A00ECA81B /* LocationManager.swift in Sources */,
 				B63E7C2B2B03A37700ECA81B /* RootView.swift in Sources */,
 				B63E7C052AFF9DD800ECA81B /* DoubleExtensions.swift in Sources */,
@@ -438,6 +437,7 @@
 				B63E7C272B038E2400ECA81B /* MainGreenButtonStyle.swift in Sources */,
 				B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */,
 				B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */,
+				B61655652B84FCF000F4794B /* SelectDevicesView.swift in Sources */,
 				B6DB0B2D2B065C9F00DEF890 /* FileRepository.swift in Sources */,
 				B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */,
 				B68CE6BE2AFD0A040047E644 /* MainViewModel.swift in Sources */,
