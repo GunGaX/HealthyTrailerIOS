@@ -13,8 +13,6 @@ struct MainScreenView: View {
     
     @StateObject private var dataManager = DataManager.shared
     
-    @State private var uploadingTimer: Timer?
-    
     @State private var showConnectingTPMSAlert = false
     @State private var showAddConfirmationAlert = false
     @State private var showForgetSensorsConfirmationAlert = false
@@ -165,7 +163,7 @@ struct MainScreenView: View {
             Text("Connected:")
                 .foregroundStyle(Color.textDark)
             
-            Text(viewModel.connectedTWD?.name ?? "TWD-Name")
+            Text(viewModel.connectedTWD?.name ?? "No name")
                 .foregroundStyle(Color.mainBlue)
         }
         .font(.roboto500, size: 16)
@@ -174,17 +172,6 @@ struct MainScreenView: View {
     private var tryToConnectButton: some View {
         Button {
             navigationManager.path.append(SelectDevicePathItem())
-//            viewModel.connectedTWD = TWDModel.mockTWD
-//            
-//            dataManager.setup(connectedTWD: viewModel.connectedTWD)
-//            
-//            withAnimation {
-//                viewModel.isTWDConnected = true
-//            }
-//            
-//            if !dataManager.connectedTPMSIds.isEmpty {
-//                startTimerAndUploadingData()
-//            }
         } label: {
             Text("Try to connect")
         }
@@ -230,21 +217,10 @@ struct MainScreenView: View {
         }
     }
     
-    private func startTimerAndUploadingData() {
-        uploadingTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
-            viewModel.updateLastValuesData()
-        }
-    }
-    
-    private func stopUploadingData() {
-        uploadingTimer?.invalidate()
-        uploadingTimer = nil
-    }
-    
     private func startConnectingTPMS(text: String) {
         showConnectingTPMSAlert = false
         
-        guard let connectedTWD = dataManager.connectedTWD else { return }
+        guard let connectedTWDId = dataManager.connectedTWDId, let axiesCount = dataManager.connectedTWDAxiesCount else { return }
         
         connectedTPMSCount += 1
         let connectedTPMSIndex = viewModel.orderedIndeces[connectedTPMSCount - 1]
@@ -256,7 +232,7 @@ struct MainScreenView: View {
         viewModel.connectedOrderedTPMSIds[connectedTPMSIndex - 1] = text
         dataManager.performLastConnectedTPMSAction(connectedDevices: viewModel.connectedOrderedTPMSIds)
         
-        let newTPMS = TPMSModel(id: text, connectedToTWDWithId: connectedTWD.id, tireData: TireData.emptyData)
+        let newTPMS = TPMSModel(id: text, connectedToTWDWithId: connectedTWDId, tireData: TireData.emptyData)
         
         let axleIndex = Int((connectedTPMSIndex - 1) / 2)
         if connectedTPMSIndex % 2 == 1 {
@@ -265,7 +241,7 @@ struct MainScreenView: View {
             dataManager.axies[axleIndex].rightTire = newTPMS
         }
         
-        if connectedTPMSCount < ((dataManager.connectedTWD?.axisCount ?? 0) * 2) {
+        if connectedTPMSCount < (axiesCount * 2) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 showConnectingTPMSAlert = true
             }
@@ -279,33 +255,33 @@ struct MainScreenView: View {
         connectedTPMSCount = 0
         
         dataManager.loadLastData()
-        startTimerAndUploadingData()
+        viewModel.startTimerAndUploadingData()
     }
     
     private func addNewTPMSSensorsAction() {
-        guard let connectedTWD = dataManager.connectedTWD else { return }
+        guard  let axiesCount = dataManager.connectedTWDAxiesCount else { return }
         
-        stopUploadingData()
+        viewModel.stopUploadingData()
         dataManager.connectedTPMSIds = []
         dataManager.saveConnectedTPMStoTWD()
         
-        for index in 0..<connectedTWD.axisCount {
+        for index in 0..<axiesCount {
             dataManager.axies[index].leftTire = TPMSModel.emptyState
             dataManager.axies[index].rightTire = TPMSModel.emptyState
         }
         
-        viewModel.generateConnectingOrder(connectedTWD.axisCount)
+        viewModel.generateConnectingOrder(axiesCount)
         
         showConnectingTPMSAlert = true
     }
     
     private func forgetTPMSSensorsAction() {
-        guard let connectedTWD = dataManager.connectedTWD else { return }
+        guard  let axiesCount = dataManager.connectedTWDAxiesCount else { return }
         
-        stopUploadingData()
+        viewModel.stopUploadingData()
         dataManager.connectedTPMSIds = []
         
-        for index in 0..<connectedTWD.axisCount {
+        for index in 0..<axiesCount {
             dataManager.axies[index].leftTire = TPMSModel.emptyState
             dataManager.axies[index].rightTire = TPMSModel.emptyState
         }
@@ -402,14 +378,14 @@ fileprivate struct AxisBarView: View {
                 Text("Axle Temp")
                     .font(.roboto500, size: 8)
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text(TWDModel.mockTWD.temperature.last?.applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType).formattedToOneDecimalPlace() ?? "0.0")
+                    Text(isRight ? viewModel.connectedTWD?.rightAxle[axis.axisNumber - 1]?.description ?? "" : viewModel.connectedTWD?.leftAxle[axis.axisNumber - 1]?.description ?? "")
                         .font(.roboto700, size: 18)
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
                         .font(.roboto700, size: 10)
                         .padding(.bottom, 3)
                 }
-                TireTemperaturePlotView(data: TWDModel.mockTWD.temperature)
+                TireTemperaturePlotView(data: [0.0, 0.0, 0.0])
                     .padding(.horizontal)
                     .padding(isRight ? .leading : .trailing, 10)
                     .frame(height: 20)
@@ -524,14 +500,14 @@ fileprivate struct FlatAxisBarView: View {
                 Text("Axle Temp")
                     .font(.roboto500, size: 8)
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text(TWDModel.mockTWD.temperature.last?.applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType).formattedToOneDecimalPlace() ?? "0.0")
+                    Text("data will be here")
                         .font(.roboto700, size: 18)
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
                         .font(.roboto700, size: 10)
                         .padding(.bottom, 3)
                 }
-                TireTemperaturePlotView(data: TWDModel.mockTWD.temperature)
+                TireTemperaturePlotView(data: [0.0, 0.0, 0.0])
                     .padding(.horizontal)
                     .padding(isRight ? .leading : .trailing, 10)
                     .frame(height: 20)

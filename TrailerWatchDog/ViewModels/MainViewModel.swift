@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 final class MainViewModel: ObservableObject {
     var dataManager = DataManager.shared
+    
     @Published var isTWDConnected = false
     @Published var connectedTWD: TWDModel?
     
@@ -23,9 +25,16 @@ final class MainViewModel: ObservableObject {
     @Published var logFoldersPaths: [String] = []
     @Published var logFiles: [String: HistoryFileModel] = [:]
     
+    @Published var uploadingTimer: Timer?
+    
     var connectingTextArray: [String] = []
     var orderedIndeces: [Int] = []
     var connectedOrderedTPMSIds: [String] = []
+    
+    init() {
+        BluetoothTWDManager.shared.$connectedTWD
+            .assign(to: &$connectedTWD)
+    }
     
     public func generateConnectingOrder(_ n: Int) {
         orderedIndeces = []
@@ -66,6 +75,17 @@ final class MainViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    public func startTimerAndUploadingData() {
+        uploadingTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
+            self.updateLastValuesData()
+        }
+    }
+    
+    public func stopUploadingData() {
+        uploadingTimer?.invalidate()
+        uploadingTimer = nil
     }
     
     public func updateLastValuesData() {

@@ -21,6 +21,7 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
     var fetchedTemperatureLine: String = ""
     
     @Published var discoveredPeripherals: [CBPeripheral] = []
+    @Published var connectedTWD: TWDModel?
     
     override init() {
         super.init()
@@ -90,10 +91,9 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
                 
                 if fetchedTemperatureLine.hasSuffix("</R>") {
                     let newTWD = parseData(dataString: fetchedTemperatureLine)
-//                    print(fetchedTemperatureLine)
                     fetchedTemperatureLine = ""
                     
-                    print(newTWD ?? "no data")
+                    connectedTWD = newTWD
                 }
             } else {
                 print("Received empty or invalid value for characteristic \(characteristic.uuid)")
@@ -101,7 +101,7 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
         }
     }
     
-    func parseData(dataString: String) -> NewTWDModel? {
+    func parseData(dataString: String) -> TWDModel? {
         guard let peripheral else { return nil }
         
         let components = dataString.components(separatedBy: "</L>,<R>")
@@ -110,40 +110,41 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
         let leftAxleComponents = components[0].components(separatedBy: ",")
         let rightAxleComponents = components[1].components(separatedBy: ",")
         
-        var newTWDModel = NewTWDModel(id: peripheral.identifier , leftAxle: Axle(), rightAxle: Axle())
+        var newTWDModel = TWDModel(
+            id: peripheral.identifier,
+            name: peripheral.name ?? "no name",
+            leftAxle: [nil, nil, nil, nil],
+            rightAxle: [nil, nil, nil, nil]
+        )
         
         func getTemperatureValue(from component: String) -> Double? {
             let components = component.components(separatedBy: ":")
                         
-            guard components.count == 2, let temperature = Double(components[1].replacingOccurrences(of: " F>", with: "").replacingOccurrences(of: "F></R>", with: "")) else { return nil }
+            guard components.count == 2, let temperature = Double(components[1].replacingOccurrences(of: " F>", with: "").replacingOccurrences(of: "F>", with: "").replacingOccurrences(of: "F></R>", with: "")) else { return nil }
             
             return temperature
         }
-                
-        newTWDModel.leftAxle.firstTire = getTemperatureValue(from: leftAxleComponents[1])
-        newTWDModel.leftAxle.secondTire = getTemperatureValue(from: leftAxleComponents[2])
-        newTWDModel.leftAxle.thirdTire = getTemperatureValue(from: leftAxleComponents[3])
-        newTWDModel.leftAxle.fourthTire = getTemperatureValue(from: leftAxleComponents[4])
         
-        newTWDModel.rightAxle.firstTire = getTemperatureValue(from: rightAxleComponents[1])
-        newTWDModel.rightAxle.secondTire = getTemperatureValue(from: rightAxleComponents[2])
-        newTWDModel.rightAxle.thirdTire = getTemperatureValue(from: rightAxleComponents[3])
-        newTWDModel.rightAxle.fourthTire = getTemperatureValue(from: rightAxleComponents[4])
+        for index in 1..<leftAxleComponents.count {
+            if let temperature = getTemperatureValue(from: leftAxleComponents[index]), temperature > -100 {
+                newTWDModel.leftAxle[index - 1] = temperature
+            }
+            
+            if let temperature = getTemperatureValue(from: rightAxleComponents[index]), temperature > -100 {
+                newTWDModel.rightAxle[index - 1] = temperature
+            }
+        }
+        
+        let leftCount = newTWDModel.leftAxle.filter({ $0 != nil }).count
+        let rightCount = newTWDModel.rightAxle.filter({ $0 != nil }).count
+        
+        if leftCount == rightCount {
+            newTWDModel.axiesCount = leftCount
+        } else {
+            print("[Error][BluetoothTWDManager] unequal axies count")
+        }
                 
         return newTWDModel
     }
-}
-
-struct NewTWDModel {
-    let id: UUID
-    var leftAxle: Axle
-    var rightAxle: Axle
-}
-
-struct Axle {
-    var firstTire: Double?
-    var secondTire: Double?
-    var thirdTire: Double?
-    var fourthTire: Double?
 }
 
