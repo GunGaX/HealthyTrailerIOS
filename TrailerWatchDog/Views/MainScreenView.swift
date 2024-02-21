@@ -378,14 +378,13 @@ fileprivate struct AxisBarView: View {
                 Text("Axle Temp")
                     .font(.roboto500, size: 8)
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text(isRight ? viewModel.connectedTWD?.rightAxle[axis.axisNumber - 1]?.description ?? "" : viewModel.connectedTWD?.leftAxle[axis.axisNumber - 1]?.description ?? "")
-                        .font(.roboto700, size: 18)
+                    Text(isRight ? viewModel.connectedTWD?.rightAxle[axis.axisNumber - 1].last?.description ?? "" : viewModel.connectedTWD?.leftAxle[axis.axisNumber - 1].last?.description ?? "")
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
                         .font(.roboto700, size: 10)
                         .padding(.bottom, 3)
                 }
-                TireTemperaturePlotView(data: [0.0, 0.0, 0.0])
+                TireTemperaturePlotView(data: isRight ? viewModel.connectedTWD?.rightAxle[axis.axisNumber - 1] ?? [] : viewModel.connectedTWD?.leftAxle[axis.axisNumber - 1] ?? [])
                     .padding(.horizontal)
                     .padding(isRight ? .leading : .trailing, 10)
                     .frame(height: 20)
@@ -500,14 +499,14 @@ fileprivate struct FlatAxisBarView: View {
                 Text("Axle Temp")
                     .font(.roboto500, size: 8)
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text("data will be here")
+                    Text(isRight ? viewModel.connectedTWD?.rightAxle[axis.axisNumber - 1].last?.description ?? "" : viewModel.connectedTWD?.leftAxle[axis.axisNumber - 1].last?.description ?? "")
                         .font(.roboto700, size: 18)
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
                         .font(.roboto700, size: 10)
                         .padding(.bottom, 3)
                 }
-                TireTemperaturePlotView(data: [0.0, 0.0, 0.0])
+                TireTemperaturePlotView(data: isRight ? viewModel.connectedTWD?.rightAxle[axis.axisNumber - 1] ?? [] : viewModel.connectedTWD?.leftAxle[axis.axisNumber - 1] ?? [])
                     .padding(.horizontal)
                     .padding(isRight ? .leading : .trailing, 10)
                     .frame(height: 20)

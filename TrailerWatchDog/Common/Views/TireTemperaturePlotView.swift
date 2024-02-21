@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct TireTemperaturePlotView: View {
-    let data: [Double]
+    var data: [Double]
     
     var maxValue: Double {
         return data.reduce(0, { max($0, $1) })
