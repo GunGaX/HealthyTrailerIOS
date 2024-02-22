@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 final class MainViewModel: ObservableObject {
     var dataManager = DataManager.shared
+    
     @Published var isTWDConnected = false
     @Published var connectedTWD: TWDModel?
     
@@ -23,9 +25,18 @@ final class MainViewModel: ObservableObject {
     @Published var logFoldersPaths: [String] = []
     @Published var logFiles: [String: HistoryFileModel] = [:]
     
+    @Published var uploadingTimer: Timer?
+    
+    @Published var previouslyConnectedDevices: [UUID] = []
+    
     var connectingTextArray: [String] = []
     var orderedIndeces: [Int] = []
     var connectedOrderedTPMSIds: [String] = []
+    
+    init() {
+        BluetoothTWDManager.shared.$connectedTWD
+            .assign(to: &$connectedTWD)
+    }
     
     public func generateConnectingOrder(_ n: Int) {
         orderedIndeces = []
@@ -68,6 +79,17 @@ final class MainViewModel: ObservableObject {
         }
     }
     
+    public func startTimerAndUploadingData() {
+        uploadingTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
+            self.updateLastValuesData()
+        }
+    }
+    
+    public func stopUploadingData() {
+        uploadingTimer?.invalidate()
+        uploadingTimer = nil
+    }
+    
     public func updateLastValuesData() {
         let dataManager = DataManager.shared
                 
@@ -79,6 +101,39 @@ final class MainViewModel: ObservableObject {
                 UserDefaults.standard.setObject(dataManager.axies[index].rightTire, forKey: "lastLog_TPMS\(dataManager.axies[index].rightTire.id)")
             }
         }
+    }
+    
+    public func getLastTemperatureForAxle(isRight: Bool, index: Int) -> String {
+        if isRight {
+            return connectedTWD?.rightAxle[index].last?.applyTemperatureSystem(selectedSystem: selectedTemperatureType).formattedToOneDecimalPlace().description ?? ""
+        } else {
+            return connectedTWD?.leftAxle[index].last?.applyTemperatureSystem(selectedSystem: selectedTemperatureType).formattedToOneDecimalPlace().description ?? ""
+        }
+    }
+    
+    public func getTemperatureArrayForAxle(isRight: Bool, index: Int) -> [Double] {
+        if isRight {
+            return connectedTWD?.rightAxle[index] ?? []
+        } else {
+            return connectedTWD?.leftAxle[index] ?? []
+        }
+    }
+    
+    public func wasPreviouslyConnected(deviceId: UUID) -> Bool {
+        previouslyConnectedDevices.contains(deviceId)
+    }
+    
+    public func saveConnectedDeviceID(connectedDeviceId: UUID) {
+        guard !previouslyConnectedDevices.contains(connectedDeviceId) else { return }
+        
+        var newConnectedDevicesArray = previouslyConnectedDevices
+        newConnectedDevicesArray.append(connectedDeviceId)
+        
+        UserDefaults.standard.setObject(newConnectedDevicesArray, forKey: "previouslyConnectedBluetoothDevices")
+    }
+    
+    public func getConnectedDeviceIDs() {
+        self.previouslyConnectedDevices = UserDefaults.standard.getObject(forKey: "previouslyConnectedBluetoothDevices", castTo: [UUID].self) ?? []
     }
     
     

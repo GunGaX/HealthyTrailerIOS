@@ -8,12 +8,39 @@
 import Foundation
 
 struct TWDModel: Codable {
-    let id: String
+    let id: UUID
     let name: String
-    let axisCount: Int
-    let temperature: [Double]
+    var axiesCount: Int?
+    var leftAxle: [[Double]]
+    var rightAxle: [[Double]]
     
-    static var mockTWD: TWDModel {
-        TWDModel(id: "fkj4oirh48i", name: "HC-04", axisCount: 2, temperature: [23.1, 45.1, 23.4, 23.6, 17.3, 29.1])
+    init(id: UUID, name: String, axiesCount: Int? = nil, leftAxle: [[Double]], rightAxle: [[Double]]) {
+        self.id = id
+        self.name = name
+        self.axiesCount = axiesCount
+        self.leftAxle = leftAxle
+        self.rightAxle = rightAxle
+    }
+    
+    mutating func addNewTemperature(isRight: Bool, newTemperature: Double, index: Int) {
+        if isRight {
+            if rightAxle[index].count >= 10 {
+                rightAxle[index].removeFirst()
+            }
+            rightAxle[index].append(newTemperature)
+        } else {
+            if leftAxle[index].count >= 10 {
+                leftAxle[index].removeFirst()
+            }
+            leftAxle[index].append(newTemperature)
+        }
+    }
+    
+    public func getLeftAxleCount() -> Int {
+        return leftAxle.filter({ !$0.isEmpty }).count
+    }
+    
+    public func getRighttAxleCount() -> Int {
+        return rightAxle.filter({ !$0.isEmpty }).count
     }
 }
