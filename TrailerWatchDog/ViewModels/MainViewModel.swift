@@ -10,6 +10,7 @@ import Combine
 
 final class MainViewModel: ObservableObject {
     var dataManager = DataManager.shared
+    var twdManager = BluetoothTWDManager.shared
     
     @Published var isTWDConnected = false
     @Published var connectedTWD: TWDModel?
@@ -34,7 +35,7 @@ final class MainViewModel: ObservableObject {
     var connectedOrderedTPMSIds: [String] = []
     
     init() {
-        BluetoothTWDManager.shared.$connectedTWD
+        twdManager.$connectedTWD
             .assign(to: &$connectedTWD)
     }
     
@@ -42,7 +43,7 @@ final class MainViewModel: ObservableObject {
         orderedIndeces = []
         connectingTextArray = []
         connectedOrderedTPMSIds = []
-
+        
         for i in 1...(n * 2) where i % 2 != 0 {
             orderedIndeces.append(i)
         }
@@ -81,7 +82,8 @@ final class MainViewModel: ObservableObject {
     
     public func startTimerAndUploadingData() {
         uploadingTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
-            self.updateLastValuesData()
+            self.updateLastTPMSValuesData()
+            self.twdManager.updateLastTWDValuesData()
         }
     }
     
@@ -90,9 +92,7 @@ final class MainViewModel: ObservableObject {
         uploadingTimer = nil
     }
     
-    public func updateLastValuesData() {
-        let dataManager = DataManager.shared
-                
+    private func updateLastTPMSValuesData() {
         for index in 0..<dataManager.axies.count {
             if !dataManager.axies[index].leftTire.id.isEmpty {
                 UserDefaults.standard.setObject(dataManager.axies[index].leftTire, forKey: "lastLog_TPMS\(dataManager.axies[index].leftTire.id)")

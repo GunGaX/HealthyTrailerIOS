@@ -226,12 +226,6 @@ class DataManager: NSObject, ObservableObject {
         connectedTPMSIds = []
     }
     
-    func saveConnectedTPMStoTWD() {
-        guard let connectedTWDId else { return }
-        
-        UserDefaults.standard.setObject(connectedTPMSIds, forKey: "TPMSDevicesForTWD\(connectedTWDId)")
-    }
-    
     func saveLastConnectedTPMSDevices() {
         guard connectedTWDId != nil else { return }
         
@@ -248,6 +242,18 @@ class DataManager: NSObject, ObservableObject {
         } else {
             return []
         }
+    }
+    
+    func saveConnectedTPMStoTWD() {
+        guard let connectedTWDId else { return }
+        
+        UserDefaults.standard.setObject(connectedTPMSIds, forKey: "TPMSDevicesForTWD\(connectedTWDId)")
+    }
+    
+    func deleteConnectedTPMStoTWD() {
+        guard let connectedTWDId else { return }
+        
+        UserDefaults.standard.removeObject(forKey: "TPMSDevicesForTWD\(connectedTWDId)")
     }
     
     func fetchConnectedTPMStoTWD() {

@@ -281,6 +281,7 @@ struct MainScreenView: View {
         guard  let axiesCount = dataManager.connectedTWDAxiesCount else { return }
         
         viewModel.stopUploadingData()
+        dataManager.deleteConnectedTPMStoTWD()
         dataManager.connectedTPMSIds = []
         
         for index in 0..<axiesCount {
