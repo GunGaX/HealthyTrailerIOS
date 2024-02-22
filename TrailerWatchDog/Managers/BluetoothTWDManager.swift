@@ -39,6 +39,14 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
         }
     }
     
+    func disconnectFromDevice() {
+        if let peripheral {
+            centralManager.cancelPeripheralConnection(peripheral)
+        }
+        
+        peripheral = nil
+    }
+    
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
             central.scanForPeripherals(withServices: nil)
