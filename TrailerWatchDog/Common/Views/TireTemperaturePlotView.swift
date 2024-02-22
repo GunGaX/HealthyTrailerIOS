@@ -12,11 +12,11 @@ struct TireTemperaturePlotView: View {
     var data: [Double]
     
     var maxValue: Double {
-        return data.reduce(0, { max($0, $1) })
+        return data.max() ?? 100.0
     }
     
     var minValue: Double {
-        return data.reduce(0, { min($0, $1) })
+        return data.min() ?? 0.0
     }
     
     var body: some View {
@@ -25,7 +25,7 @@ struct TireTemperaturePlotView: View {
                 let value = data[index]
                 LineMark(x: .value("time", index), y: .value("value", value))
                     .foregroundStyle(Color.mainGreen)
-                    .interpolationMethod(.catmullRom)
+                    .interpolationMethod(.stepCenter)
                 
                 if index == data.indices.last {
                     PointMark(

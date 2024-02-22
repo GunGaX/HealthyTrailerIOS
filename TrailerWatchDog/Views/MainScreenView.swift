@@ -379,6 +379,7 @@ fileprivate struct AxisBarView: View {
                     .font(.roboto500, size: 8)
                 HStack(alignment: .bottom, spacing: 5) {
                     Text(viewModel.getLastTemperatureForAxle(isRight: isRight, index: axis.axisNumber - 1))
+                        .font(.roboto700, size: 18)
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
                         .font(.roboto700, size: 10)
@@ -387,7 +388,7 @@ fileprivate struct AxisBarView: View {
                 TireTemperaturePlotView(data: viewModel.getTemperatureArrayForAxle(isRight: isRight, index: axis.axisNumber - 1))
                     .padding(.horizontal)
                     .padding(isRight ? .leading : .trailing, 10)
-                    .frame(height: 20)
+                    .frame(height: 24)
             }
             .foregroundStyle(Color.mainGreen)
             .padding(isRight ? .trailing : .leading, -10)
@@ -495,7 +496,7 @@ fileprivate struct FlatAxisBarView: View {
                 .padding(.top, 2)
                 .padding(.bottom, 1)
             
-            VStack {
+            VStack(spacing: 0) {
                 Text("Axle Temp")
                     .font(.roboto500, size: 8)
                 HStack(alignment: .bottom, spacing: 5) {
@@ -509,7 +510,7 @@ fileprivate struct FlatAxisBarView: View {
                 TireTemperaturePlotView(data: viewModel.getTemperatureArrayForAxle(isRight: isRight, index: axis.axisNumber - 1))
                     .padding(.horizontal)
                     .padding(isRight ? .leading : .trailing, 10)
-                    .frame(height: 20)
+                    .frame(height: 24)
             }
             .foregroundStyle(Color.mainGreen)
             .padding(.vertical, 6)
