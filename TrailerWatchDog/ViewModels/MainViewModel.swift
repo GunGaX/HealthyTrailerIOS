@@ -27,6 +27,8 @@ final class MainViewModel: ObservableObject {
     
     @Published var uploadingTimer: Timer?
     
+    @Published var previouslyConnectedDevices: [UUID] = []
+    
     var connectingTextArray: [String] = []
     var orderedIndeces: [Int] = []
     var connectedOrderedTPMSIds: [String] = []
@@ -99,6 +101,39 @@ final class MainViewModel: ObservableObject {
                 UserDefaults.standard.setObject(dataManager.axies[index].rightTire, forKey: "lastLog_TPMS\(dataManager.axies[index].rightTire.id)")
             }
         }
+    }
+    
+    public func getLastTemperatureForAxle(isRight: Bool, index: Int) -> String {
+        if isRight {
+            return connectedTWD?.rightAxle[index].last?.applyTemperatureSystem(selectedSystem: selectedTemperatureType).formattedToOneDecimalPlace().description ?? ""
+        } else {
+            return connectedTWD?.leftAxle[index].last?.applyTemperatureSystem(selectedSystem: selectedTemperatureType).formattedToOneDecimalPlace().description ?? ""
+        }
+    }
+    
+    public func getTemperatureArrayForAxle(isRight: Bool, index: Int) -> [Double] {
+        if isRight {
+            return connectedTWD?.rightAxle[index] ?? []
+        } else {
+            return connectedTWD?.leftAxle[index] ?? []
+        }
+    }
+    
+    public func wasPreviouslyConnected(deviceId: UUID) -> Bool {
+        previouslyConnectedDevices.contains(deviceId)
+    }
+    
+    public func saveConnectedDeviceID(connectedDeviceId: UUID) {
+        guard !previouslyConnectedDevices.contains(connectedDeviceId) else { return }
+        
+        var newConnectedDevicesArray = previouslyConnectedDevices
+        newConnectedDevicesArray.append(connectedDeviceId)
+        
+        UserDefaults.standard.setObject(newConnectedDevicesArray, forKey: "previouslyConnectedBluetoothDevices")
+    }
+    
+    public func getConnectedDeviceIDs() {
+        self.previouslyConnectedDevices = UserDefaults.standard.getObject(forKey: "previouslyConnectedBluetoothDevices", castTo: [UUID].self) ?? []
     }
     
     

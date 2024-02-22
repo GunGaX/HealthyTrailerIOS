@@ -26,17 +26,21 @@ struct TWDModel: Codable {
         if isRight {
             if rightAxle[index].count >= 10 {
                 rightAxle[index].removeFirst()
-                rightAxle[index].append(newTemperature)
-            } else {
-                rightAxle[index].append(newTemperature)
             }
+            rightAxle[index].append(newTemperature)
         } else {
             if leftAxle[index].count >= 10 {
                 leftAxle[index].removeFirst()
-                leftAxle[index].append(newTemperature)
-            } else {
-                leftAxle[index].append(newTemperature)
             }
+            leftAxle[index].append(newTemperature)
         }
+    }
+    
+    public func getLeftAxleCount() -> Int {
+        return leftAxle.filter({ !$0.isEmpty }).count
+    }
+    
+    public func getRighttAxleCount() -> Int {
+        return rightAxle.filter({ !$0.isEmpty }).count
     }
 }

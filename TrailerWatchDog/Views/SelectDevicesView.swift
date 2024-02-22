@@ -15,8 +15,6 @@ struct SelectDevicesView: View {
     @StateObject var twdManager = BluetoothTWDManager.shared
     @StateObject private var dataManager = DataManager.shared
     
-    @State var previouslyConnectedDevices: [UUID] = []
-    
     var body: some View {
         VStack(spacing: 0) {
             SecondaryHeaderView(titleText: "Select devices")
@@ -30,7 +28,7 @@ struct SelectDevicesView: View {
         .navigationBarBackButtonHidden()
         .onAppear {
             twdManager.setupBluetooth()
-            getConnectedDeviceIDs()
+            viewModel.getConnectedDeviceIDs()
         }
     }
     
@@ -39,59 +37,15 @@ struct SelectDevicesView: View {
             ForEach(twdManager.discoveredPeripherals, id: \.name) { peripheral in
                 Button(action: {
                     twdManager.connectToDevice(peripheral: peripheral)
-                    saveConnectedDeviceID(connectedDeviceId: peripheral.identifier)
+                    viewModel.saveConnectedDeviceID(connectedDeviceId: peripheral.identifier)
                     connectTWDAction(device: peripheral)
                     navigationManager.removeLast()
                 }) {
-                    deviceItemView(peripheral: peripheral)
+                    BluetoothItemView(peripheral: peripheral)
                 }
             }
         }
         .frame(maxWidth: .infinity)
-    }
-    
-    private func deviceItemView(peripheral: CBPeripheral) -> some View {
-        VStack(spacing: 8) {
-            HStack {
-                Text("Device name:")
-                    .font(.roboto500, size: 16)
-                    .foregroundStyle(Color.black)
-                Text(peripheral.name ?? "Unknown name")
-                    .font(.roboto400, size: 16)
-                    .foregroundStyle(Color.mainBlue)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            HStack {
-                Text("Device identifier:")
-                    .font(.roboto500, size: 16)
-                    .foregroundStyle(Color.black)
-                Text(peripheral.identifier.uuidString.suffix(12))
-                    .font(.roboto400, size: 16)
-                    .foregroundStyle(Color.mainBlue)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            HStack {
-                Text("Previously connected to device:")
-                    .font(.roboto500, size: 16)
-                    .foregroundStyle(Color.black)
-                Text(wasPreviouslyConnected(deviceId: peripheral.identifier) ? "Yes" : "No")
-                    .font(.roboto400, size: 16)
-                    .foregroundStyle(Color.mainBlue)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .foregroundStyle(Color.lightBlue)
-        )
-        .padding(.horizontal)
-    }
-    
-    private func wasPreviouslyConnected(deviceId: UUID) -> Bool {
-        previouslyConnectedDevices.contains(deviceId)
     }
     
     private func connectTWDAction(device: CBPeripheral) {
@@ -110,18 +64,65 @@ struct SelectDevicesView: View {
             viewModel.startTimerAndUploadingData()
         }
     }
+}
+
+fileprivate struct BluetoothItemView: View {
+    @EnvironmentObject var viewModel: MainViewModel
     
-    private func saveConnectedDeviceID(connectedDeviceId: UUID) {
-        guard !previouslyConnectedDevices.contains(connectedDeviceId) else { return }
-        
-        var newConnectedDevicesArray = previouslyConnectedDevices
-        newConnectedDevicesArray.append(connectedDeviceId)
-        
-        UserDefaults.standard.setObject(newConnectedDevicesArray, forKey: "previouslyConnectedBluetoothDevices")
+    let peripheral: CBPeripheral
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            deviceNameSection
+            identifierSection
+            wasPreviouslyConnectedSection
+        }
+        .padding()
+        .background(
+            lightBackgroung
+        )
+        .padding(.horizontal)
     }
     
-    private func getConnectedDeviceIDs() {
-        self.previouslyConnectedDevices = UserDefaults.standard.getObject(forKey: "previouslyConnectedBluetoothDevices", castTo: [UUID].self) ?? []
+    private var deviceNameSection: some View {
+        HStack {
+            Text("Device name:")
+                .font(.roboto500, size: 16)
+                .foregroundStyle(Color.black)
+            Text(peripheral.name ?? "Unknown name")
+                .font(.roboto400, size: 16)
+                .foregroundStyle(Color.mainBlue)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var identifierSection: some View {
+        HStack {
+            Text("Device identifier:")
+                .font(.roboto500, size: 16)
+                .foregroundStyle(Color.black)
+            Text(peripheral.identifier.uuidString.suffix(12))
+                .font(.roboto400, size: 16)
+                .foregroundStyle(Color.mainBlue)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var wasPreviouslyConnectedSection: some View {
+        HStack {
+            Text("Previously connected to device:")
+                .font(.roboto500, size: 16)
+                .foregroundStyle(Color.black)
+            Text(viewModel.wasPreviouslyConnected(deviceId: peripheral.identifier) ? "Yes" : "No")
+                .font(.roboto400, size: 16)
+                .foregroundStyle(Color.mainBlue)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var lightBackgroung: some View {
+        RoundedRectangle(cornerRadius: 10)
+            .foregroundStyle(Color.lightBlue)
     }
 }
 

@@ -129,8 +129,8 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
             }
         }
         
-        let leftCount = connectedTWD!.leftAxle.filter({ !$0.isEmpty }).count
-        let rightCount = connectedTWD!.rightAxle.filter({ !$0.isEmpty }).count
+        let leftCount = connectedTWD!.getLeftAxleCount()
+        let rightCount = connectedTWD!.getRighttAxleCount()
         
         if leftCount == rightCount {
             connectedTWD!.axiesCount = leftCount
