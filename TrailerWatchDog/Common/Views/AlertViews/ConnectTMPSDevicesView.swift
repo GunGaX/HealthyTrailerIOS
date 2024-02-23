@@ -52,8 +52,23 @@ struct ConnectTMPSDevicesView: View {
     @Binding var showAlert: Bool
     
     var discoveredTMPSDevices: [String]
+    
+    var discoveredAvailavleTMPSDevices: [String] {
+        var availableTPMSDevices: [String] = []
+        
+        for deviceId in discoveredTMPSDevices {
+            let isConnected = UserDefaults.standard.bool(forKey: "TPMSConnectionWithId:\(deviceId)")
+            
+            if !isConnected {
+                availableTPMSDevices.append(deviceId)
+            }
+        }
+        
+        return availableTPMSDevices
+    }
+    
     var enableTPMSDevices: [String] {
-        let valuesNotInDiscoveredDevices = discoveredTMPSDevices
+        let valuesNotInDiscoveredDevices = discoveredAvailavleTMPSDevices
             .filter { !dataManager.connectedTPMSIds.contains($0) }
             .filter { !lastConnectedTPMSDevices.contains($0) }
             .filter { !$0.isEmpty }

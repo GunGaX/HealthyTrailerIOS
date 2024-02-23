@@ -136,6 +136,18 @@ final class MainViewModel: ObservableObject {
         self.previouslyConnectedDevices = UserDefaults.standard.getObject(forKey: "previouslyConnectedBluetoothDevices", castTo: [UUID].self) ?? []
     }
     
+    public func updateTPMSConnectionStatus(id: String, isConnected: Bool) {
+        UserDefaults.standard.setValue(isConnected, forKey: "TPMSConnectionWithId:\(id)")
+    }
+    
+    public func unChainTPMSDevices() {
+        guard !dataManager.connectedTPMSIds.isEmpty else { return }
+        
+        for tpmsId in dataManager.connectedTPMSIds {
+            updateTPMSConnectionStatus(id: tpmsId, isConnected: false)
+        }
+    }
+    
     
 //
 //    public func createDirectory() {

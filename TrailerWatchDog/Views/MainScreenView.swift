@@ -233,6 +233,7 @@ struct MainScreenView: View {
         
         viewModel.connectedOrderedTPMSIds[connectedTPMSIndex - 1] = text
         dataManager.performLastConnectedTPMSAction(connectedDevices: viewModel.connectedOrderedTPMSIds)
+        viewModel.updateTPMSConnectionStatus(id: text, isConnected: true)
         
         let newTPMS = TPMSModel(id: text, connectedToTWDWithId: connectedTWDId, tireData: TireData.emptyData)
         
@@ -281,6 +282,7 @@ struct MainScreenView: View {
         guard  let axiesCount = dataManager.connectedTWDAxiesCount else { return }
         
         viewModel.stopUploadingData()
+        viewModel.unChainTPMSDevices()
         dataManager.deleteConnectedTPMStoTWD()
         dataManager.connectedTPMSIds = []
         
