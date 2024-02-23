@@ -13,10 +13,10 @@ struct SettingsView: View {
     
     @State private var maxTPMSSensorTemperature = 0.7728
     @State private var maxDifferenceTPMSSensorTemperature = 0.3
-    @State private var maxTWDSensorTemperature = 0.7728
+    @State private var maxTWDSensorTemperature = 0.6818
     @State private var maxDifferenceTWDSensorTemperature = 0.3
-    @State private var preassureMinValue = 0.2
-    @State private var preassureMaxValue = 0.8
+    @State private var preassureMinValue = 0.07522
+    @State private var preassureMaxValue = 0.32604
     @State private var ixExpandedTemperature = false
     @State private var isExpnadedPreassure = false
         
@@ -38,7 +38,7 @@ struct SettingsView: View {
                     DefaultSignleSliderView(value: $maxTWDSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed TWD sensor temperature", minValue: 32, maxValue: 220)
                     DefaultSignleSliderView(value: $maxDifferenceTWDSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed difference in TWD sensor temperature", minValue: 0, maxValue: 100)
                     
-                    DefaultDoubleSliderView(firstValue: $preassureMinValue, secondValue: $preassureMaxValue, selectedPreassureType: $viewModel.selectedPreassureType, titleText: "Expected pressure range:", minValue: 1.45, maxValue: 72.52)
+                    DefaultDoubleSliderView(firstValue: $preassureMinValue, secondValue: $preassureMaxValue, selectedPreassureType: $viewModel.selectedPreassureType, titleText: "Expected pressure range:", minValue: 1.45, maxValue: 174.92)
                     
                     notificationSection
                         .padding(.bottom, 30)

@@ -19,7 +19,7 @@ final class MainViewModel: ObservableObject {
     
     @Published var selectedSound: NotificationSound = .chime
     @Published var selectedTemperatureType: TemperatureType = .fahrenheit
-    @Published var selectedPreassureType: PreasureType = .bar
+    @Published var selectedPreassureType: PreasureType = .kpa
     
     @Published var terminalLogs: [TerminalLog] = TerminalLog.mockLogs
     
