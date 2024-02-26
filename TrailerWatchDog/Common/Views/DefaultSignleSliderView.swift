@@ -19,7 +19,7 @@ struct DefaultSignleSliderView: View {
     var minBound: Double {
         switch selectedTemperatureType {
         case .fahrenheit: return self.minValue
-        case .celsius: return self.minValue.fromFahrenheitToCelsius() < 0 ? 0 : self.minValue.fromFahrenheitToCelsius()
+        case .celsius: return self.minValue.fromFahrenheitToCelsius()
         }
     }
     
@@ -27,6 +27,13 @@ struct DefaultSignleSliderView: View {
         switch selectedTemperatureType {
         case .fahrenheit: return self.maxValue
         case .celsius: return self.maxValue.fromFahrenheitToCelsius()
+        }
+    }
+    
+    var actualValue: Double {
+        switch selectedTemperatureType {
+        case .fahrenheit: return self.value
+        case .celsius: return self.value.fromFahrenheitToCelsius()
         }
     }
     
@@ -51,20 +58,20 @@ struct DefaultSignleSliderView: View {
                     .frame(height: 4)
                 RoundedRectangle(cornerRadius: 10)
                     .foregroundColor(.mainBlue)
-                    .frame(width: gr.size.width * CGFloat((value - minBound) / (maxBound - minBound)), height: 6)
+                    .frame(width: gr.size.width * CGFloat((value - minValue) / (maxValue - minValue)), height: 6)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 HStack {
                     Circle()
                         .foregroundColor(Color.mainBlue)
                         .frame(width: 20, height: 20)
-                        .offset(x: gr.size.width * CGFloat((value - minBound) / (maxBound - minBound)) - 10)
+                        .offset(x: gr.size.width * CGFloat((value - minValue) / (maxValue - minValue)) - 10)
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onChanged { v in
                                     if (abs(v.translation.width) < 0.1) {
                                         self.lastCoordinateValue = CGFloat(value)
                                     }
-                                    let newValue = min(max(minBound, self.lastCoordinateValue + Double(v.translation.width) / Double(gr.size.width) * (maxBound - minBound)), maxBound)
+                                    let newValue = min(max(minValue, self.lastCoordinateValue + Double(v.translation.width) / Double(gr.size.width) * (maxValue - minValue)), maxValue)
                                     self.value = newValue
                                 }
                         )
@@ -83,7 +90,7 @@ struct DefaultSignleSliderView: View {
     
     private var bubleValue: some View {
         HStack(alignment: .bottom, spacing: 4) {
-            Text("\(Double(value).formattedToOneDecimalPlace())")
+            Text("\(Double(actualValue).formattedToOneDecimalPlace())")
                 .foregroundStyle(Color.mainBlue)
                 .font(.roboto700, size: 20)
             
