@@ -24,13 +24,13 @@ struct SettingsView: View {
                     axlesInfo
                         .padding(.vertical, -10)
                        
-                    DefaultSignleSliderView(value: $viewModel.maxTPMSSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed TPMS sensor temperature", minValue: 32, maxValue: 220)
-                    DefaultSignleSliderView(value: $viewModel.maxDifferenceTPMSSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed difference in TPMS sensor temperature", minValue: 0, maxValue: 100)
+                    DefaultSignleSliderView(value: $viewModel.maxTPMSSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed TPMS sensor temperature", minValue: viewModel.maxTPMSSensorTemperatureLowerBound, maxValue: viewModel.maxTPMSSensorTemperatureUpperBound)
+                    DefaultSignleSliderView(value: $viewModel.maxDifferenceTPMSSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed difference in TPMS sensor temperature", minValue: viewModel.maxDifferenceTPMSSensorTemperatureLowerBound, maxValue: viewModel.maxDifferenceTPMSSensorTemperatureUpperBound)
                     
-                    DefaultSignleSliderView(value: $viewModel.maxTWDSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed TWD sensor temperature", minValue: 32, maxValue: 220)
-                    DefaultSignleSliderView(value: $viewModel.maxDifferenceTWDSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed difference in TWD sensor temperature", minValue: 0, maxValue: 100)
+                    DefaultSignleSliderView(value: $viewModel.maxTWDSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed TWD sensor temperature", minValue: viewModel.maxTWDSensorTemperatureLowerBound, maxValue: viewModel.maxTWDSensorTemperatureUpperBound)
+                    DefaultSignleSliderView(value: $viewModel.maxDifferenceTWDSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed difference in TWD sensor temperature", minValue: viewModel.maxDifferenceTWDSensorTemperatureLowerBound, maxValue: viewModel.maxDifferenceTWDSensorTemperatureUpperBound)
                     
-                    DefaultDoubleSliderView(firstValue: $viewModel.preassureMinValue, secondValue: $viewModel.preassureMaxValue, selectedPreassureType: $viewModel.selectedPreassureType, titleText: "Expected pressure range:", minValue: 1.45, maxValue: 174.92)
+                    DefaultDoubleSliderView(firstValue: $viewModel.preassureMinValue, secondValue: $viewModel.preassureMaxValue, selectedPreassureType: $viewModel.selectedPreassureType, titleText: "Expected pressure range:", minValue: viewModel.preassureMinBound, maxValue: viewModel.preassureMaxBound)
                     
                     notificationSection
                         .padding(.bottom, 30)

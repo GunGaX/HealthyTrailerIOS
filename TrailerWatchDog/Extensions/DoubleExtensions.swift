@@ -28,6 +28,14 @@ extension Double {
         return Double(self * 0.0689476000045014)
     }
     
+    func fromKpaToBar() -> Double {
+        return Double(self * 0.01)
+    }
+    
+    func fromKpaToPsi() -> Double {
+        return Double(self * 0.145037738)
+    }
+    
     func applyTemperatureSystem(selectedSystem: TemperatureType) -> Double {
         switch selectedSystem {
         case .celsius: return self.fromFahrenheitToCelsius()

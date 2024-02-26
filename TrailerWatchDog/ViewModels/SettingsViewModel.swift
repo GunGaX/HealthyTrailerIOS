@@ -14,12 +14,31 @@ final class SettingsViewModel: ObservableObject {
     @Published var selectedTemperatureType: TemperatureType = .fahrenheit
     @Published var selectedPreassureType: PreasureType = .kpa
     
-    @Published var maxTPMSSensorTemperature = 50.0
-    @Published var maxDifferenceTPMSSensorTemperature = 50.0
-    @Published var maxTWDSensorTemperature = 50.0
-    @Published var maxDifferenceTWDSensorTemperature = 50.0
-    @Published var preassureMinValue = 0.07522
-    @Published var preassureMaxValue = 0.32604
-    @Published var ixExpandedTemperature = false
-    @Published var isExpnadedPreassure = false
+    /// In Fahrenheit
+    let maxTPMSSensorTemperatureLowerBound = 32.0
+    let maxTPMSSensorTemperatureUpperBound = 220.0
+    @Published var maxTPMSSensorTemperature = 170.0
+    
+    /// In Fahrenheit
+    let maxDifferenceTPMSSensorTemperatureLowerBound = 0.0
+    let maxDifferenceTPMSSensorTemperatureUpperBound = 100.0
+    @Published var maxDifferenceTPMSSensorTemperature = 30.0
+    
+    /// In Fahrenheit
+    let maxTWDSensorTemperatureLowerBound = 32.0
+    let maxTWDSensorTemperatureUpperBound = 220.0
+    @Published var maxTWDSensorTemperature = 150.0
+    
+    /// In Fahrenheit
+    let maxDifferenceTWDSensorTemperatureLowerBound = 0.0
+    let maxDifferenceTWDSensorTemperatureUpperBound = 100.0
+    @Published var maxDifferenceTWDSensorTemperature = 30.0
+    
+    /// In Kpa
+    let preassureMinBound = 10.0
+    let preassureMaxBound = 1206.0
+    @Published var preassureMinValue = 100.0
+    @Published var preassureMaxValue = 400.0
+    
+    
 }
