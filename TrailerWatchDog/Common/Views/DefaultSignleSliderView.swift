@@ -51,25 +51,21 @@ struct DefaultSignleSliderView: View {
                     .frame(height: 4)
                 RoundedRectangle(cornerRadius: 10)
                     .foregroundColor(.mainBlue)
-                    .frame(width: gr.size.width * value, height: 6)
+                    .frame(width: gr.size.width * CGFloat((value - minBound) / (maxBound - minBound)), height: 6)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 HStack {
                     Circle()
                         .foregroundColor(Color.mainBlue)
                         .frame(width: 20, height: 20)
-                        .offset(x: gr.size.width * value - 10)
+                        .offset(x: gr.size.width * CGFloat((value - minBound) / (maxBound - minBound)) - 10)
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onChanged { v in
                                     if (abs(v.translation.width) < 0.1) {
-                                        self.lastCoordinateValue = self.value
+                                        self.lastCoordinateValue = CGFloat(value)
                                     }
-                                    if v.translation.width > 0 {
-                                        self.value = min(1.0, self.lastCoordinateValue + v.translation.width / gr.size.width)
-                                    } else {
-                                        self.value = max(0.0, self.lastCoordinateValue + v.translation.width / gr.size.width)
-                                    }
-                                    
+                                    let newValue = min(max(minBound, self.lastCoordinateValue + Double(v.translation.width) / Double(gr.size.width) * (maxBound - minBound)), maxBound)
+                                    self.value = newValue
                                 }
                         )
                     Spacer()
@@ -87,7 +83,7 @@ struct DefaultSignleSliderView: View {
     
     private var bubleValue: some View {
         HStack(alignment: .bottom, spacing: 4) {
-            Text("\(Double(value * maxBound).formattedToOneDecimalPlace())")
+            Text("\(Double(value).formattedToOneDecimalPlace())")
                 .foregroundStyle(Color.mainBlue)
                 .font(.roboto700, size: 20)
             
