@@ -12,6 +12,10 @@ final class MainViewModel: ObservableObject {
     var dataManager = DataManager.shared
     var twdManager = BluetoothTWDManager.shared
     
+    var settingsViewModel = SettingsViewModel.shared
+    
+    var errorManager = ErrorManager()
+    
     @Published var isTWDConnected = false
     @Published var connectedTWD: TWDModel?
     
@@ -37,6 +41,13 @@ final class MainViewModel: ObservableObject {
     init() {
         twdManager.$connectedTWD
             .assign(to: &$connectedTWD)
+        
+        settingsViewModel.$selectedSound
+            .assign(to: &$selectedSound)
+        settingsViewModel.$selectedTemperatureType
+            .assign(to: &$selectedTemperatureType)
+        settingsViewModel.$selectedPreassureType
+            .assign(to: &$selectedPreassureType)
     }
     
     public func generateConnectingOrder(_ n: Int) {
@@ -147,7 +158,6 @@ final class MainViewModel: ObservableObject {
             updateTPMSConnectionStatus(id: tpmsId, isConnected: false)
         }
     }
-    
     
 //
 //    public func createDirectory() {
