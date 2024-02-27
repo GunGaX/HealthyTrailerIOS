@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TWDModel: Codable {
+struct TWDModel: Codable, Equatable {
     let id: UUID
     let name: String
     var axiesCount: Int?

@@ -14,17 +14,33 @@ struct AxiesData: Identifiable, Hashable {
         lhs.rightTire == rhs.rightTire
     }
     
+    init(axisNumber: Int, leftTire: TPMSModel, rightTire: TPMSModel) {
+        self.axisNumber = axisNumber
+        self.leftTire = leftTire
+        self.rightTire = rightTire
+    }
+    
     var id: Int { axisNumber }
     
     var axisNumber: Int
     var leftTire: TPMSModel
     var rightTire: TPMSModel
     
-    init(axisNumber: Int, leftTire: TPMSModel, rightTire: TPMSModel) {
-        self.axisNumber = axisNumber
-        self.leftTire = leftTire
-        self.rightTire = rightTire
+    var isLeftCleanTPMS: Bool = false
+    var isRightCleanTPMS: Bool = false
+    var isLeftCleanTWD: Bool = false
+    var isRightCleanTWD: Bool = false
+    var isLeftCriticalTPMS: Bool = false
+    var isRightCriticalTPMS: Bool = false
+    var isLeftCriticalTWD: Bool = false
+    var isRightCriticalTWD: Bool = false
+    var isLeftCritical: Bool {
+        return isLeftCriticalTWD || isLeftCriticalTPMS
     }
+    var isRightCritical: Bool {
+        return isRightCriticalTWD || isRightCriticalTPMS
+    }
+    
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

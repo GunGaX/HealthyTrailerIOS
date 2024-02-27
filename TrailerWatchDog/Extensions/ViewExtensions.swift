@@ -36,4 +36,10 @@ extension View {
     func forgetSensorsConfirmationAlert(_ show: Binding<Bool>, onButtonTap: @escaping () -> Void) -> some View {
         modifier(ForgetSensorsConfirmationAlertView(showAlert: show, onButtonTap: onButtonTap))
     }
+    
+    func attentionAlert(_ show: Binding<Bool>, messageText: String) -> some View {
+        modifier(
+            AttentionAlertView(showAlert: show, messageText: messageText)
+        )
+    }
 }

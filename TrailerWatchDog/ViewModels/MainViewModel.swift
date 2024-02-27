@@ -14,8 +14,6 @@ final class MainViewModel: ObservableObject {
     
     var settingsViewModel = SettingsViewModel.shared
     
-    var errorManager = ErrorManager()
-    
     @Published var isTWDConnected = false
     @Published var connectedTWD: TWDModel?
     

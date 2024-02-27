@@ -12,6 +12,7 @@ struct MainScreenView: View {
     @EnvironmentObject var viewModel: MainViewModel
     
     @StateObject private var dataManager = DataManager.shared
+    @StateObject private var errorManager = ErrorManager()
     
     @State private var showConnectingTPMSAlert = false
     @State private var showAddConfirmationAlert = false
@@ -21,6 +22,9 @@ struct MainScreenView: View {
     @State private var connectedTPMSCount: Int = 0
     
     @State private var connectedTPMSDevices: [String] = []
+    
+    @State private var showTWDOverheatAlert = false
+    @State private var showTPMSOverheatAlert = false
         
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
@@ -51,6 +55,12 @@ struct MainScreenView: View {
             .confirmationAddNewSensorsAlert($showAddConfirmationAlert, onButtonTap: addNewTPMSSensorsAction)
             .forgetSensorsConfirmationAlert($showForgetSensorsConfirmationAlert, onButtonTap: forgetTPMSSensorsAction)
             .connectingTPMSAlertView($showConnectingTPMSAlert, discoveredTPMSDevices: dataManager.tpms_ids, tireToConnect: tireToConnectText, onButtonTap: startConnectingTPMS, onCancelTap: saveAndStartWorking)
+            .onChange(of: errorManager.temperatureOverheatTWDError) { newValue in
+                if newValue {
+                    showTWDOverheatAlert = true
+                }
+            }
+            .attentionAlert($showTWDOverheatAlert, messageText: errorManager.temperatureOverheatTWDMessage)
         }
     }
     
