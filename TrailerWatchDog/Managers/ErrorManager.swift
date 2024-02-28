@@ -25,7 +25,8 @@ final class ErrorManager: ObservableObject {
     var temperatureOverheatTPMSMessage = ""
     var temperatureOverheatTPMSMessageChanged = false
     
-    @Published var temperatureDifferenceTWDError = false
+    @Published var showTWDTemperatureDifferenceAlert = false
+    var temperatureDifferenceTWDError = false
     var temperatureDifferenceTWDMessage = ""
     var temperatureDifferenceTWDMessageChanged = false
     
@@ -44,7 +45,11 @@ final class ErrorManager: ObservableObject {
     }
     
     private func twdDataChanged(twd: TWDModel?) {
+        guard let twd else { return }
+        
+        let hasBigDiff = self.checkMinMaxTempTWD(twd: twd)
         let hasOverheat = self.checkOverheatTWD(twd: twd)
+        self.setMaxDifferenceTWD(hasMaxDiff: hasBigDiff)
         self.setTemperatureOverheatTWD(isOverheat: hasOverheat)
     }
     
@@ -65,9 +70,7 @@ final class ErrorManager: ObservableObject {
         return settingsViewModel.maxDifferenceTWDSensorTemperature
     }
     
-    private func checkOverheatTWD(twd: TWDModel?) -> Bool {
-        guard let twd else { return false }
-        
+    private func checkOverheatTWD(twd: TWDModel) -> Bool {
         let maxAllowedTemperature = getMaxAllowedTemperatureTWD()
         var messageBuilder = ""
         var hasOverheat = false
@@ -117,37 +120,115 @@ final class ErrorManager: ObservableObject {
         return hasOverheat
     }
     
-//    private func checkMinMaxTempTWD(twd: TWDModel?) -> Bool {
-//        guard let twd else { return false }
-//        
-//        var minTemp = Double.infinity
-//        var maxTemp = -Double.infinity
-//        var messageBuilder = ""
-//        
-//        for index in 0..<twd.leftAxle.count {
-//            if let newMaxTemp = twd.leftAxle[index].max(), newMaxTemp > maxTemp {
-//                maxTemp = newMaxTemp
-//            }
-//            if let newMinTemp = twd.leftAxle[index].min(), newMinTemp < minTemp {
-//                minTemp = newMinTemp
-//            }
-//            
-//            if let newMaxTemp = twd.rightAxle[index].max(), newMaxTemp > maxTemp {
-//                maxTemp = newMaxTemp
-//            }
-//            if let newMinTemp = twd.rightAxle[index].min(), newMinTemp < minTemp {
-//                minTemp = newMinTemp
-//            }
-//        }
-//        
-//        let maxDiff = self.getMaxAllowedDifferenceTWD()
-//        var hasBigDiff = false
-//        if maxTemp - minTemp < maxDiff {
-//            self.temperatureDifferenceTWDMessage = messageBuilder
-//        }
-//        
-//        var overMaxRows = twd.leftAxle.
-//    }
+    private func checkMinMaxTempTWD(twd: TWDModel) -> Bool {
+        var minTemp = Double.infinity
+        var maxTemp = -Double.infinity
+        var messageBuilder = ""
+        
+        for index in 0..<twd.leftAxle.count {
+            if let newMaxTemp = twd.leftAxle[index].max(), newMaxTemp > maxTemp {
+                maxTemp = newMaxTemp
+            }
+            if let newMinTemp = twd.leftAxle[index].min(), newMinTemp < minTemp {
+                minTemp = newMinTemp
+            }
+            
+            if let newMaxTemp = twd.rightAxle[index].max(), newMaxTemp > maxTemp {
+                maxTemp = newMaxTemp
+            }
+            if let newMinTemp = twd.rightAxle[index].min(), newMinTemp < minTemp {
+                minTemp = newMinTemp
+            }
+        }
+        
+        let maxDiff = self.getMaxAllowedDifferenceTWD()
+        var hasBigDiff = false
+        if maxTemp - minTemp < maxDiff {
+            self.temperatureDifferenceTWDMessage = messageBuilder
+            return false
+        }
+        
+        var overMaxRowsIndeces: [Int] = []
+        var overMinRowsIndeces: [Int] = []
+        
+        for index in twd.leftAxle.indices {
+            if let currentTemperature = twd.leftAxle[index].last, currentTemperature + maxDiff < maxTemp {
+                overMaxRowsIndeces.append(index)
+            }
+            if let currentTemperature = twd.leftAxle[index].last, currentTemperature - maxDiff > minTemp {
+                overMinRowsIndeces.append(index)
+            }
+            
+            if let currentTemperature = twd.rightAxle[index].last, currentTemperature + maxDiff < maxTemp {
+                overMaxRowsIndeces.append(index)
+            }
+            if let currentTemperature = twd.rightAxle[index].last, currentTemperature - maxDiff > minTemp {
+                overMinRowsIndeces.append(index)
+            }
+        }
+        
+        // Probably because of indices
+        if overMinRowsIndeces.count < overMaxRowsIndeces.count {
+            for index in twd.leftAxle.indices {
+                if !overMinRowsIndeces.contains(index) {
+                    continue
+                }
+                
+                if let currentTemperature = twd.leftAxle[index].last, currentTemperature - maxDiff > minTemp {
+                    tpmsManager.axies[index].isLeftCriticalTWD = true
+                    hasBigDiff = true
+                    messageBuilder += "Left TWD sensor \(index + 1) is over max temperature difference\n"
+                }
+                
+                if let currentTemperature = twd.rightAxle[index].last, currentTemperature - maxDiff > minTemp {
+                    tpmsManager.axies[index].isRightCriticalTWD = true
+                    hasBigDiff = true
+                    messageBuilder += "Right TWD sensor \(index + 1) is over max temperature difference\n"
+                }
+            }
+        } else if overMinRowsIndeces.count > overMaxRowsIndeces.count {
+            for index in twd.leftAxle.indices {
+                if !overMaxRowsIndeces.contains(index) {
+                    continue
+                }
+                
+                if let currentTemperature = twd.leftAxle[index].last, currentTemperature + maxDiff < maxTemp {
+                    tpmsManager.axies[index].isLeftCriticalTWD = true
+                    hasBigDiff = true
+                    messageBuilder += "Left TWD sensor \(index + 1) is over max temperature difference\n"
+                }
+                
+                if let currentTemperature = twd.rightAxle[index].last, currentTemperature + maxDiff < maxTemp {
+                    tpmsManager.axies[index].isRightCriticalTWD = true
+                    hasBigDiff = true
+                    messageBuilder += "Right TWD sensor \(index + 1) is over max temperature difference\n"
+                }
+            }
+        } else {
+            var criticalSensoursCount = 0
+            
+            for index in twd.leftAxle.indices {
+                if let currentTemperature = twd.leftAxle[index].last, currentTemperature + maxDiff < maxTemp || currentTemperature - maxDiff > minTemp {
+                    tpmsManager.axies[index].isLeftCriticalTWD = true
+                    hasBigDiff = true
+                    criticalSensoursCount += 1
+                }
+                
+                if let currentTemperature = twd.rightAxle[index].last, currentTemperature + maxDiff < maxTemp || currentTemperature - maxDiff > minTemp {
+                    tpmsManager.axies[index].isRightCriticalTWD = true
+                    hasBigDiff = true
+                    criticalSensoursCount += 1
+                }
+            }
+            
+            criticalSensoursCount /= 2
+            messageBuilder += "\(criticalSensoursCount) or more sensors is over max temperature difference\n"
+        }
+        
+        temperatureDifferenceTWDMessageChanged = self.temperatureDifferenceTWDMessage != messageBuilder
+        temperatureDifferenceTWDMessage = messageBuilder
+        return hasBigDiff
+    }
     
     private func setTemperatureOverheatTWD(isOverheat: Bool) {
         if temperatureOverheatTWDError != isOverheat || temperatureOverheatTWDMessageChanged {
@@ -165,6 +246,16 @@ final class ErrorManager: ObservableObject {
             temperatureOverheatTPMSError = isOverheat
             if temperatureOverheatTPMSError {
                 showTPMSOverheatAlert = true
+            }
+        }
+    }
+    
+    private func setMaxDifferenceTWD(hasMaxDiff: Bool) {
+        if temperatureDifferenceTWDError != hasMaxDiff || temperatureDifferenceTWDMessageChanged {
+            temperatureDifferenceTWDMessageChanged = false
+            temperatureDifferenceTWDError = hasMaxDiff
+            if temperatureDifferenceTWDError {
+                showTWDTemperatureDifferenceAlert = true
             }
         }
     }

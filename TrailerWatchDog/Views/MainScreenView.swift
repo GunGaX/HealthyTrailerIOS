@@ -54,6 +54,7 @@ struct MainScreenView: View {
             .connectingTPMSAlertView($showConnectingTPMSAlert, discoveredTPMSDevices: dataManager.tpms_ids, tireToConnect: tireToConnectText, onButtonTap: startConnectingTPMS, onCancelTap: saveAndStartWorking)
             .attentionAlert($errorManager.showTWDOverheatAlert, messageText: errorManager.temperatureOverheatTWDMessage)
             .attentionAlert($errorManager.showTPMSOverheatAlert, messageText: errorManager.temperatureOverheatTPMSMessage)
+            .attentionAlert($errorManager.showTWDTemperatureDifferenceAlert, messageText: errorManager.temperatureDifferenceTWDMessage)
         }
     }
     
