@@ -35,7 +35,6 @@
 		B63E7C0B2B02269F00ECA81B /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C0A2B02269F00ECA81B /* ViewModifiers.swift */; };
 		B63E7C0D2B02297300ECA81B /* AxiesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */; };
 		B63E7C1E2B02936400ECA81B /* MeasurementTypePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */; };
-		B63E7C212B0387E300ECA81B /* AlertTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C202B0387E300ECA81B /* AlertTypeEnum.swift */; };
 		B63E7C232B0389CE00ECA81B /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C222B0389CE00ECA81B /* WelcomeView.swift */; };
 		B63E7C252B038D5400ECA81B /* AllowPermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C242B038D5400ECA81B /* AllowPermissionsView.swift */; };
 		B63E7C272B038E2400ECA81B /* MainGreenButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C262B038E2400ECA81B /* MainGreenButtonStyle.swift */; };
@@ -96,7 +95,6 @@
 		B63E7C0A2B02269F00ECA81B /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxiesDataModel.swift; sourceTree = "<group>"; };
 		B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementTypePickerView.swift; sourceTree = "<group>"; };
-		B63E7C202B0387E300ECA81B /* AlertTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTypeEnum.swift; sourceTree = "<group>"; };
 		B63E7C222B0389CE00ECA81B /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		B63E7C242B038D5400ECA81B /* AllowPermissionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowPermissionsView.swift; sourceTree = "<group>"; };
 		B63E7C262B038E2400ECA81B /* MainGreenButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGreenButtonStyle.swift; sourceTree = "<group>"; };
@@ -226,14 +224,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		B63E7C1F2B0387D200ECA81B /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				B63E7C202B0387E300ECA81B /* AlertTypeEnum.swift */,
-			);
-			path = Enums;
-			sourceTree = "<group>";
-		};
 		B68CE69C2AFBD5EB0047E644 = {
 			isa = PBXGroup;
 			children = (
@@ -256,7 +246,6 @@
 				B68CE6CD2AFD0D180047E644 /* Info.plist */,
 				B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */,
 				B63E7C2A2B03A37700ECA81B /* RootView.swift */,
-				B63E7C1F2B0387D200ECA81B /* Enums */,
 				B63E7BF22AFD79E400ECA81B /* Helpers */,
 				B63E7BED2AFD78DD00ECA81B /* Managers */,
 				B63E7BE22AFD153800ECA81B /* Extensions */,
@@ -427,7 +416,6 @@
 				B66F4B1D2B2799DA0001E143 /* TPMSModel.swift in Sources */,
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
-				B63E7C212B0387E300ECA81B /* AlertTypeEnum.swift in Sources */,
 				B63E7C232B0389CE00ECA81B /* WelcomeView.swift in Sources */,
 				B6DB0B312B079E4700DEF890 /* FolderDetailsView.swift in Sources */,
 				B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */,
