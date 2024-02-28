@@ -15,14 +15,19 @@ final class ErrorManager: ObservableObject {
     
     private var cancellable: AnyCancellable?
     
-    @Published var temperatureOverheatTWDError = false
+    @Published var showTWDOverheatAlert = false
+    var temperatureOverheatTWDError = false
     var temperatureOverheatTWDMessage = ""
     var temperatureOverheatTWDMessageChanged = false
     
-    @Published var temperatureOverheatTPMSError = false
+    @Published var showTPMSOverheatAlert = false
+    var temperatureOverheatTPMSError = false
     var temperatureOverheatTPMSMessage = ""
     var temperatureOverheatTPMSMessageChanged = false
     
+    @Published var temperatureDifferenceTWDError = false
+    var temperatureDifferenceTWDMessage = ""
+    var temperatureDifferenceTWDMessageChanged = false
     
     init() {        
         let twdPublisher = twdManager.$connectedTWD
@@ -54,6 +59,10 @@ final class ErrorManager: ObservableObject {
     
     private func getMaxAllowedTemperatureTPMS() -> Double {
         return settingsViewModel.maxTPMSSensorTemperature
+    }
+    
+    private func getMaxAllowedDifferenceTWD() -> Double {
+        return settingsViewModel.maxDifferenceTWDSensorTemperature
     }
     
     private func checkOverheatTWD(twd: TWDModel?) -> Bool {
@@ -102,15 +111,51 @@ final class ErrorManager: ObservableObject {
             }
         }
         
+        temperatureOverheatTPMSMessageChanged = self.temperatureOverheatTPMSMessage != messageBuilder
         temperatureOverheatTPMSMessage = messageBuilder
         
         return hasOverheat
     }
     
+//    private func checkMinMaxTempTWD(twd: TWDModel?) -> Bool {
+//        guard let twd else { return false }
+//        
+//        var minTemp = Double.infinity
+//        var maxTemp = -Double.infinity
+//        var messageBuilder = ""
+//        
+//        for index in 0..<twd.leftAxle.count {
+//            if let newMaxTemp = twd.leftAxle[index].max(), newMaxTemp > maxTemp {
+//                maxTemp = newMaxTemp
+//            }
+//            if let newMinTemp = twd.leftAxle[index].min(), newMinTemp < minTemp {
+//                minTemp = newMinTemp
+//            }
+//            
+//            if let newMaxTemp = twd.rightAxle[index].max(), newMaxTemp > maxTemp {
+//                maxTemp = newMaxTemp
+//            }
+//            if let newMinTemp = twd.rightAxle[index].min(), newMinTemp < minTemp {
+//                minTemp = newMinTemp
+//            }
+//        }
+//        
+//        let maxDiff = self.getMaxAllowedDifferenceTWD()
+//        var hasBigDiff = false
+//        if maxTemp - minTemp < maxDiff {
+//            self.temperatureDifferenceTWDMessage = messageBuilder
+//        }
+//        
+//        var overMaxRows = twd.leftAxle.
+//    }
+    
     private func setTemperatureOverheatTWD(isOverheat: Bool) {
         if temperatureOverheatTWDError != isOverheat || temperatureOverheatTWDMessageChanged {
             temperatureOverheatTWDMessageChanged = false
             temperatureOverheatTWDError = isOverheat
+            if temperatureOverheatTWDError {
+                showTWDOverheatAlert = true
+            }
         }
     }
     
@@ -118,6 +163,9 @@ final class ErrorManager: ObservableObject {
         if temperatureOverheatTPMSError != isOverheat || temperatureOverheatTPMSMessageChanged {
             temperatureOverheatTPMSMessageChanged = false
             temperatureOverheatTPMSError = isOverheat
+            if temperatureOverheatTPMSError {
+                showTPMSOverheatAlert = true
+            }
         }
     }
 }
