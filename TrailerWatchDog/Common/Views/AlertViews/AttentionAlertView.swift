@@ -49,7 +49,7 @@ struct AttentionView: View {
             title
             confirmationText
             okButton
-            .padding(.top, 12)
+            .padding(.top, 6)
         }
         .padding()
     }

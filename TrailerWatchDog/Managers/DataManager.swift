@@ -76,6 +76,7 @@ class DataManager: NSObject, ObservableObject {
     var didStartCsv = false
     var didGetTireData = false
     
+    var canShowNotifications = false
 
     func log(_ message:String) {
         if (useOSConsoleLog) {
@@ -216,7 +217,7 @@ class DataManager: NSObject, ObservableObject {
             }
         }
         
-        print(axies)
+        canShowNotifications = true
     }
     
     func disconnectTWD() {

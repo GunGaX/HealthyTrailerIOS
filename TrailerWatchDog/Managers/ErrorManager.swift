@@ -30,6 +30,11 @@ final class ErrorManager: ObservableObject {
     var temperatureDifferenceTWDMessage = ""
     var temperatureDifferenceTWDMessageChanged = false
     
+    @Published var showTPMSTemperatureDifferenceAlert = false
+    var temperatureDifferenceTPMSError = false
+    var temperatureDifferenceTPMSMessage = ""
+    var temperatureDifferenceTPMSMessageChanged = false
+    
     init() {        
         let twdPublisher = twdManager.$connectedTWD
             .removeDuplicates()
@@ -54,7 +59,9 @@ final class ErrorManager: ObservableObject {
     }
     
     private func tpmsDataChanged(axies: [AxiesData]) {
+        let hasBigDiff = self.checkMinMaxTempTPMS(axies: axies)
         let hasOverheat = self.checkOverheatTPMS(axies: axies)
+        self.setMaxDifferenceTPMS(hasMaxDiff: hasBigDiff)
         self.setTemperatureOverheatTPMS(isOverheat: hasOverheat)
     }
     
@@ -68,6 +75,10 @@ final class ErrorManager: ObservableObject {
     
     private func getMaxAllowedDifferenceTWD() -> Double {
         return settingsViewModel.maxDifferenceTWDSensorTemperature
+    }
+    
+    private func getMaxAllowedDifferenceTPMS() -> Double {
+        return settingsViewModel.maxDifferenceTPMSSensorTemperature
     }
     
     private func checkOverheatTWD(twd: TWDModel) -> Bool {
@@ -167,7 +178,6 @@ final class ErrorManager: ObservableObject {
             }
         }
         
-        // Probably because of indices
         if overMinRowsIndeces.count < overMaxRowsIndeces.count {
             for index in twd.leftAxle.indices {
                 if !overMinRowsIndeces.contains(index) {
@@ -230,6 +240,52 @@ final class ErrorManager: ObservableObject {
         return hasBigDiff
     }
     
+    private func checkMinMaxTempTPMS(axies: [AxiesData]) -> Bool {
+        var minTemp = Double.infinity
+        var maxTemp = -Double.infinity
+        var messageBuilder = ""
+        
+        for row in axies {
+            if row.leftTire.tireData.temperature > maxTemp {
+                maxTemp = row.leftTire.tireData.temperature
+            }
+            if row.leftTire.tireData.temperature < minTemp {
+                minTemp = row.leftTire.tireData.temperature
+            }
+            
+            if row.rightTire.tireData.temperature > maxTemp {
+                maxTemp = row.rightTire.tireData.temperature
+            }
+            if row.rightTire.tireData.temperature < minTemp {
+                minTemp = row.rightTire.tireData.temperature
+            }
+        }
+        
+        let maxDiff = self.getMaxAllowedDifferenceTPMS()
+        var hasBigDiff = false
+        if maxTemp - minTemp < maxDiff {
+            return false
+        }
+        
+        for index in axies.indices {
+            if axies[index].leftTire.tireData.temperature + maxDiff < maxTemp || axies[index].leftTire.tireData.temperature - maxDiff > minTemp {
+                tpmsManager.axies[index].isLeftCriticalTPMS = true
+                hasBigDiff = true
+                messageBuilder += "Left wheel \(index + 1) is over max temperature difference\n"
+            }
+            
+            if axies[index].rightTire.tireData.temperature + maxDiff < maxTemp || axies[index].rightTire.tireData.temperature - maxDiff > minTemp {
+                tpmsManager.axies[index].isRightCriticalTPMS = true
+                hasBigDiff = true
+                messageBuilder += "Right wheel \(index + 1) is over max temperature difference\n"
+            }
+        }
+        
+        temperatureDifferenceTPMSMessageChanged = self.temperatureDifferenceTPMSMessage != messageBuilder
+        temperatureDifferenceTPMSMessage = messageBuilder
+        return hasBigDiff
+    }
+    
     private func setTemperatureOverheatTWD(isOverheat: Bool) {
         if temperatureOverheatTWDError != isOverheat || temperatureOverheatTWDMessageChanged {
             temperatureOverheatTWDMessageChanged = false
@@ -256,6 +312,16 @@ final class ErrorManager: ObservableObject {
             temperatureDifferenceTWDError = hasMaxDiff
             if temperatureDifferenceTWDError {
                 showTWDTemperatureDifferenceAlert = true
+            }
+        }
+    }
+    
+    private func setMaxDifferenceTPMS(hasMaxDiff: Bool) {
+        if temperatureDifferenceTPMSError != hasMaxDiff || temperatureDifferenceTPMSMessageChanged {
+            temperatureDifferenceTPMSMessageChanged = false
+            temperatureDifferenceTPMSError = hasMaxDiff
+            if temperatureDifferenceTPMSError && tpmsManager.canShowNotifications {
+                showTPMSTemperatureDifferenceAlert = true
             }
         }
     }

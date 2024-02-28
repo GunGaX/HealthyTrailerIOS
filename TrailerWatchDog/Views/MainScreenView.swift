@@ -55,6 +55,7 @@ struct MainScreenView: View {
             .attentionAlert($errorManager.showTWDOverheatAlert, messageText: errorManager.temperatureOverheatTWDMessage)
             .attentionAlert($errorManager.showTPMSOverheatAlert, messageText: errorManager.temperatureOverheatTPMSMessage)
             .attentionAlert($errorManager.showTWDTemperatureDifferenceAlert, messageText: errorManager.temperatureDifferenceTWDMessage)
+            .attentionAlert($errorManager.showTPMSTemperatureDifferenceAlert, messageText: errorManager.temperatureDifferenceTPMSMessage)
         }
     }
     
