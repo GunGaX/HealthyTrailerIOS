@@ -35,6 +35,11 @@ final class ErrorManager: ObservableObject {
     var temperatureDifferenceTPMSMessage = ""
     var temperatureDifferenceTPMSMessageChanged = false
     
+    @Published var showTPMSPressureAlert = false
+    var pressureTPMSError = false
+    var pressureTPMSMessage = ""
+    var pressureTPMSMessageChanged = false
+    
     init() {        
         let twdPublisher = twdManager.$connectedTWD
             .removeDuplicates()
@@ -50,6 +55,7 @@ final class ErrorManager: ObservableObject {
     }
     
     private func twdDataChanged(twd: TWDModel?) {
+        guard twdManager.canShowNotifications else { return }
         guard let twd else { return }
         
         let hasBigDiff = self.checkMinMaxTempTWD(twd: twd)
@@ -59,10 +65,14 @@ final class ErrorManager: ObservableObject {
     }
     
     private func tpmsDataChanged(axies: [AxiesData]) {
+        guard tpmsManager.canShowNotifications else { return }
+        
         let hasBigDiff = self.checkMinMaxTempTPMS(axies: axies)
         let hasOverheat = self.checkOverheatTPMS(axies: axies)
+        let hasOutOfBounds = self.checkPressureTPMS(axies: axies)
         self.setMaxDifferenceTPMS(hasMaxDiff: hasBigDiff)
         self.setTemperatureOverheatTPMS(isOverheat: hasOverheat)
+        self.setPressureErrorTPMS(isOutOfBounds: hasOutOfBounds)
     }
     
     private func getMaxAllowedTemperatureTWD() -> Double {
@@ -79,6 +89,14 @@ final class ErrorManager: ObservableObject {
     
     private func getMaxAllowedDifferenceTPMS() -> Double {
         return settingsViewModel.maxDifferenceTPMSSensorTemperature
+    }
+    
+    private func getMinPressureTPMS() -> Double {
+        return settingsViewModel.preassureMinValue
+    }
+    
+    private func getMaxPressureTPMS() -> Double {
+        return settingsViewModel.preassureMaxValue
     }
     
     private func checkOverheatTWD(twd: TWDModel) -> Bool {
@@ -286,6 +304,55 @@ final class ErrorManager: ObservableObject {
         return hasBigDiff
     }
     
+    private func checkPressureTPMS(axies: [AxiesData]) -> Bool {
+        let minPressure = self.getMinPressureTPMS()
+        let maxPressure = self.getMaxPressureTPMS()
+        var isOutOfBound = false
+        var messageBuilder = ""
+        
+        for index in axies.indices {
+            if axies[index].leftTire.tireData.preassure < minPressure {
+                tpmsManager.axies[index].isLeftCriticalTPMS = true
+                isOutOfBound = true
+                
+                if axies[index].leftTire.tireData.preassure == 0.0 {
+                    messageBuilder += "Left wheel \(index + 1) has flat tire or sensor is unscrewed\n"
+                } else {
+                    messageBuilder += "Left wheel \(index + 1) has to low pressure\n"
+                }
+                
+                if axies[index].leftTire.tireData.preassure > maxPressure {
+                    tpmsManager.axies[index].isLeftCriticalTPMS = true
+                    isOutOfBound = true
+                    
+                    messageBuilder += "Left wheel \(index + 1) has to high pressure\n"
+                }
+            }
+            
+            if axies[index].rightTire.tireData.preassure < minPressure {
+                tpmsManager.axies[index].isRightCriticalTPMS = true
+                isOutOfBound = true
+                
+                if axies[index].rightTire.tireData.preassure == 0.0 {
+                    messageBuilder += "Right wheel \(index + 1) has flat tire or sensor is unscrewed\n"
+                } else {
+                    messageBuilder += "Right wheel \(index + 1) has to low pressure\n"
+                }
+                
+                if axies[index].rightTire.tireData.preassure > maxPressure {
+                    tpmsManager.axies[index].isRightCriticalTPMS = true
+                    isOutOfBound = true
+                    
+                    messageBuilder += "Right wheel \(index + 1) has to high pressure\n"
+                }
+            }
+        }
+        
+        pressureTPMSMessageChanged = self.pressureTPMSMessage != messageBuilder
+        pressureTPMSMessage = messageBuilder
+        return isOutOfBound
+    }
+    
     private func setTemperatureOverheatTWD(isOverheat: Bool) {
         if temperatureOverheatTWDError != isOverheat || temperatureOverheatTWDMessageChanged {
             temperatureOverheatTWDMessageChanged = false
@@ -320,8 +387,18 @@ final class ErrorManager: ObservableObject {
         if temperatureDifferenceTPMSError != hasMaxDiff || temperatureDifferenceTPMSMessageChanged {
             temperatureDifferenceTPMSMessageChanged = false
             temperatureDifferenceTPMSError = hasMaxDiff
-            if temperatureDifferenceTPMSError && tpmsManager.canShowNotifications {
+            if temperatureDifferenceTPMSError {
                 showTPMSTemperatureDifferenceAlert = true
+            }
+        }
+    }
+    
+    private func setPressureErrorTPMS(isOutOfBounds: Bool) {
+        if pressureTPMSError != isOutOfBounds || pressureTPMSMessageChanged {
+            pressureTPMSMessageChanged = false
+            pressureTPMSError = isOutOfBounds
+            if pressureTPMSError {
+                showTPMSPressureAlert = true
             }
         }
     }

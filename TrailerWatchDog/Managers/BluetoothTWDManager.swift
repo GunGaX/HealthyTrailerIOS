@@ -11,6 +11,8 @@ import CoreBluetooth
 class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     static let shared = BluetoothTWDManager()
     
+    var canShowNotifications = false
+    
     private let temperature_characteristic = CBUUID(string: "FFE1")
     
     private var centralManager: CBCentralManager!
@@ -147,6 +149,8 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
         } else {
             print("[Error][BluetoothTWDManager] unequal axies count")
         }
+        
+        canShowNotifications = true
     }
     
     public func updateLastTWDValuesData() {

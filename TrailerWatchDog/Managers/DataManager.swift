@@ -361,8 +361,7 @@ class DataManager: NSObject, ObservableObject {
             var finalPreassure = -1000.0
             
             if (pressure_kpa_persist ?? 0 >= 0.5) && (pressure_kpa_persist ?? 0 < 300.0) {
-                finalPreassure = Double(pressure_psi_persist)
-                
+                finalPreassure = Double(pressure_kpa_persist ?? 0)
                 haveVal = true
             } else {
                 f_pressure_psi_screen = 0

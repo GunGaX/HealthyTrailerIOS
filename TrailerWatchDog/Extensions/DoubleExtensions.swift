@@ -45,9 +45,9 @@ extension Double {
     
     func applyPreassureSystem(selectedSystem: PreasureType) -> Double {
         switch selectedSystem {
-        case .kpa: return self.fromPsiToKpa()
-        case .bar: return self.fromPsiToBar()
-        case .psi: return self
+        case .kpa: return self
+        case .bar: return self.fromKpaToBar()
+        case .psi: return self.fromKpaToPsi()
         }
     }
 }

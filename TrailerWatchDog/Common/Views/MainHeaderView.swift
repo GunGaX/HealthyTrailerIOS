@@ -50,6 +50,8 @@ struct MainHeaderView: View {
                 .rotationEffect(.degrees(90))
                 .frame(width: 22, height: 22)
                 .foregroundColor(.black)
+                .padding(10)
+                .contentShape(Rectangle())
         }
     }
     
