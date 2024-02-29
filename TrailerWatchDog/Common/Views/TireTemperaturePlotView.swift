@@ -11,6 +11,8 @@ import Charts
 struct TireTemperaturePlotView: View {
     var data: [Double]
     
+    var foregroundColor: Color
+    
     var maxValue: Double {
         return data.max() ?? 100.0
     }
@@ -24,7 +26,7 @@ struct TireTemperaturePlotView: View {
             ForEach(data.indices, id: \.self) { index in
                 let value = data[index]
                 LineMark(x: .value("time", index), y: .value("value", value))
-                    .foregroundStyle(Color.mainGreen)
+                    .foregroundStyle(foregroundColor)
                     .interpolationMethod(.stepCenter)
                 
                 if index == data.indices.last {
@@ -32,7 +34,7 @@ struct TireTemperaturePlotView: View {
                         x: .value("time", index),
                         y: .value("value", value)
                     )
-                    .foregroundStyle(Color.mainGreen)
+                    .foregroundStyle(foregroundColor)
                 }
             }
         }
@@ -44,7 +46,7 @@ struct TireTemperaturePlotView: View {
 }
 
 #Preview {
-    TireTemperaturePlotView(data: [56.1, 72.5, 74.5, 24.2, 26.1, 34.1, 36.5])
+    TireTemperaturePlotView(data: [56.1, 72.5, 74.5, 24.2, 26.1, 34.1, 36.5], foregroundColor: Color.mainGreen)
         .frame(height: 100)
         .padding()
 }
