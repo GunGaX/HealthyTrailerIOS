@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct AttentionAlertView: ViewModifier {
     @Binding public var showAlert: Bool
@@ -40,6 +41,7 @@ struct AttentionAlertView: ViewModifier {
 }
 
 struct AttentionView: View {
+    @EnvironmentObject var viewModel: MainViewModel
     @Binding var showAlert: Bool
         
     var messageText: String
@@ -52,6 +54,9 @@ struct AttentionView: View {
             .padding(.top, 6)
         }
         .padding()
+        .onAppear {
+            viewModel.playAlertSound()
+        }
     }
     
     private var title: some View {

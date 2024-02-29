@@ -8,12 +8,16 @@
 import Foundation
 import Combine
 import SwiftUI
+import AVFAudio
 
 final class MainViewModel: ObservableObject {
     var dataManager = DataManager.shared
     var twdManager = BluetoothTWDManager.shared
     
     var settingsViewModel = SettingsViewModel.shared
+    
+    var alertSoundPlayer: AVAudioPlayer?
+    var dogBarkSoundPlayer: AVAudioPlayer?
     
     @Published var isTWDConnected = false
     @Published var connectedTWD: TWDModel?
@@ -47,6 +51,8 @@ final class MainViewModel: ObservableObject {
             .assign(to: &$selectedTemperatureType)
         settingsViewModel.$selectedPreassureType
             .assign(to: &$selectedPreassureType)
+        
+        setupAudioPlayers()
     }
     
     public func generateConnectingOrder(_ n: Int) {
@@ -154,6 +160,32 @@ final class MainViewModel: ObservableObject {
                 if let file = FileRepository.shared.readFromFile(filePath: path) {
                     logFiles[path] = file
                 }
+            }
+        }
+    }
+    
+    public func playAlertSound() {
+        if settingsViewModel.selectedSound == .chime {
+            alertSoundPlayer?.play()
+        } else {
+            dogBarkSoundPlayer?.play()
+        }
+    }
+    
+    private func setupAudioPlayers() {
+        if let soundURL1 = Bundle.main.url(forResource: "alert_sound", withExtension: "mp3") {
+            do {
+                alertSoundPlayer = try AVAudioPlayer(contentsOf: soundURL1)
+            } catch {
+                print("Error loading sound file: \(error.localizedDescription)")
+            }
+        }
+        
+        if let soundURL2 = Bundle.main.url(forResource: "dogbark_alert", withExtension: "wav") {
+            do {
+                dogBarkSoundPlayer = try AVAudioPlayer(contentsOf: soundURL2)
+            } catch {
+                print("Error loading sound file: \(error.localizedDescription)")
             }
         }
     }

@@ -13,6 +13,8 @@
 		B61655672B8CD01300F4794B /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61655662B8CD01300F4794B /* ErrorManager.swift */; };
 		B61655692B8CE6CA00F4794B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61655682B8CE6CA00F4794B /* SettingsViewModel.swift */; };
 		B616556B2B8E740700F4794B /* AttentionAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B616556A2B8E740700F4794B /* AttentionAlertView.swift */; };
+		B616556F2B90F77800F4794B /* dogbark_alert.wav in Resources */ = {isa = PBXBuildFile; fileRef = B616556D2B90F77800F4794B /* dogbark_alert.wav */; };
+		B61655702B90F77800F4794B /* alert_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B616556E2B90F77800F4794B /* alert_sound.mp3 */; };
 		B62928502B210C4A0044B011 /* TWDModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B629284F2B210C4A0044B011 /* TWDModel.swift */; };
 		B629550C2B7D43A800054E01 /* BluetoothTWDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B629550B2B7D43A800054E01 /* BluetoothTWDManager.swift */; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
@@ -73,6 +75,8 @@
 		B61655662B8CD01300F4794B /* ErrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		B61655682B8CE6CA00F4794B /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		B616556A2B8E740700F4794B /* AttentionAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionAlertView.swift; sourceTree = "<group>"; };
+		B616556D2B90F77800F4794B /* dogbark_alert.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dogbark_alert.wav; sourceTree = "<group>"; };
+		B616556E2B90F77800F4794B /* alert_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alert_sound.mp3; sourceTree = "<group>"; };
 		B629284F2B210C4A0044B011 /* TWDModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWDModel.swift; sourceTree = "<group>"; };
 		B629550B2B7D43A800054E01 /* BluetoothTWDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothTWDManager.swift; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
@@ -148,6 +152,15 @@
 				B616556A2B8E740700F4794B /* AttentionAlertView.swift */,
 			);
 			path = AlertViews;
+			sourceTree = "<group>";
+		};
+		B616556C2B90F77800F4794B /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				B616556D2B90F77800F4794B /* dogbark_alert.wav */,
+				B616556E2B90F77800F4794B /* alert_sound.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		B63E7BE22AFD153800ECA81B /* Extensions */ = {
@@ -246,6 +259,7 @@
 				B68CE6CD2AFD0D180047E644 /* Info.plist */,
 				B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */,
 				B63E7C2A2B03A37700ECA81B /* RootView.swift */,
+				B616556C2B90F77800F4794B /* Sounds */,
 				B63E7BF22AFD79E400ECA81B /* Helpers */,
 				B63E7BED2AFD78DD00ECA81B /* Managers */,
 				B63E7BE22AFD153800ECA81B /* Extensions */,
@@ -389,8 +403,10 @@
 				B68CE6CB2AFD0C2A0047E644 /* Roboto-Bold.ttf in Resources */,
 				B68CE6C82AFD0C2A0047E644 /* Roboto-Medium.ttf in Resources */,
 				B68CE6B02AFBD5ED0047E644 /* Preview Assets.xcassets in Resources */,
+				B61655702B90F77800F4794B /* alert_sound.mp3 in Resources */,
 				B68CE6CA2AFD0C2A0047E644 /* Roboto-Thin.ttf in Resources */,
 				B68CE6C92AFD0C2A0047E644 /* Roboto-Regular.ttf in Resources */,
+				B616556F2B90F77800F4794B /* dogbark_alert.wav in Resources */,
 				B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */,
 				B68CE6CC2AFD0C2A0047E644 /* Roboto-Light.ttf in Resources */,
 				B68CE6C72AFD0C2A0047E644 /* Roboto-Black.ttf in Resources */,
