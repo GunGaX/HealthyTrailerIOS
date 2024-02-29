@@ -132,16 +132,20 @@ final class ErrorManager: ObservableObject {
         var hasOverheat = false
         
         for index in 0..<axies.count {
-            if axies[index].leftTire.tireData.temperature > maxAllowedTemperature {
-                messageBuilder += "Left wheel \(index + 1) is over temperature threshold\n"
-                tpmsManager.axies[index].isLeftCriticalTPMS = true
-                hasOverheat = true
+            if axies[index].isLeftCleanTPMS && axies[index].leftTire.tireData.updateDate.isFresh() {
+                if axies[index].leftTire.tireData.temperature > maxAllowedTemperature {
+                    messageBuilder += "Left wheel \(index + 1) is over temperature threshold\n"
+                    tpmsManager.axies[index].isLeftCriticalTPMS = true
+                    hasOverheat = true
+                }
             }
             
-            if axies[index].rightTire.tireData.temperature > maxAllowedTemperature {
-                messageBuilder += "Right wheel \(index + 1) is over temperature threshold\n"
-                tpmsManager.axies[index].isRightCriticalTPMS = true
-                hasOverheat = true
+            if axies[index].isRightCleanTPMS && axies[index].rightTire.tireData.updateDate.isFresh() {
+                if axies[index].rightTire.tireData.temperature > maxAllowedTemperature {
+                    messageBuilder += "Right wheel \(index + 1) is over temperature threshold\n"
+                    tpmsManager.axies[index].isRightCriticalTPMS = true
+                    hasOverheat = true
+                }
             }
         }
         
@@ -266,18 +270,22 @@ final class ErrorManager: ObservableObject {
         var messageBuilder = ""
         
         for row in axies {
-            if row.leftTire.tireData.temperature > maxTemp {
-                maxTemp = row.leftTire.tireData.temperature
-            }
-            if row.leftTire.tireData.temperature < minTemp {
-                minTemp = row.leftTire.tireData.temperature
+            if !row.isLeftCleanTPMS {
+                if row.leftTire.tireData.temperature > maxTemp {
+                    maxTemp = row.leftTire.tireData.temperature
+                }
+                if row.leftTire.tireData.temperature < minTemp {
+                    minTemp = row.leftTire.tireData.temperature
+                }
             }
             
-            if row.rightTire.tireData.temperature > maxTemp {
-                maxTemp = row.rightTire.tireData.temperature
-            }
-            if row.rightTire.tireData.temperature < minTemp {
-                minTemp = row.rightTire.tireData.temperature
+            if !row.isRightCleanTPMS {
+                if row.rightTire.tireData.temperature > maxTemp {
+                    maxTemp = row.rightTire.tireData.temperature
+                }
+                if row.rightTire.tireData.temperature < minTemp {
+                    minTemp = row.rightTire.tireData.temperature
+                }
             }
         }
         
@@ -288,16 +296,20 @@ final class ErrorManager: ObservableObject {
         }
         
         for index in axies.indices {
-            if axies[index].leftTire.tireData.temperature + maxDiff < maxTemp || axies[index].leftTire.tireData.temperature - maxDiff > minTemp {
-                tpmsManager.axies[index].isLeftCriticalTPMS = true
-                hasBigDiff = true
-                messageBuilder += "Left wheel \(index + 1) is over max temperature difference\n"
+            if !axies[index].isLeftCleanTPMS && axies[index].leftTire.tireData.updateDate.isFresh() {
+                if axies[index].leftTire.tireData.temperature + maxDiff < maxTemp || axies[index].leftTire.tireData.temperature - maxDiff > minTemp {
+                    tpmsManager.axies[index].isLeftCriticalTPMS = true
+                    hasBigDiff = true
+                    messageBuilder += "Left wheel \(index + 1) is over max temperature difference\n"
+                }
             }
             
-            if axies[index].rightTire.tireData.temperature + maxDiff < maxTemp || axies[index].rightTire.tireData.temperature - maxDiff > minTemp {
-                tpmsManager.axies[index].isRightCriticalTPMS = true
-                hasBigDiff = true
-                messageBuilder += "Right wheel \(index + 1) is over max temperature difference\n"
+            if !axies[index].isRightCleanTPMS && axies[index].rightTire.tireData.updateDate.isFresh() {
+                if axies[index].rightTire.tireData.temperature + maxDiff < maxTemp || axies[index].rightTire.tireData.temperature - maxDiff > minTemp {
+                    tpmsManager.axies[index].isRightCriticalTPMS = true
+                    hasBigDiff = true
+                    messageBuilder += "Right wheel \(index + 1) is over max temperature difference\n"
+                }
             }
         }
         
@@ -313,39 +325,43 @@ final class ErrorManager: ObservableObject {
         var messageBuilder = ""
         
         for index in axies.indices {
-            if axies[index].leftTire.tireData.preassure < minPressure {
-                tpmsManager.axies[index].isLeftCriticalTPMS = true
-                isOutOfBound = true
-                
-                if axies[index].leftTire.tireData.preassure == 0.0 {
-                    messageBuilder += "Left wheel \(index + 1) has flat tire or sensor is unscrewed\n"
-                } else {
-                    messageBuilder += "Left wheel \(index + 1) has to low pressure\n"
-                }
-                
-                if axies[index].leftTire.tireData.preassure > maxPressure {
+            if !axies[index].isLeftCleanTPMS && axies[index].leftTire.tireData.updateDate.isFresh() {
+                if axies[index].leftTire.tireData.preassure < minPressure {
                     tpmsManager.axies[index].isLeftCriticalTPMS = true
                     isOutOfBound = true
                     
-                    messageBuilder += "Left wheel \(index + 1) has to high pressure\n"
+                    if axies[index].leftTire.tireData.preassure == 0.0 {
+                        messageBuilder += "Left wheel \(index + 1) has flat tire or sensor is unscrewed\n"
+                    } else {
+                        messageBuilder += "Left wheel \(index + 1) has to low pressure\n"
+                    }
+                    
+                    if axies[index].leftTire.tireData.preassure > maxPressure {
+                        tpmsManager.axies[index].isLeftCriticalTPMS = true
+                        isOutOfBound = true
+                        
+                        messageBuilder += "Left wheel \(index + 1) has to high pressure\n"
+                    }
                 }
             }
             
-            if axies[index].rightTire.tireData.preassure < minPressure {
-                tpmsManager.axies[index].isRightCriticalTPMS = true
-                isOutOfBound = true
-                
-                if axies[index].rightTire.tireData.preassure == 0.0 {
-                    messageBuilder += "Right wheel \(index + 1) has flat tire or sensor is unscrewed\n"
-                } else {
-                    messageBuilder += "Right wheel \(index + 1) has to low pressure\n"
-                }
-                
-                if axies[index].rightTire.tireData.preassure > maxPressure {
+            if !axies[index].isRightCleanTPMS && axies[index].rightTire.tireData.updateDate.isFresh() {
+                if axies[index].rightTire.tireData.preassure < minPressure {
                     tpmsManager.axies[index].isRightCriticalTPMS = true
                     isOutOfBound = true
                     
-                    messageBuilder += "Right wheel \(index + 1) has to high pressure\n"
+                    if axies[index].rightTire.tireData.preassure == 0.0 {
+                        messageBuilder += "Right wheel \(index + 1) has flat tire or sensor is unscrewed\n"
+                    } else {
+                        messageBuilder += "Right wheel \(index + 1) has to low pressure\n"
+                    }
+                    
+                    if axies[index].rightTire.tireData.preassure > maxPressure {
+                        tpmsManager.axies[index].isRightCriticalTPMS = true
+                        isOutOfBound = true
+                        
+                        messageBuilder += "Right wheel \(index + 1) has to high pressure\n"
+                    }
                 }
             }
         }
