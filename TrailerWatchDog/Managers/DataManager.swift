@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-
 import CoreBluetooth
 import CoreLocation
 import UserNotifications
@@ -77,7 +76,7 @@ class DataManager: NSObject, ObservableObject {
     var didGetTireData = false
     
     var canShowNotifications = false
-
+    
     func log(_ message:String) {
         if (useOSConsoleLog) {
             os_log("%@", log: .default, type: .info, message)
@@ -153,7 +152,6 @@ class DataManager: NSObject, ObservableObject {
         }
     }
     
-    
     override init() {
         super.init()
     }
@@ -208,12 +206,15 @@ class DataManager: NSObject, ObservableObject {
             guard let tpms else { return }
             
             let axleIndex: Int = Int((index - 1) / 2)
-            print(axleIndex)
             
             if index % 2 == 0 {
                 axies[axleIndex].rightTire = tpms
+                axies[axleIndex].isRightSaved = true
+                axies[axleIndex].isRightCleanTPMS = false
             } else {
                 axies[axleIndex].leftTire = tpms
+                axies[axleIndex].isLeftSaved = true
+                axies[axleIndex].isLeftCleanTPMS = false
             }
         }
         
@@ -263,8 +264,6 @@ class DataManager: NSObject, ObservableObject {
         if let retrievedIds = UserDefaults.standard.getObject(forKey: "TPMSDevicesForTWD\(connectedTWDId)", castTo: [String].self) {
             connectedTPMSIds = retrievedIds
         }
-        
-        print(connectedTPMSIds)
     }
     
     func performLastConnectedTPMSAction(connectedDevices: [String]) {        

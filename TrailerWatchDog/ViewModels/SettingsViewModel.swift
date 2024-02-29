@@ -35,10 +35,8 @@ final class SettingsViewModel: ObservableObject {
     @Published var maxDifferenceTWDSensorTemperature = 30.0
     
     /// In Kpa
-    let preassureMinBound = 10.0
+    let preassureMinBound = 0.0
     let preassureMaxBound = 1206.0
-    @Published var preassureMinValue = 100.0
+    @Published var preassureMinValue = 0.0
     @Published var preassureMaxValue = 400.0
-    
-    
 }

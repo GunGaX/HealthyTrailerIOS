@@ -113,9 +113,9 @@ struct MainScreenView: View {
                 .scaledToFit()
                 .frame(width: 220)
             
-            ForEach(dataManager.axies, id: \.id) { axis in
-                AxisBarView(axis: axis)
-                if axis.axisNumber != dataManager.axies.last?.axisNumber {
+            ForEach(dataManager.axies.indices, id: \.self) { index in
+                AxisBarView(axis: $dataManager.axies[index])
+                if dataManager.axies[index].axisNumber != dataManager.axies.last?.axisNumber {
                     separatingAxisBar
                 }
             }
@@ -246,8 +246,12 @@ struct MainScreenView: View {
         let axleIndex = Int((connectedTPMSIndex - 1) / 2)
         if connectedTPMSIndex % 2 == 1 {
             dataManager.axies[axleIndex].leftTire = newTPMS
+            dataManager.axies[axleIndex].isLeftSaved = true
+            dataManager.axies[axleIndex].isLeftCleanTPMS = false
         } else {
             dataManager.axies[axleIndex].rightTire = newTPMS
+            dataManager.axies[axleIndex].isRightSaved = true
+            dataManager.axies[axleIndex].isRightCleanTPMS = false
         }
         
         if connectedTPMSCount < (axiesCount * 2) {
@@ -295,6 +299,10 @@ struct MainScreenView: View {
         for index in 0..<axiesCount {
             dataManager.axies[index].leftTire = TPMSModel.emptyState
             dataManager.axies[index].rightTire = TPMSModel.emptyState
+            dataManager.axies[index].isLeftCleanTPMS = true
+            dataManager.axies[index].isRightCleanTPMS = true
+            dataManager.axies[index].isLeftSaved = false
+            dataManager.axies[index].isRightSaved = false
         }
     }
 }
@@ -302,11 +310,11 @@ struct MainScreenView: View {
 fileprivate struct AxisBarView: View {
     @EnvironmentObject var viewModel: MainViewModel
     
-    var axis: AxiesData
+    @Binding var axis: AxiesData
     
     var body: some View {
         HStack(spacing: -20) {
-            valueBar(isRight: false)
+            valueBar(isRight: false, axle: axis)
             
             ZStack {
                 Image("fillAxisImage")
@@ -374,14 +382,14 @@ fileprivate struct AxisBarView: View {
             }
             .zIndex(2.0)
             
-            valueBar(isRight: true)
+            valueBar(isRight: true, axle: axis)
         }
     }
     
-    private func valueBar(isRight: Bool) -> some View {
+    private func valueBar(isRight: Bool, axle: AxiesData) -> some View {
         ZStack {
             Rectangle()
-                .foregroundStyle(Color.lightGreen)
+                .foregroundStyle(updateColors(axle: axle, isRight: isRight))
                 .padding(.top, 2)
                 .padding(.bottom, 1)
             
@@ -403,6 +411,43 @@ fileprivate struct AxisBarView: View {
             }
             .foregroundStyle(Color.mainGreen)
             .padding(isRight ? .trailing : .leading, -10)
+        }
+    }
+    
+    private func updateColors(axle: AxiesData, isRight: Bool) -> Color {
+        // TEMPORARY
+        let tempTimeValue = true
+
+        if isRight {
+            if !axle.isRightSaved && !axle.isRightCriticalTWD {
+                return Color.mainDark
+            } else if axle.isRightCleanTPMS && !axle.isRightCriticalTWD {
+                return Color.lightBlue
+            } else if tempTimeValue {
+                if axle.isRightCritical || axle.isRightCriticalTWD {
+                    return Color.lightRed
+                } else {
+                    return Color.lightGreen
+                }
+            } else {
+                // TEMPORARY
+                return Color.purple
+            }
+        } else {
+            if !axle.isLeftSaved && !axle.isLeftCriticalTWD {
+                return Color.mainDark
+            } else if axle.isLeftCleanTPMS && !axle.isLeftCriticalTWD {
+                return Color.lightBlue
+            } else if tempTimeValue {
+                if axle.isLeftCritical || axle.isLeftCriticalTWD {
+                    return Color.lightRed
+                } else {
+                    return Color.lightGreen
+                }
+            } else {
+                // TEMPORARY
+                return Color.purple
+            }
         }
     }
 }

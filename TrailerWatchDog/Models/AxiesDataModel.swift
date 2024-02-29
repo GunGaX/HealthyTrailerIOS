@@ -8,12 +8,6 @@
 import Foundation
 
 struct AxiesData: Identifiable, Hashable {
-    static func == (lhs: AxiesData, rhs: AxiesData) -> Bool {
-        lhs.id == rhs.id &&
-        lhs.leftTire == rhs.leftTire &&
-        lhs.rightTire == rhs.rightTire
-    }
-    
     init(axisNumber: Int, leftTire: TPMSModel, rightTire: TPMSModel) {
         self.axisNumber = axisNumber
         self.leftTire = leftTire
@@ -26,10 +20,12 @@ struct AxiesData: Identifiable, Hashable {
     var leftTire: TPMSModel
     var rightTire: TPMSModel
     
-    var isLeftCleanTPMS: Bool = false
-    var isRightCleanTPMS: Bool = false
-    var isLeftCleanTWD: Bool = false
-    var isRightCleanTWD: Bool = false
+    var isLeftSaved: Bool = false
+    var isRightSaved: Bool = false
+    var isLeftCleanTPMS: Bool = true
+    var isRightCleanTPMS: Bool = true
+    var isLeftCleanTWD: Bool = true
+    var isRightCleanTWD: Bool = true
     var isLeftCriticalTPMS: Bool = false
     var isRightCriticalTPMS: Bool = false
     var isLeftCriticalTWD: Bool = false

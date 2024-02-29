@@ -58,6 +58,7 @@ final class ErrorManager: ObservableObject {
         guard twdManager.canShowNotifications else { return }
         guard let twd else { return }
         
+        self.clearFlagsTWD()
         let hasBigDiff = self.checkMinMaxTempTWD(twd: twd)
         let hasOverheat = self.checkOverheatTWD(twd: twd)
         self.setMaxDifferenceTWD(hasMaxDiff: hasBigDiff)
@@ -67,6 +68,7 @@ final class ErrorManager: ObservableObject {
     private func tpmsDataChanged(axies: [AxiesData]) {
         guard tpmsManager.canShowNotifications else { return }
         
+        self.clearFlagsTPMS()
         let hasBigDiff = self.checkMinMaxTempTPMS(axies: axies)
         let hasOverheat = self.checkOverheatTPMS(axies: axies)
         let hasOutOfBounds = self.checkPressureTPMS(axies: axies)
@@ -113,7 +115,7 @@ final class ErrorManager: ObservableObject {
             
             if twd.rightAxle[index].last ?? 0.0 > maxAllowedTemperature {
                 messageBuilder += "Right TWD sensor \(index + 1) is over temperature threshold\n"
-                tpmsManager.axies[index].isRightCleanTWD = true
+                tpmsManager.axies[index].isRightCriticalTWD = true
                 hasOverheat = true
             }
         }
@@ -400,6 +402,20 @@ final class ErrorManager: ObservableObject {
             if pressureTPMSError {
                 showTPMSPressureAlert = true
             }
+        }
+    }
+    
+    private func clearFlagsTPMS() {
+        for index in tpmsManager.axies.indices {
+            tpmsManager.axies[index].isLeftCriticalTPMS = false
+            tpmsManager.axies[index].isRightCriticalTPMS = false
+        }
+    }
+    
+    private func clearFlagsTWD() {
+        for index in tpmsManager.axies.indices {
+            tpmsManager.axies[index].isLeftCriticalTWD = false
+            tpmsManager.axies[index].isRightCriticalTWD = false
         }
     }
 }

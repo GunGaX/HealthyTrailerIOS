@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 final class MainViewModel: ObservableObject {
     var dataManager = DataManager.shared
@@ -69,23 +70,6 @@ final class MainViewModel: ObservableObject {
         
         for _ in 1...(n * 2) {
             connectedOrderedTPMSIds.append("")
-        }
-    }
-    
-    public func getLogDirectories() {
-        if let folderPaths = FileRepository.shared.getSubdirectoriesPaths() {
-            logFoldersPaths = folderPaths
-        }
-    }
-    
-    public func getFilesIdDirecory(path: String) {
-        logFiles = [:]
-        if let filesPaths = FileRepository.shared.getFilesPathsInDirectory(directoryPath: path) {
-            for path in filesPaths {
-                if let file = FileRepository.shared.readFromFile(filePath: path) {
-                    logFiles[path] = file
-                }
-            }
         }
     }
     
@@ -154,6 +138,23 @@ final class MainViewModel: ObservableObject {
         
         for tpmsId in dataManager.connectedTPMSIds {
             updateTPMSConnectionStatus(id: tpmsId, isConnected: false)
+        }
+    }
+    
+    public func getLogDirectories() {
+        if let folderPaths = FileRepository.shared.getSubdirectoriesPaths() {
+            logFoldersPaths = folderPaths
+        }
+    }
+    
+    public func getFilesIdDirecory(path: String) {
+        logFiles = [:]
+        if let filesPaths = FileRepository.shared.getFilesPathsInDirectory(directoryPath: path) {
+            for path in filesPaths {
+                if let file = FileRepository.shared.readFromFile(filePath: path) {
+                    logFiles[path] = file
+                }
+            }
         }
     }
     
