@@ -219,8 +219,8 @@ struct MainScreenView: View {
     
     private var flatTrailer: some View {
         VStack(spacing: 10) {
-            ForEach(dataManager.axies, id: \.id) { axis in
-                FlatAxisBarView(axis: axis)
+            ForEach(dataManager.axies.indices, id: \.self) { index in
+                FlatAxisBarView(axis: $dataManager.axies[index])
             }
         }
     }
@@ -415,15 +415,12 @@ fileprivate struct AxisBarView: View {
     }
     
     private func updateColors(axle: AxiesData, isRight: Bool) -> Color {
-        // TEMPORARY
-        let tempTimeValue = true
-
         if isRight {
             if !axle.isRightSaved && !axle.isRightCriticalTWD {
                 return Color.mainDark
             } else if axle.isRightCleanTPMS && !axle.isRightCriticalTWD {
                 return Color.lightBlue
-            } else if tempTimeValue {
+            } else if axle.rightTire.tireData.updateDate.isFresh() {
                 if axle.isRightCritical || axle.isRightCriticalTWD {
                     return Color.lightRed
                 } else {
@@ -438,7 +435,7 @@ fileprivate struct AxisBarView: View {
                 return Color.mainDark
             } else if axle.isLeftCleanTPMS && !axle.isLeftCriticalTWD {
                 return Color.lightBlue
-            } else if tempTimeValue {
+            } else if axle.leftTire.tireData.updateDate.isFresh() {
                 if axle.isLeftCritical || axle.isLeftCriticalTWD {
                     return Color.lightRed
                 } else {
@@ -455,7 +452,7 @@ fileprivate struct AxisBarView: View {
 fileprivate struct FlatAxisBarView: View {
     @EnvironmentObject var viewModel: MainViewModel
     
-    var axis: AxiesData
+    @Binding var axis: AxiesData
     
     var body: some View {
         VStack(spacing: 8) {
@@ -466,7 +463,7 @@ fileprivate struct FlatAxisBarView: View {
                 .padding(.leading)
             
             HStack(spacing: 0) {
-                flatValueBar(isRight: false)
+                flatValueBar(isRight: false, axle: axis)
                 ZStack {
                     tireImage
                     VStack(spacing: 0) {
@@ -528,7 +525,7 @@ fileprivate struct FlatAxisBarView: View {
                     .frame(width: 44)
                 }
                 .zIndex(2.0)
-                flatValueBar(isRight: true)
+                flatValueBar(isRight: true, axle: axis)
             }
         }
     }
@@ -545,10 +542,10 @@ fileprivate struct FlatAxisBarView: View {
         .frame(height: 64)
     }
     
-    private func flatValueBar(isRight: Bool) -> some View {
+    private func flatValueBar(isRight: Bool, axle: AxiesData) -> some View {
         ZStack {
             Rectangle()
-                .foregroundStyle(Color.lightGreen)
+                .foregroundStyle(updateColors(axle: axle, isRight: isRight))
                 .padding(.top, 2)
                 .padding(.bottom, 1)
             
@@ -572,6 +569,40 @@ fileprivate struct FlatAxisBarView: View {
             .padding(.vertical, 6)
         }
         .padding(isRight ? .leading : .trailing, -10)
+    }
+    
+    private func updateColors(axle: AxiesData, isRight: Bool) -> Color {
+        if isRight {
+            if !axle.isRightSaved && !axle.isRightCriticalTWD {
+                return Color.mainDark
+            } else if axle.isRightCleanTPMS && !axle.isRightCriticalTWD {
+                return Color.lightBlue
+            } else if axle.rightTire.tireData.updateDate.isFresh() {
+                if axle.isRightCritical || axle.isRightCriticalTWD {
+                    return Color.lightRed
+                } else {
+                    return Color.lightGreen
+                }
+            } else {
+                // TEMPORARY
+                return Color.purple
+            }
+        } else {
+            if !axle.isLeftSaved && !axle.isLeftCriticalTWD {
+                return Color.mainDark
+            } else if axle.isLeftCleanTPMS && !axle.isLeftCriticalTWD {
+                return Color.lightBlue
+            } else if axle.leftTire.tireData.updateDate.isFresh() {
+                if axle.isLeftCritical || axle.isLeftCriticalTWD {
+                    return Color.lightRed
+                } else {
+                    return Color.lightGreen
+                }
+            } else {
+                // TEMPORARY
+                return Color.purple
+            }
+        }
     }
 }
 
