@@ -8,12 +8,6 @@
 import Foundation
 
 struct AxiesData: Identifiable, Hashable {
-    init(axisNumber: Int, leftTire: TPMSModel, rightTire: TPMSModel) {
-        self.axisNumber = axisNumber
-        self.leftTire = leftTire
-        self.rightTire = rightTire
-    }
-    
     var id: Int { axisNumber }
     
     var axisNumber: Int
@@ -36,7 +30,6 @@ struct AxiesData: Identifiable, Hashable {
     var isRightCritical: Bool {
         return isRightCriticalTWD || isRightCriticalTPMS
     }
-    
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

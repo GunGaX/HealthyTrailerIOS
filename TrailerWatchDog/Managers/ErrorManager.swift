@@ -8,10 +8,10 @@
 import SwiftUI
 import Combine
 
-final class ErrorManager: ObservableObject {
-    var settingsViewModel = SettingsViewModel.shared
-    var twdManager = BluetoothTWDManager.shared
-    var tpmsManager = DataManager.shared
+final class ErrorManager: ObservableObject {        
+    private var settingsViewModel = SettingsViewModel.shared
+    private var twdManager = BluetoothTWDManager.shared
+    private var tpmsManager = DataManager.shared
     
     private var cancellable: AnyCancellable?
     
@@ -40,6 +40,11 @@ final class ErrorManager: ObservableObject {
     var pressureTPMSMessage = ""
     var pressureTPMSMessageChanged = false
     
+    @Published var backgroundColors: [(Color, Color)] = [(Color.mainDark, Color.mainDark), (Color.mainDark, Color.mainDark), (Color.mainDark, Color.mainDark), (Color.mainDark, Color.mainDark)]
+    @Published var foregroundColors: [(Color, Color)] = [(Color.white, Color.white), (Color.white, Color.white), (Color.white, Color.white), (Color.white, Color.white)]
+    
+    var staleDataTimers: [(Timer?, Timer?)] = [(nil, nil), (nil, nil), (nil, nil), (nil, nil)]
+    
     init() {        
         let twdPublisher = twdManager.$connectedTWD
             .removeDuplicates()
@@ -51,6 +56,7 @@ final class ErrorManager: ObservableObject {
             .sink { twd, tpms in
                 self.twdDataChanged(twd: twd)
                 self.tpmsDataChanged(axies: tpms)
+                self.updateColors()
             }
     }
     
@@ -433,5 +439,89 @@ final class ErrorManager: ObservableObject {
             tpmsManager.axies[index].isLeftCriticalTWD = false
             tpmsManager.axies[index].isRightCriticalTWD = false
         }
+    }
+    
+    private func updateColors() {
+        for index in tpmsManager.axies.indices {
+            updateColorsForAxle(axle: tpmsManager.axies[index], index: index)
+        }
+    }
+    
+    private func updateColorsForAxle(axle: AxiesData, index: Int) {
+        if !axle.isRightSaved && !axle.isRightCriticalTWD {
+            setColors(index, true, back: Color.mainDark, front: Color.white)
+        } else if axle.isRightCleanTPMS && !axle.isRightCriticalTWD {
+            setColors(index, true, back: Color.lightBlue, front: Color.mainBlue)
+        } else if axle.rightTire.tireData.updateDate.isFresh() {
+            if axle.isRightCritical || axle.isRightCriticalTWD {
+                setColors(index, true, back: Color.lightRed, front: Color.mainRed)
+            } else {
+                setColors(index, true, back: Color.lightGreen, front: Color.mainGreen)
+            }
+        } else {
+            setBlinkyColors(index, true, first: Color.lightRed, second: Color.lightYellow)
+        }
+        if !axle.isLeftSaved && !axle.isLeftCriticalTWD {
+            setColors(index, false, back: Color.mainDark, front: Color.white)
+        } else if axle.isLeftCleanTPMS && !axle.isLeftCriticalTWD {
+            setColors(index, false, back: Color.lightBlue, front: Color.mainBlue)
+        } else if axle.leftTire.tireData.updateDate.isFresh() {
+            if axle.isLeftCritical || axle.isLeftCriticalTWD {
+                setColors(index, false, back: Color.lightRed, front: Color.mainRed)
+            } else {
+                setColors(index, false, back: Color.lightGreen, front: Color.mainGreen)
+            }
+        } else {
+            setBlinkyColors(index, false, first: Color.lightRed, second: Color.lightYellow)
+        }
+    }
+    
+    private func setColors(_ index: Int, _ isRight: Bool, back: Color, front: Color) {
+        if isRight {
+            staleDataTimers[index].1?.invalidate()
+            staleDataTimers[index].1 = nil
+            backgroundColors[index].1 = back
+            foregroundColors[index].1 = front
+        } else {
+            staleDataTimers[index].0?.invalidate()
+            staleDataTimers[index].0 = nil
+            backgroundColors[index].0 = back
+            foregroundColors[index].0 = front
+        }
+    }
+    
+    private func setStaleColors(_ index: Int, _ isRight: Bool, back: Color, front: Color) {
+        if isRight {
+            backgroundColors[index].1 = back
+            foregroundColors[index].1 = front
+        } else {
+            backgroundColors[index].0 = back
+            foregroundColors[index].0 = front
+        }
+    }
+    
+    private func setBlinkyColors(_ index: Int, _ isRight: Bool, first: Color, second: Color) {
+        if isRight {
+            guard staleDataTimers[index].1 == nil else { return }
+                    
+            staleDataTimers[index].1 = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { timer in
+                self.setStaleColors(index, isRight, back: first, front: Color.mainRed)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    self.setStaleColors(index, isRight, back: second, front: Color.mainRed)
+                }
+            }
+        } else {
+            guard staleDataTimers[index].0 == nil else { return }
+                    
+            staleDataTimers[index].0 = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { timer in
+                self.setStaleColors(index, isRight, back: first, front: Color.mainRed)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    self.setStaleColors(index, isRight, back: second, front: Color.mainRed)
+                }
+            }
+        }
+        
     }
 }

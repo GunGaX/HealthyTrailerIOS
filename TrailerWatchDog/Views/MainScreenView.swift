@@ -114,7 +114,7 @@ struct MainScreenView: View {
                 .frame(width: 220)
             
             ForEach(dataManager.axies.indices, id: \.self) { index in
-                AxisBarView(axis: $dataManager.axies[index])
+                AxisBarView(errorManager: errorManager, axis: $dataManager.axies[index], index: index)
                 if dataManager.axies[index].axisNumber != dataManager.axies.last?.axisNumber {
                     separatingAxisBar
                 }
@@ -220,7 +220,7 @@ struct MainScreenView: View {
     private var flatTrailer: some View {
         VStack(spacing: 10) {
             ForEach(dataManager.axies.indices, id: \.self) { index in
-                FlatAxisBarView(axis: $dataManager.axies[index])
+                FlatAxisBarView(errorManager: errorManager, axis: $dataManager.axies[index], index: index)
             }
         }
     }
@@ -309,12 +309,14 @@ struct MainScreenView: View {
 
 fileprivate struct AxisBarView: View {
     @EnvironmentObject var viewModel: MainViewModel
+    @StateObject var errorManager: ErrorManager
     
     @Binding var axis: AxiesData
+    let index: Int
     
     var body: some View {
         HStack(spacing: -20) {
-            valueBar(isRight: false, axle: axis)
+            valueBar(isRight: false, axle: axis, index: index)
             
             ZStack {
                 Image("fillAxisImage")
@@ -382,12 +384,13 @@ fileprivate struct AxisBarView: View {
             }
             .zIndex(2.0)
             
-            valueBar(isRight: true, axle: axis)
+            valueBar(isRight: true, axle: axis, index: index)
         }
     }
     
-    private func valueBar(isRight: Bool, axle: AxiesData) -> some View {
-        let (backgroundColor, foregroundColor) = updateColors(axle: axle, isRight: isRight)
+    private func valueBar(isRight: Bool, axle: AxiesData, index: Int) -> some View {
+        let backgroundColor = isRight ? errorManager.backgroundColors[index].1 : errorManager.backgroundColors[index].0
+        let foregroundColor = isRight ? errorManager.foregroundColors[index].1 : errorManager.foregroundColors[index].0
         
         return ZStack {
             Rectangle()
@@ -418,46 +421,14 @@ fileprivate struct AxisBarView: View {
             .padding(isRight ? .trailing : .leading, -10)
         }
     }
-    
-    private func updateColors(axle: AxiesData, isRight: Bool) -> (Color, Color) {
-        if isRight {
-            if !axle.isRightSaved && !axle.isRightCriticalTWD {
-                return (Color.mainDark, Color.white)
-            } else if axle.isRightCleanTPMS && !axle.isRightCriticalTWD {
-                return (Color.lightBlue, Color.mainBlue)
-            } else if axle.rightTire.tireData.updateDate.isFresh() {
-                if axle.isRightCritical || axle.isRightCriticalTWD {
-                    return (Color.lightRed, Color.mainRed)
-                } else {
-                    return (Color.lightGreen, Color.mainGreen)
-                }
-            } else {
-                // TEMPORARY
-                return (Color.purple, Color.white)
-            }
-        } else {
-            if !axle.isLeftSaved && !axle.isLeftCriticalTWD {
-                return (Color.mainDark, Color.white)
-            } else if axle.isLeftCleanTPMS && !axle.isLeftCriticalTWD {
-                return (Color.lightBlue, Color.mainBlue)
-            } else if axle.leftTire.tireData.updateDate.isFresh() {
-                if axle.isLeftCritical || axle.isLeftCriticalTWD {
-                    return (Color.lightRed, Color.mainRed)
-                } else {
-                    return (Color.lightGreen, Color.mainGreen)
-                }
-            } else {
-                // TEMPORARY
-                return (Color.purple, Color.white)
-            }
-        }
-    }
 }
 
 fileprivate struct FlatAxisBarView: View {
     @EnvironmentObject var viewModel: MainViewModel
+    @StateObject var errorManager: ErrorManager
     
     @Binding var axis: AxiesData
+    let index: Int
     
     var body: some View {
         VStack(spacing: 8) {
@@ -468,7 +439,7 @@ fileprivate struct FlatAxisBarView: View {
                 .padding(.leading)
             
             HStack(spacing: 0) {
-                flatValueBar(isRight: false, axle: axis)
+                flatValueBar(isRight: false, axle: axis, index: index)
                 ZStack {
                     tireImage
                     VStack(spacing: 0) {
@@ -530,7 +501,7 @@ fileprivate struct FlatAxisBarView: View {
                     .frame(width: 44)
                 }
                 .zIndex(2.0)
-                flatValueBar(isRight: true, axle: axis)
+                flatValueBar(isRight: true, axle: axis, index: index)
             }
         }
     }
@@ -547,8 +518,9 @@ fileprivate struct FlatAxisBarView: View {
         .frame(height: 64)
     }
     
-    private func flatValueBar(isRight: Bool, axle: AxiesData) -> some View {
-        let (backgroundColor, foregroundColor) = updateColors(axle: axle, isRight: isRight)
+    private func flatValueBar(isRight: Bool, axle: AxiesData, index: Int) -> some View {
+        let backgroundColor = isRight ? errorManager.backgroundColors[index].1 : errorManager.backgroundColors[index].0
+        let foregroundColor = isRight ? errorManager.foregroundColors[index].1 : errorManager.foregroundColors[index].0
         
         return ZStack {
             Rectangle()
@@ -579,40 +551,6 @@ fileprivate struct FlatAxisBarView: View {
             .padding(.vertical, 6)
         }
         .padding(isRight ? .leading : .trailing, -10)
-    }
-    
-    private func updateColors(axle: AxiesData, isRight: Bool) -> (Color, Color) {
-        if isRight {
-            if !axle.isRightSaved && !axle.isRightCriticalTWD {
-                return (Color.mainDark, Color.white)
-            } else if axle.isRightCleanTPMS && !axle.isRightCriticalTWD {
-                return (Color.lightBlue, Color.mainBlue)
-            } else if axle.rightTire.tireData.updateDate.isFresh() {
-                if axle.isRightCritical || axle.isRightCriticalTWD {
-                    return (Color.lightRed, Color.mainRed)
-                } else {
-                    return (Color.lightGreen, Color.mainGreen)
-                }
-            } else {
-                // TEMPORARY
-                return (Color.purple, Color.white)
-            }
-        } else {
-            if !axle.isLeftSaved && !axle.isLeftCriticalTWD {
-                return (Color.mainDark, Color.white)
-            } else if axle.isLeftCleanTPMS && !axle.isLeftCriticalTWD {
-                return (Color.lightBlue, Color.mainBlue)
-            } else if axle.leftTire.tireData.updateDate.isFresh() {
-                if axle.isLeftCritical || axle.isLeftCriticalTWD {
-                    return (Color.lightRed, Color.mainRed)
-                } else {
-                    return (Color.lightGreen, Color.mainGreen)
-                }
-            } else {
-                // TEMPORARY
-                return (Color.purple, Color.white)
-            }
-        }
     }
 }
 
