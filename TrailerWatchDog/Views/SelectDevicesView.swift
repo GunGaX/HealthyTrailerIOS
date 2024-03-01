@@ -39,6 +39,8 @@ struct SelectDevicesView: View {
                     twdManager.connectToDevice(peripheral: peripheral)
                     viewModel.saveConnectedDeviceID(connectedDeviceId: peripheral.identifier)
                     connectTWDAction(device: peripheral)
+                    viewModel.startCheckWarningTimer()
+                    print("tapped")
                     navigationManager.removeLast()
                 }) {
                     BluetoothItemView(peripheral: peripheral)

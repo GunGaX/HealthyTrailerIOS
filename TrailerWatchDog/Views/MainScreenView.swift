@@ -57,6 +57,7 @@ struct MainScreenView: View {
             .attentionAlert($errorManager.showTWDTemperatureDifferenceAlert, messageText: errorManager.temperatureDifferenceTWDMessage)
             .attentionAlert($errorManager.showTPMSTemperatureDifferenceAlert, messageText: errorManager.temperatureDifferenceTPMSMessage)
             .attentionAlert($errorManager.showTPMSPressureAlert, messageText: errorManager.pressureTPMSMessage)
+            .attentionAlert($viewModel.showStaleDataAlert, messageText: viewModel.staleDataMessage)
         }
     }
     
@@ -64,6 +65,7 @@ struct MainScreenView: View {
         Button {
             withAnimation {
                 viewModel.stopUploadingData()
+                viewModel.stopCheckWarningTimer()
                 dataManager.disconnectTWD()
                 BluetoothTWDManager.shared.disconnectFromDevice()
                 viewModel.isTWDConnected = false
