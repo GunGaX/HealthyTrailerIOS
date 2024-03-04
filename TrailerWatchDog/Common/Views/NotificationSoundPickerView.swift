@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum NotificationSound: CaseIterable {
+enum NotificationSound: CaseIterable, Codable {
     case chime, trailerWatchDog
     
     var title: String {
