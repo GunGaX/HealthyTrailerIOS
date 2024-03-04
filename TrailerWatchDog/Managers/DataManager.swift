@@ -218,7 +218,7 @@ class DataManager: NSObject, ObservableObject {
             }
         }
         
-        canShowNotifications = true
+        self.canShowNotifications = true
     }
     
     func disconnectTWD() {

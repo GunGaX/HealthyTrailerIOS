@@ -442,6 +442,8 @@ final class ErrorManager: ObservableObject {
     }
     
     private func updateColors() {
+        guard tpmsManager.canShowNotifications else { return }
+        
         for index in tpmsManager.axies.indices {
             updateColorsForAxle(axle: tpmsManager.axies[index], index: index)
         }
