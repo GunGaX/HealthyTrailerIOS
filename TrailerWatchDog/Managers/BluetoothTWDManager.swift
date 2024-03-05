@@ -36,7 +36,17 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
             centralManager.connect(peripheral, options: nil)
             
             self.peripheral = peripheral
+            
+            self.getLastTWDLog()
         }
+    }
+    
+    func disconnectFromDevice() {
+        if let peripheral {
+            centralManager.cancelPeripheralConnection(peripheral)
+        }
+        
+        peripheral = nil
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -99,7 +109,7 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
         }
     }
     
-    func parseData(dataString: String) {
+    private func parseData(dataString: String) {
         guard let peripheral else { return }
         
         let components = dataString.components(separatedBy: "</L>,<R>")
@@ -136,6 +146,20 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
             connectedTWD!.axiesCount = leftCount
         } else {
             print("[Error][BluetoothTWDManager] unequal axies count")
+        }
+    }
+    
+    public func updateLastTWDValuesData() {
+        guard let connectedTWD else { return }
+        
+        UserDefaults.standard.setObject(connectedTWD, forKey: "lastLog_TWD\(connectedTWD.id.uuidString)")
+    }
+    
+    public func getLastTWDLog() {
+        guard let peripheral else { return }
+        
+        if let twd = UserDefaults.standard.getObject(forKey: "lastLog_TWD\(peripheral.identifier.uuidString)", castTo: TWDModel.self) {
+            connectedTWD = twd
         }
     }
     

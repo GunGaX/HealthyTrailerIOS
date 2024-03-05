@@ -67,7 +67,7 @@ struct TerminalView: View {
             Text("Connected:")
                 .foregroundStyle(Color.textDark)
             
-            Text("TWD-DEVICE-NAME")
+            Text(viewModel.connectedTWD?.name ?? "No name")
                 .foregroundStyle(Color.mainBlue)
         }
         .font(.roboto500, size: 16)
