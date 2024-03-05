@@ -7,10 +7,17 @@
 
 import Foundation
 import Combine
+import SwiftUI
+import AVFAudio
 
 final class MainViewModel: ObservableObject {
     var dataManager = DataManager.shared
     var twdManager = BluetoothTWDManager.shared
+    
+    var settingsViewModel = SettingsViewModel.shared
+    
+    var alertSoundPlayer: AVAudioPlayer?
+    var dogBarkSoundPlayer: AVAudioPlayer?
     
     @Published var isTWDConnected = false
     @Published var connectedTWD: TWDModel?
@@ -19,7 +26,7 @@ final class MainViewModel: ObservableObject {
     
     @Published var selectedSound: NotificationSound = .chime
     @Published var selectedTemperatureType: TemperatureType = .fahrenheit
-    @Published var selectedPreassureType: PreasureType = .bar
+    @Published var selectedPreassureType: PreasureType = .kpa
     
     @Published var terminalLogs: [TerminalLog] = TerminalLog.mockLogs
     
@@ -30,13 +37,27 @@ final class MainViewModel: ObservableObject {
     
     @Published var previouslyConnectedDevices: [UUID] = []
     
+    @Published var showStaleDataAlert = false
+    var staleDataMessage = ""
+    
     var connectingTextArray: [String] = []
     var orderedIndeces: [Int] = []
     var connectedOrderedTPMSIds: [String] = []
     
+    var staleWarningTimer: Timer?
+    
     init() {
         twdManager.$connectedTWD
             .assign(to: &$connectedTWD)
+        
+        settingsViewModel.$selectedSound
+            .assign(to: &$selectedSound)
+        settingsViewModel.$selectedTemperatureType
+            .assign(to: &$selectedTemperatureType)
+        settingsViewModel.$selectedPreassureType
+            .assign(to: &$selectedPreassureType)
+        
+        setupAudioPlayers()
     }
     
     public func generateConnectingOrder(_ n: Int) {
@@ -60,23 +81,6 @@ final class MainViewModel: ObservableObject {
         
         for _ in 1...(n * 2) {
             connectedOrderedTPMSIds.append("")
-        }
-    }
-    
-    public func getLogDirectories() {
-        if let folderPaths = FileRepository.shared.getSubdirectoriesPaths() {
-            logFoldersPaths = folderPaths
-        }
-    }
-    
-    public func getFilesIdDirecory(path: String) {
-        logFiles = [:]
-        if let filesPaths = FileRepository.shared.getFilesPathsInDirectory(directoryPath: path) {
-            for path in filesPaths {
-                if let file = FileRepository.shared.readFromFile(filePath: path) {
-                    logFiles[path] = file
-                }
-            }
         }
     }
     
@@ -148,6 +152,85 @@ final class MainViewModel: ObservableObject {
         }
     }
     
+    public func getLogDirectories() {
+        if let folderPaths = FileRepository.shared.getSubdirectoriesPaths() {
+            logFoldersPaths = folderPaths
+        }
+    }
+    
+    public func getFilesIdDirecory(path: String) {
+        logFiles = [:]
+        if let filesPaths = FileRepository.shared.getFilesPathsInDirectory(directoryPath: path) {
+            for path in filesPaths {
+                if let file = FileRepository.shared.readFromFile(filePath: path) {
+                    logFiles[path] = file
+                }
+            }
+        }
+    }
+    
+    public func playAlertSound() {
+        if settingsViewModel.selectedSound == .chime {
+            alertSoundPlayer?.play()
+        } else {
+            dogBarkSoundPlayer?.play()
+        }
+    }
+    
+    private func setupAudioPlayers() {
+        if let soundURL1 = Bundle.main.url(forResource: "alert_sound", withExtension: "mp3") {
+            do {
+                alertSoundPlayer = try AVAudioPlayer(contentsOf: soundURL1)
+            } catch {
+                print("Error loading sound file: \(error.localizedDescription)")
+            }
+        }
+        
+        if let soundURL2 = Bundle.main.url(forResource: "dogbark_alert", withExtension: "wav") {
+            do {
+                dogBarkSoundPlayer = try AVAudioPlayer(contentsOf: soundURL2)
+            } catch {
+                print("Error loading sound file: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func checkWarnings() {
+        print("show 1")
+        let axisList = dataManager.axies
+        var tyresNames = ""
+        var tyreCount = 0
+        
+        for index in axisList.indices {
+            if !axisList[index].isFresh(isRight: false) {
+                tyresNames += "Left sensor \(index) hasn't reported in over five minutes, please check sensor\n"
+                tyreCount += 1
+            }
+            if !axisList[index].isFresh(isRight: true) {
+                tyresNames += "Right sensor \(index) hasn't reported in over five minutes, please check sensor\n"
+                tyreCount += 1
+            }
+        }
+        
+        if tyreCount != 0 {
+            print("show 2")
+            staleDataMessage = tyresNames
+            showStaleDataAlert = true
+        }
+    }
+    
+    public func startCheckWarningTimer() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 240) {
+            self.staleWarningTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { timer in
+                self.checkWarnings()
+            }
+        }
+    }
+    
+    public func stopCheckWarningTimer() {
+        staleWarningTimer?.invalidate()
+        staleWarningTimer = nil
+    }
     
 //
 //    public func createDirectory() {

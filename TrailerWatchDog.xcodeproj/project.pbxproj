@@ -10,6 +10,12 @@
 		B6058EF02B163B0300D84AD3 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6058EEF2B163B0300D84AD3 /* UserDefaultsExtension.swift */; };
 		B6058EF32B17651500D84AD3 /* ConnectTMPSDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */; };
 		B61655652B84FCF000F4794B /* SelectDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61655642B84FCF000F4794B /* SelectDevicesView.swift */; };
+		B61655672B8CD01300F4794B /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61655662B8CD01300F4794B /* ErrorManager.swift */; };
+		B61655692B8CE6CA00F4794B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61655682B8CE6CA00F4794B /* SettingsViewModel.swift */; };
+		B616556B2B8E740700F4794B /* AttentionAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B616556A2B8E740700F4794B /* AttentionAlertView.swift */; };
+		B616556F2B90F77800F4794B /* dogbark_alert.wav in Resources */ = {isa = PBXBuildFile; fileRef = B616556D2B90F77800F4794B /* dogbark_alert.wav */; };
+		B61655702B90F77800F4794B /* alert_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B616556E2B90F77800F4794B /* alert_sound.mp3 */; };
+		B616559D2B973B8D00F4794B /* NotificationErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B616559C2B973B8D00F4794B /* NotificationErrorModel.swift */; };
 		B62928502B210C4A0044B011 /* TWDModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B629284F2B210C4A0044B011 /* TWDModel.swift */; };
 		B629550C2B7D43A800054E01 /* BluetoothTWDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B629550B2B7D43A800054E01 /* BluetoothTWDManager.swift */; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
@@ -32,7 +38,6 @@
 		B63E7C0B2B02269F00ECA81B /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C0A2B02269F00ECA81B /* ViewModifiers.swift */; };
 		B63E7C0D2B02297300ECA81B /* AxiesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */; };
 		B63E7C1E2B02936400ECA81B /* MeasurementTypePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */; };
-		B63E7C212B0387E300ECA81B /* AlertTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C202B0387E300ECA81B /* AlertTypeEnum.swift */; };
 		B63E7C232B0389CE00ECA81B /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C222B0389CE00ECA81B /* WelcomeView.swift */; };
 		B63E7C252B038D5400ECA81B /* AllowPermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C242B038D5400ECA81B /* AllowPermissionsView.swift */; };
 		B63E7C272B038E2400ECA81B /* MainGreenButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C262B038E2400ECA81B /* MainGreenButtonStyle.swift */; };
@@ -68,6 +73,12 @@
 		B6058EEF2B163B0300D84AD3 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTMPSDevicesView.swift; sourceTree = "<group>"; };
 		B61655642B84FCF000F4794B /* SelectDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDevicesView.swift; sourceTree = "<group>"; };
+		B61655662B8CD01300F4794B /* ErrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
+		B61655682B8CE6CA00F4794B /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		B616556A2B8E740700F4794B /* AttentionAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionAlertView.swift; sourceTree = "<group>"; };
+		B616556D2B90F77800F4794B /* dogbark_alert.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dogbark_alert.wav; sourceTree = "<group>"; };
+		B616556E2B90F77800F4794B /* alert_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alert_sound.mp3; sourceTree = "<group>"; };
+		B616559C2B973B8D00F4794B /* NotificationErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationErrorModel.swift; sourceTree = "<group>"; };
 		B629284F2B210C4A0044B011 /* TWDModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWDModel.swift; sourceTree = "<group>"; };
 		B629550B2B7D43A800054E01 /* BluetoothTWDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothTWDManager.swift; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
@@ -90,7 +101,6 @@
 		B63E7C0A2B02269F00ECA81B /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		B63E7C0C2B02297300ECA81B /* AxiesDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxiesDataModel.swift; sourceTree = "<group>"; };
 		B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementTypePickerView.swift; sourceTree = "<group>"; };
-		B63E7C202B0387E300ECA81B /* AlertTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTypeEnum.swift; sourceTree = "<group>"; };
 		B63E7C222B0389CE00ECA81B /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		B63E7C242B038D5400ECA81B /* AllowPermissionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowPermissionsView.swift; sourceTree = "<group>"; };
 		B63E7C262B038E2400ECA81B /* MainGreenButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGreenButtonStyle.swift; sourceTree = "<group>"; };
@@ -141,8 +151,18 @@
 				B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */,
 				B65FADD12B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift */,
 				B65FADD32B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift */,
+				B616556A2B8E740700F4794B /* AttentionAlertView.swift */,
 			);
 			path = AlertViews;
+			sourceTree = "<group>";
+		};
+		B616556C2B90F77800F4794B /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				B616556D2B90F77800F4794B /* dogbark_alert.wav */,
+				B616556E2B90F77800F4794B /* alert_sound.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		B63E7BE22AFD153800ECA81B /* Extensions */ = {
@@ -191,6 +211,7 @@
 				B6DB0B2C2B065C9F00DEF890 /* FileRepository.swift */,
 				B671C0562B0F9A940034DE77 /* DataManager.swift */,
 				B629550B2B7D43A800054E01 /* BluetoothTWDManager.swift */,
+				B61655662B8CD01300F4794B /* ErrorManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -214,16 +235,9 @@
 				B6C862A02B14F73400698ADC /* TireDataModel.swift */,
 				B629284F2B210C4A0044B011 /* TWDModel.swift */,
 				B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */,
+				B616559C2B973B8D00F4794B /* NotificationErrorModel.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		B63E7C1F2B0387D200ECA81B /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				B63E7C202B0387E300ECA81B /* AlertTypeEnum.swift */,
-			);
-			path = Enums;
 			sourceTree = "<group>";
 		};
 		B68CE69C2AFBD5EB0047E644 = {
@@ -248,7 +262,7 @@
 				B68CE6CD2AFD0D180047E644 /* Info.plist */,
 				B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */,
 				B63E7C2A2B03A37700ECA81B /* RootView.swift */,
-				B63E7C1F2B0387D200ECA81B /* Enums */,
+				B616556C2B90F77800F4794B /* Sounds */,
 				B63E7BF22AFD79E400ECA81B /* Helpers */,
 				B63E7BED2AFD78DD00ECA81B /* Managers */,
 				B63E7BE22AFD153800ECA81B /* Extensions */,
@@ -290,6 +304,7 @@
 			isa = PBXGroup;
 			children = (
 				B68CE6BD2AFD0A040047E644 /* MainViewModel.swift */,
+				B61655682B8CE6CA00F4794B /* SettingsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -391,8 +406,10 @@
 				B68CE6CB2AFD0C2A0047E644 /* Roboto-Bold.ttf in Resources */,
 				B68CE6C82AFD0C2A0047E644 /* Roboto-Medium.ttf in Resources */,
 				B68CE6B02AFBD5ED0047E644 /* Preview Assets.xcassets in Resources */,
+				B61655702B90F77800F4794B /* alert_sound.mp3 in Resources */,
 				B68CE6CA2AFD0C2A0047E644 /* Roboto-Thin.ttf in Resources */,
 				B68CE6C92AFD0C2A0047E644 /* Roboto-Regular.ttf in Resources */,
+				B616556F2B90F77800F4794B /* dogbark_alert.wav in Resources */,
 				B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */,
 				B68CE6CC2AFD0C2A0047E644 /* Roboto-Light.ttf in Resources */,
 				B68CE6C72AFD0C2A0047E644 /* Roboto-Black.ttf in Resources */,
@@ -418,12 +435,12 @@
 				B66F4B1D2B2799DA0001E143 /* TPMSModel.swift in Sources */,
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
-				B63E7C212B0387E300ECA81B /* AlertTypeEnum.swift in Sources */,
 				B63E7C232B0389CE00ECA81B /* WelcomeView.swift in Sources */,
 				B6DB0B312B079E4700DEF890 /* FolderDetailsView.swift in Sources */,
 				B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */,
 				B63E7C092AFFB33400ECA81B /* NotificationSoundPickerView.swift in Sources */,
 				B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */,
+				B61655672B8CD01300F4794B /* ErrorManager.swift in Sources */,
 				B63E7C252B038D5400ECA81B /* AllowPermissionsView.swift in Sources */,
 				B63E7BEC2AFD23ED00ECA81B /* UIApplicationExtensions.swift in Sources */,
 				B63E7C292B039F2A00ECA81B /* LocationManager.swift in Sources */,
@@ -432,6 +449,8 @@
 				B63E7C0B2B02269F00ECA81B /* ViewModifiers.swift in Sources */,
 				B65FADD42B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift in Sources */,
 				B65FADD22B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift in Sources */,
+				B61655692B8CE6CA00F4794B /* SettingsViewModel.swift in Sources */,
+				B616556B2B8E740700F4794B /* AttentionAlertView.swift in Sources */,
 				B629550C2B7D43A800054E01 /* BluetoothTWDManager.swift in Sources */,
 				B63E7BF62AFE5D1900ECA81B /* SecondaryHeaderView.swift in Sources */,
 				B63E7C272B038E2400ECA81B /* MainGreenButtonStyle.swift in Sources */,
@@ -443,6 +462,7 @@
 				B68CE6BE2AFD0A040047E644 /* MainViewModel.swift in Sources */,
 				B63E7BF12AFD79CC00ECA81B /* ViewExtensions.swift in Sources */,
 				B63E7C032AFE86AF00ECA81B /* DefaultSignleSliderView.swift in Sources */,
+				B616559D2B973B8D00F4794B /* NotificationErrorModel.swift in Sources */,
 				B63E7C2D2B03B98F00ECA81B /* BluetoothManager.swift in Sources */,
 				B6DB0B332B07AB0800DEF890 /* LogFileDetailsView.swift in Sources */,
 				B63E7BF42AFD79FB00ECA81B /* NavigationDestinationModifier.swift in Sources */,

@@ -13,8 +13,8 @@ extension View {
         modifier(NavigationDestinationsViewModifier())
     }
     
-    func defaultAlert(_ alert: Binding<AlertType?>) -> some View {
-        modifier(AlertView(alertStep: alert))
+    func headerShadowRectangle() -> some View {
+        self.modifier(HeaderShadowRectangle())
     }
     
     func connectingTPMSAlertView(_ show: Binding<Bool>, discoveredTPMSDevices: [String], tireToConnect: String, onButtonTap: @escaping (String) -> Void, onCancelTap: @escaping () -> Void) -> some View {
@@ -35,5 +35,11 @@ extension View {
     
     func forgetSensorsConfirmationAlert(_ show: Binding<Bool>, onButtonTap: @escaping () -> Void) -> some View {
         modifier(ForgetSensorsConfirmationAlertView(showAlert: show, onButtonTap: onButtonTap))
+    }
+    
+    func attentionAlert(_ show: Binding<Bool>, messageText: String) -> some View {
+        modifier(
+            AttentionAlertView(showAlert: show, messageText: messageText)
+        )
     }
 }

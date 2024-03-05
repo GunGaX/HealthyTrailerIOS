@@ -28,6 +28,14 @@ extension Double {
         return Double(self * 0.0689476000045014)
     }
     
+    func fromKpaToBar() -> Double {
+        return Double(self * 0.01)
+    }
+    
+    func fromKpaToPsi() -> Double {
+        return Double(self * 0.145037738)
+    }
+    
     func applyTemperatureSystem(selectedSystem: TemperatureType) -> Double {
         switch selectedSystem {
         case .celsius: return self.fromFahrenheitToCelsius()
@@ -37,9 +45,9 @@ extension Double {
     
     func applyPreassureSystem(selectedSystem: PreasureType) -> Double {
         switch selectedSystem {
-        case .kpa: return self.fromPsiToKpa()
-        case .bar: return self.fromPsiToBar()
-        case .psi: return self
+        case .kpa: return self
+        case .bar: return self.fromKpaToBar()
+        case .psi: return self.fromKpaToPsi()
         }
     }
 }

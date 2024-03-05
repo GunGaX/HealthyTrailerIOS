@@ -20,17 +20,33 @@ struct DefaultDoubleSliderView: View {
     
     var minBound: Double {
         switch selectedPreassureType {
-        case .kpa: minValue.fromPsiToKpa()
-        case .bar: minValue.fromPsiToBar()
-        case .psi: minValue
+        case .kpa: return minValue
+        case .bar: return minValue.fromKpaToBar()
+        case .psi: return minValue.fromKpaToPsi()
         }
     }
     
     var maxBound: Double {
         switch selectedPreassureType {
-        case .kpa: maxValue.fromPsiToKpa()
-        case .bar: maxValue.fromPsiToBar()
-        case .psi: maxValue
+        case .kpa: return maxValue
+        case .bar: return maxValue.fromKpaToBar()
+        case .psi: return maxValue.fromKpaToPsi()
+        }
+    }
+    
+    var fromActualValue: Double {
+        switch selectedPreassureType {
+        case .kpa: return firstValue
+        case .bar: return firstValue.fromKpaToBar()
+        case .psi: return firstValue.fromKpaToPsi()
+        }
+    }
+    
+    var toActualValue: Double {
+        switch selectedPreassureType {
+        case .kpa: return secondValue
+        case .bar: return secondValue.fromKpaToBar()
+        case .psi: return secondValue.fromKpaToPsi()
         }
     }
     
@@ -60,26 +76,22 @@ struct DefaultDoubleSliderView: View {
                     .frame(height: 4)
                 RoundedRectangle(cornerRadius: 10)
                     .foregroundColor(.mainBlue)
-                    .offset(x: gr.size.width * firstValue)
-                    .frame(width: gr.size.width * abs(secondValue - firstValue), height: 6)
+                    .offset(x: gr.size.width * CGFloat((firstValue - minValue) / (maxValue - minValue)))
+                    .frame(width: gr.size.width * CGFloat((secondValue - firstValue) / (maxValue - minValue)), height: 6)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 HStack {
                     Circle()
                         .foregroundColor(Color.mainBlue)
                         .frame(width: 20, height: 20)
-                        .offset(x: gr.size.width * firstValue - 10)
+                        .offset(x: gr.size.width * CGFloat((firstValue - minValue) / (maxValue - minValue)) - 10)
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onChanged { v in
                                     if (abs(v.translation.width) < 0.1) {
                                         self.lastCoordinateFirstValue = self.firstValue
                                     }
-                                    if v.translation.width > 0 {
-                                        self.firstValue = min(1.0, self.lastCoordinateFirstValue + v.translation.width / gr.size.width)
-                                    } else {
-                                        self.firstValue = max(0.0, self.lastCoordinateFirstValue + v.translation.width / gr.size.width)
-                                    }
-                                    
+                                    let newValue = min(max(minValue, self.lastCoordinateFirstValue + Double(v.translation.width) / Double(gr.size.width) * (maxValue - minValue )), maxValue)
+                                    self.firstValue = newValue
                                 }
                         )
                     Spacer()
@@ -88,19 +100,15 @@ struct DefaultDoubleSliderView: View {
                     Circle()
                         .foregroundColor(Color.mainBlue)
                         .frame(width: 20, height: 20)
-                        .offset(x: gr.size.width * secondValue - 10)
+                        .offset(x: gr.size.width * CGFloat((secondValue - minValue) / (maxValue - minValue)) - 10)
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onChanged { v in
                                     if (abs(v.translation.width) < 0.1) {
                                         self.lastCoordinateSecondValue = self.secondValue
                                     }
-                                    if v.translation.width > 0 {
-                                        self.secondValue = min(1.0, self.lastCoordinateSecondValue + v.translation.width / gr.size.width)
-                                    } else {
-                                        self.secondValue = max(0.0, self.lastCoordinateSecondValue + v.translation.width / gr.size.width)
-                                    }
-                                    
+                                    let newValue = min(max(minValue, self.lastCoordinateSecondValue + Double(v.translation.width) / Double(gr.size.width) * (maxValue - minValue)), maxValue)
+                                    self.secondValue = newValue
                                 }
                         )
                     Spacer()
@@ -111,8 +119,8 @@ struct DefaultDoubleSliderView: View {
     
     @ViewBuilder
     private var title: some View {
-        let from = ((maxBound - minBound) * firstValue + minBound).formattedToOneDecimalPlace()
-        let to = ((maxBound - minBound) * secondValue + minBound).formattedToOneDecimalPlace()
+        let from = fromActualValue.formattedToOneDecimalPlace()
+        let to = toActualValue.formattedToOneDecimalPlace()
         Text("\(titleText) \(from) \(selectedPreassureType.measureMark) to \(to) \(selectedPreassureType.measureMark)")
             .foregroundStyle(Color.textDark)
             .font(.roboto500, size: 16)
@@ -137,6 +145,7 @@ struct DefaultDoubleSliderView: View {
         }
     }
 }
+
 
 #Preview {
     DefaultDoubleSliderView(firstValue: .constant(0.3), secondValue: .constant(0.7), selectedPreassureType: .constant(.bar), titleText: "MAX temperature", minValue: 0, maxValue: 160)
