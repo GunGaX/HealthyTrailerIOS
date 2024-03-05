@@ -52,11 +52,11 @@ struct MainScreenView: View {
             .confirmationAddNewSensorsAlert($showAddConfirmationAlert, onButtonTap: addNewTPMSSensorsAction)
             .forgetSensorsConfirmationAlert($showForgetSensorsConfirmationAlert, onButtonTap: forgetTPMSSensorsAction)
             .connectingTPMSAlertView($showConnectingTPMSAlert, discoveredTPMSDevices: dataManager.tpms_ids, tireToConnect: tireToConnectText, onButtonTap: startConnectingTPMS, onCancelTap: saveAndStartWorking)
-            .attentionAlert($errorManager.showTWDOverheatAlert, messageText: errorManager.temperatureOverheatTWDMessage)
-            .attentionAlert($errorManager.showTPMSOverheatAlert, messageText: errorManager.temperatureOverheatTPMSMessage)
-            .attentionAlert($errorManager.showTWDTemperatureDifferenceAlert, messageText: errorManager.temperatureDifferenceTWDMessage)
-            .attentionAlert($errorManager.showTPMSTemperatureDifferenceAlert, messageText: errorManager.temperatureDifferenceTPMSMessage)
-            .attentionAlert($errorManager.showTPMSPressureAlert, messageText: errorManager.pressureTPMSMessage)
+            .attentionAlert($errorManager.twdOverheatNotificationError.show, messageText: errorManager.twdOverheatNotificationError.message)
+            .attentionAlert($errorManager.tpmsOverheatNotificationError.show, messageText: errorManager.tpmsOverheatNotificationError.message)
+            .attentionAlert($errorManager.twdTemperatureDifferenceNotificationError.show, messageText: errorManager.twdTemperatureDifferenceNotificationError.message)
+            .attentionAlert($errorManager.tpmsTemperatureDifferenceNotificationError.show, messageText: errorManager.tpmsTemperatureDifferenceNotificationError.message)
+            .attentionAlert($errorManager.tpmsPressureNotificationError.show, messageText: errorManager.tpmsPressureNotificationError.message)
             .attentionAlert($viewModel.showStaleDataAlert, messageText: viewModel.staleDataMessage)
         }
     }

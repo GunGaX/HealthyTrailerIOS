@@ -15,30 +15,19 @@ final class ErrorManager: ObservableObject {
     
     private var cancellable: AnyCancellable?
     
-    @Published var showTWDOverheatAlert = false
-    var temperatureOverheatTWDError = false
-    var temperatureOverheatTWDMessage = ""
-    var temperatureOverheatTWDMessageChanged = false
+    @Published var twdOverheatNotificationError = NotificationError()
     
-    @Published var showTPMSOverheatAlert = false
-    var temperatureOverheatTPMSError = false
-    var temperatureOverheatTPMSMessage = ""
-    var temperatureOverheatTPMSMessageChanged = false
+    @Published var tpmsOverheatNotificationError = NotificationError()
     
-    @Published var showTWDTemperatureDifferenceAlert = false
-    var temperatureDifferenceTWDError = false
-    var temperatureDifferenceTWDMessage = ""
-    var temperatureDifferenceTWDMessageChanged = false
+    @Published var twdTemperatureDifferenceNotificationError = NotificationError()
     
-    @Published var showTPMSTemperatureDifferenceAlert = false
-    var temperatureDifferenceTPMSError = false
-    var temperatureDifferenceTPMSMessage = ""
-    var temperatureDifferenceTPMSMessageChanged = false
+    @Published var tpmsTemperatureDifferenceNotificationError = NotificationError()
     
-    @Published var showTPMSPressureAlert = false
-    var pressureTPMSError = false
-    var pressureTPMSMessage = ""
-    var pressureTPMSMessageChanged = false
+    @Published var tpmsPressureNotificationError = NotificationError()
+//    @Published var showTPMSPressureAlert = false
+//    var pressureTPMSError = false
+//    var pressureTPMSMessage = ""
+//    var pressureTPMSMessageChanged = false
     
     @Published var backgroundColors: [(Color, Color)] = [(Color.mainDark, Color.mainDark), (Color.mainDark, Color.mainDark), (Color.mainDark, Color.mainDark), (Color.mainDark, Color.mainDark)]
     @Published var foregroundColors: [(Color, Color)] = [(Color.white, Color.white), (Color.white, Color.white), (Color.white, Color.white), (Color.white, Color.white)]
@@ -126,8 +115,8 @@ final class ErrorManager: ObservableObject {
             }
         }
         
-        temperatureOverheatTWDMessageChanged = self.temperatureOverheatTWDMessage != messageBuilder
-        temperatureOverheatTWDMessage = messageBuilder
+        twdOverheatNotificationError.changed = self.twdOverheatNotificationError.message != messageBuilder
+        twdOverheatNotificationError.message = messageBuilder
         
         return hasOverheat
     }
@@ -155,8 +144,8 @@ final class ErrorManager: ObservableObject {
             }
         }
         
-        temperatureOverheatTPMSMessageChanged = self.temperatureOverheatTPMSMessage != messageBuilder
-        temperatureOverheatTPMSMessage = messageBuilder
+        tpmsOverheatNotificationError.changed = self.tpmsOverheatNotificationError.message != messageBuilder
+        tpmsOverheatNotificationError.message = messageBuilder
         
         return hasOverheat
     }
@@ -185,7 +174,7 @@ final class ErrorManager: ObservableObject {
         let maxDiff = self.getMaxAllowedDifferenceTWD()
         var hasBigDiff = false
         if maxTemp - minTemp < maxDiff {
-            self.temperatureDifferenceTWDMessage = messageBuilder
+            self.twdTemperatureDifferenceNotificationError.message = messageBuilder
             return false
         }
         
@@ -265,8 +254,8 @@ final class ErrorManager: ObservableObject {
             messageBuilder += "\(criticalSensoursCount) or more sensors is over max temperature difference\n"
         }
         
-        temperatureDifferenceTWDMessageChanged = self.temperatureDifferenceTWDMessage != messageBuilder
-        temperatureDifferenceTWDMessage = messageBuilder
+        twdTemperatureDifferenceNotificationError.changed = self.twdTemperatureDifferenceNotificationError.message != messageBuilder
+        twdTemperatureDifferenceNotificationError.message = messageBuilder
         return hasBigDiff
     }
     
@@ -319,8 +308,8 @@ final class ErrorManager: ObservableObject {
             }
         }
         
-        temperatureDifferenceTPMSMessageChanged = self.temperatureDifferenceTPMSMessage != messageBuilder
-        temperatureDifferenceTPMSMessage = messageBuilder
+        tpmsTemperatureDifferenceNotificationError.changed = self.tpmsTemperatureDifferenceNotificationError.message != messageBuilder
+        tpmsTemperatureDifferenceNotificationError.message = messageBuilder
         return hasBigDiff
     }
     
@@ -372,57 +361,57 @@ final class ErrorManager: ObservableObject {
             }
         }
         
-        pressureTPMSMessageChanged = self.pressureTPMSMessage != messageBuilder
-        pressureTPMSMessage = messageBuilder
+        tpmsPressureNotificationError.changed = self.tpmsPressureNotificationError.message != messageBuilder
+        tpmsPressureNotificationError.message = messageBuilder
         return isOutOfBound
     }
     
     private func setTemperatureOverheatTWD(isOverheat: Bool) {
-        if temperatureOverheatTWDError != isOverheat || temperatureOverheatTWDMessageChanged {
-            temperatureOverheatTWDMessageChanged = false
-            temperatureOverheatTWDError = isOverheat
-            if temperatureOverheatTWDError {
-                showTWDOverheatAlert = true
+        if twdOverheatNotificationError.error != isOverheat || twdOverheatNotificationError.changed {
+            twdOverheatNotificationError.changed = false
+            twdOverheatNotificationError.error = isOverheat
+            if twdOverheatNotificationError.error {
+                twdOverheatNotificationError.show = true
             }
         }
     }
     
     private func setTemperatureOverheatTPMS(isOverheat: Bool) {
-        if temperatureOverheatTPMSError != isOverheat || temperatureOverheatTPMSMessageChanged {
-            temperatureOverheatTPMSMessageChanged = false
-            temperatureOverheatTPMSError = isOverheat
-            if temperatureOverheatTPMSError {
-                showTPMSOverheatAlert = true
+        if tpmsOverheatNotificationError.error != isOverheat || tpmsOverheatNotificationError.changed {
+            tpmsOverheatNotificationError.changed = false
+            tpmsOverheatNotificationError.error = isOverheat
+            if tpmsOverheatNotificationError.error {
+                tpmsOverheatNotificationError.show = true
             }
         }
     }
     
     private func setMaxDifferenceTWD(hasMaxDiff: Bool) {
-        if temperatureDifferenceTWDError != hasMaxDiff || temperatureDifferenceTWDMessageChanged {
-            temperatureDifferenceTWDMessageChanged = false
-            temperatureDifferenceTWDError = hasMaxDiff
-            if temperatureDifferenceTWDError {
-                showTWDTemperatureDifferenceAlert = true
+        if twdTemperatureDifferenceNotificationError.error != hasMaxDiff || twdTemperatureDifferenceNotificationError.changed {
+            twdTemperatureDifferenceNotificationError.changed = false
+            twdTemperatureDifferenceNotificationError.error = hasMaxDiff
+            if twdTemperatureDifferenceNotificationError.error {
+                twdTemperatureDifferenceNotificationError.show = true
             }
         }
     }
     
     private func setMaxDifferenceTPMS(hasMaxDiff: Bool) {
-        if temperatureDifferenceTPMSError != hasMaxDiff || temperatureDifferenceTPMSMessageChanged {
-            temperatureDifferenceTPMSMessageChanged = false
-            temperatureDifferenceTPMSError = hasMaxDiff
-            if temperatureDifferenceTPMSError {
-                showTPMSTemperatureDifferenceAlert = true
+        if tpmsTemperatureDifferenceNotificationError.error != hasMaxDiff || tpmsTemperatureDifferenceNotificationError.changed {
+            tpmsTemperatureDifferenceNotificationError.changed = false
+            tpmsTemperatureDifferenceNotificationError.error = hasMaxDiff
+            if tpmsTemperatureDifferenceNotificationError.error {
+                tpmsTemperatureDifferenceNotificationError.show = true
             }
         }
     }
     
     private func setPressureErrorTPMS(isOutOfBounds: Bool) {
-        if pressureTPMSError != isOutOfBounds || pressureTPMSMessageChanged {
-            pressureTPMSMessageChanged = false
-            pressureTPMSError = isOutOfBounds
-            if pressureTPMSError {
-                showTPMSPressureAlert = true
+        if tpmsPressureNotificationError.error != isOutOfBounds || tpmsPressureNotificationError.changed {
+            tpmsPressureNotificationError.changed = false
+            tpmsPressureNotificationError.error = isOutOfBounds
+            if tpmsPressureNotificationError.error {
+                tpmsPressureNotificationError.show = true
             }
         }
     }
