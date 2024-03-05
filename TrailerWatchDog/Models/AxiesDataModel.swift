@@ -35,3 +35,13 @@ struct AxiesData: Identifiable, Hashable {
         hasher.combine(id)
     }
 }
+
+extension AxiesData {
+    func isFresh(isRight: Bool) -> Bool {
+        let now = Date()
+        let diff = abs(now.timeIntervalSince(isRight ? self.rightTire.tireData.updateDate : self.leftTire.tireData.updateDate))
+        let minutes = diff / 60
+        
+        return minutes <= 10
+    }
+}

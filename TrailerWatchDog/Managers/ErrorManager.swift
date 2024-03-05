@@ -127,7 +127,7 @@ final class ErrorManager: ObservableObject {
         var hasOverheat = false
         
         for index in 0..<axies.count {
-            if axies[index].isLeftCleanTPMS && axies[index].leftTire.tireData.updateDate.isFresh() {
+            if axies[index].isLeftCleanTPMS && axies[index].isFresh(isRight: false) {
                 if axies[index].leftTire.tireData.temperature > maxAllowedTemperature {
                     messageBuilder += "Left wheel \(index + 1) is over temperature threshold\n"
                     tpmsManager.axies[index].isLeftCriticalTPMS = true
@@ -135,7 +135,7 @@ final class ErrorManager: ObservableObject {
                 }
             }
             
-            if axies[index].isRightCleanTPMS && axies[index].rightTire.tireData.updateDate.isFresh() {
+            if axies[index].isRightCleanTPMS && axies[index].isFresh(isRight: true) {
                 if axies[index].rightTire.tireData.temperature > maxAllowedTemperature {
                     messageBuilder += "Right wheel \(index + 1) is over temperature threshold\n"
                     tpmsManager.axies[index].isRightCriticalTPMS = true
@@ -291,7 +291,7 @@ final class ErrorManager: ObservableObject {
         }
         
         for index in axies.indices {
-            if !axies[index].isLeftCleanTPMS && axies[index].leftTire.tireData.updateDate.isFresh() {
+            if !axies[index].isLeftCleanTPMS && axies[index].isFresh(isRight: false) {
                 if axies[index].leftTire.tireData.temperature + maxDiff < maxTemp || axies[index].leftTire.tireData.temperature - maxDiff > minTemp {
                     tpmsManager.axies[index].isLeftCriticalTPMS = true
                     hasBigDiff = true
@@ -299,7 +299,7 @@ final class ErrorManager: ObservableObject {
                 }
             }
             
-            if !axies[index].isRightCleanTPMS && axies[index].rightTire.tireData.updateDate.isFresh() {
+            if !axies[index].isRightCleanTPMS && axies[index].isFresh(isRight: true) {
                 if axies[index].rightTire.tireData.temperature + maxDiff < maxTemp || axies[index].rightTire.tireData.temperature - maxDiff > minTemp {
                     tpmsManager.axies[index].isRightCriticalTPMS = true
                     hasBigDiff = true
@@ -320,7 +320,7 @@ final class ErrorManager: ObservableObject {
         var messageBuilder = ""
         
         for index in axies.indices {
-            if !axies[index].isLeftCleanTPMS && axies[index].leftTire.tireData.updateDate.isFresh() {
+            if !axies[index].isLeftCleanTPMS && axies[index].isFresh(isRight: false) {
                 if axies[index].leftTire.tireData.preassure < minPressure {
                     tpmsManager.axies[index].isLeftCriticalTPMS = true
                     isOutOfBound = true
@@ -340,7 +340,7 @@ final class ErrorManager: ObservableObject {
                 }
             }
             
-            if !axies[index].isRightCleanTPMS && axies[index].rightTire.tireData.updateDate.isFresh() {
+            if !axies[index].isRightCleanTPMS && axies[index].isFresh(isRight: true) {
                 if axies[index].rightTire.tireData.preassure < minPressure {
                     tpmsManager.axies[index].isRightCriticalTPMS = true
                     isOutOfBound = true
@@ -443,7 +443,7 @@ final class ErrorManager: ObservableObject {
             setColors(index, true, back: Color.mainDark, front: Color.white)
         } else if axle.isRightCleanTPMS && !axle.isRightCriticalTWD {
             setColors(index, true, back: Color.lightBlue, front: Color.mainBlue)
-        } else if axle.rightTire.tireData.updateDate.isFresh() {
+        } else if axle.isFresh(isRight: true) {
             if axle.isRightCritical || axle.isRightCriticalTWD {
                 setColors(index, true, back: Color.lightRed, front: Color.mainRed)
             } else {
@@ -456,7 +456,7 @@ final class ErrorManager: ObservableObject {
             setColors(index, false, back: Color.mainDark, front: Color.white)
         } else if axle.isLeftCleanTPMS && !axle.isLeftCriticalTWD {
             setColors(index, false, back: Color.lightBlue, front: Color.mainBlue)
-        } else if axle.leftTire.tireData.updateDate.isFresh() {
+        } else if axle.isFresh(isRight: false) {
             if axle.isLeftCritical || axle.isLeftCriticalTWD {
                 setColors(index, false, back: Color.lightRed, front: Color.mainRed)
             } else {

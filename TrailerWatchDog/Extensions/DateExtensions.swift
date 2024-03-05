@@ -19,12 +19,4 @@ extension Date {
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
         return dateFormatter.string(from: self)
     }
-    
-    func isFresh() -> Bool {
-        let now = Date()
-        let diff = abs(now.timeIntervalSince(self))
-        let minutes = diff / 60
-        
-        return minutes <= 10
-    }
 }

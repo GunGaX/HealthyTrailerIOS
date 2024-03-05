@@ -202,11 +202,11 @@ final class MainViewModel: ObservableObject {
         var tyreCount = 0
         
         for index in axisList.indices {
-            if !axisList[index].leftTire.tireData.updateDate.isFresh() {
+            if !axisList[index].isFresh(isRight: false) {
                 tyresNames += "Left sensor \(index) hasn't reported in over five minutes, please check sensor\n"
                 tyreCount += 1
             }
-            if !axisList[index].rightTire.tireData.updateDate.isFresh() {
+            if !axisList[index].isFresh(isRight: true) {
                 tyresNames += "Right sensor \(index) hasn't reported in over five minutes, please check sensor\n"
                 tyreCount += 1
             }
