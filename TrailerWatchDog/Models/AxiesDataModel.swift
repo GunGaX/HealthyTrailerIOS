@@ -38,10 +38,20 @@ struct AxiesData: Identifiable, Hashable {
 
 extension AxiesData {
     func isFresh(isRight: Bool) -> Bool {
-        let now = Date()
-        let diff = abs(now.timeIntervalSince(isRight ? self.rightTire.tireData.updateDate : self.leftTire.tireData.updateDate))
-        let minutes = diff / 60
+        let date = isRight ? self.rightTire.tireData.updateDate : self.leftTire.tireData.updateDate
         
-        return minutes <= 10
+        return date.isFresh()
+    }
+    
+    func getTemperature(isRight: Bool) -> Double {
+        let tire = isRight ? self.rightTire : self.leftTire
+        
+        return tire.tireData.temperature
+    }
+    
+    func getPressure(isRight: Bool) -> Double {
+        let tire = isRight ? self.rightTire : self.leftTire
+        
+        return tire.tireData.preassure
     }
 }

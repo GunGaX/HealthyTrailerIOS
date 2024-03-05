@@ -335,14 +335,14 @@ fileprivate struct AxisBarView: View {
                                 .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.leftTire.tireData.temperature
+                            Text(axis.getTemperature(isRight: false)
                                 .applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.leftTire.tireData.preassure
+                            Text(axis.getPressure(isRight: false)
                                 .applyPreassureSystem(selectedSystem: viewModel.selectedPreassureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedPreassureType.measureMark)
@@ -363,14 +363,14 @@ fileprivate struct AxisBarView: View {
                                 .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.rightTire.tireData.temperature
+                            Text(axis.getTemperature(isRight: true)
                                 .applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.rightTire.tireData.preassure
+                            Text(axis.getPressure(isRight: true)
                                 .applyPreassureSystem(selectedSystem: viewModel.selectedPreassureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedPreassureType.measureMark)
@@ -452,14 +452,14 @@ fileprivate struct FlatAxisBarView: View {
                                 .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.leftTire.tireData.temperature
+                            Text(axis.getTemperature(isRight: false)
                                 .applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.leftTire.tireData.preassure
+                            Text(axis.getPressure(isRight: false)
                                 .applyPreassureSystem(selectedSystem: viewModel.selectedPreassureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedPreassureType.measureMark)
@@ -483,14 +483,14 @@ fileprivate struct FlatAxisBarView: View {
                                 .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.rightTire.tireData.temperature
+                            Text(axis.getTemperature(isRight: true)
                                 .applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.rightTire.tireData.preassure
+                            Text(axis.getPressure(isRight: true)
                                 .applyPreassureSystem(selectedSystem: viewModel.selectedPreassureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedPreassureType.measureMark)
