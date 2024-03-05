@@ -509,6 +509,5 @@ final class ErrorManager: ObservableObject {
                 }
             }
         }
-        
     }
 }

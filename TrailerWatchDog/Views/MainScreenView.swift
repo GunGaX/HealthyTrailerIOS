@@ -10,9 +10,9 @@ import SwiftUI
 struct MainScreenView: View {
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var viewModel: MainViewModel
+    @EnvironmentObject var errorManager: ErrorManager
     
     @StateObject private var dataManager = DataManager.shared
-    @StateObject private var errorManager = ErrorManager()
     
     @State private var showConnectingTPMSAlert = false
     @State private var showAddConfirmationAlert = false
@@ -116,7 +116,7 @@ struct MainScreenView: View {
                 .frame(width: 220)
             
             ForEach(dataManager.axies.indices, id: \.self) { index in
-                AxisBarView(errorManager: errorManager, axis: $dataManager.axies[index], index: index)
+                AxisBarView(axis: $dataManager.axies[index], index: index)
                 if dataManager.axies[index].axisNumber != dataManager.axies.last?.axisNumber {
                     separatingAxisBar
                 }
@@ -222,7 +222,7 @@ struct MainScreenView: View {
     private var flatTrailer: some View {
         VStack(spacing: 10) {
             ForEach(dataManager.axies.indices, id: \.self) { index in
-                FlatAxisBarView(errorManager: errorManager, axis: $dataManager.axies[index], index: index)
+                FlatAxisBarView(axis: $dataManager.axies[index], index: index)
             }
         }
     }
@@ -311,7 +311,7 @@ struct MainScreenView: View {
 
 fileprivate struct AxisBarView: View {
     @EnvironmentObject var viewModel: MainViewModel
-    @StateObject var errorManager: ErrorManager
+    @EnvironmentObject var errorManager: ErrorManager
     
     @Binding var axis: AxiesData
     let index: Int
@@ -427,7 +427,7 @@ fileprivate struct AxisBarView: View {
 
 fileprivate struct FlatAxisBarView: View {
     @EnvironmentObject var viewModel: MainViewModel
-    @StateObject var errorManager: ErrorManager
+    @EnvironmentObject var errorManager: ErrorManager
     
     @Binding var axis: AxiesData
     let index: Int
