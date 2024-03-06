@@ -109,11 +109,11 @@ struct MainScreenView: View {
     }
     
     private var fillTrailer: some View {
-        VStack(spacing: -3) {
+        VStack(spacing: 0) {
             Image("fillTrailerTop")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 220)
+                .frame(width: 240)
             
             ForEach(dataManager.axies.indices, id: \.self) { index in
                 AxisBarView(axis: $dataManager.axies[index], index: index)
@@ -125,7 +125,7 @@ struct MainScreenView: View {
             Image("fillTrailerBack")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 220)
+                .frame(width: 240)
         }
     }
     
@@ -133,7 +133,7 @@ struct MainScreenView: View {
         Image("separatingAxisImage")
             .resizable()
             .scaledToFit()
-            .frame(width: 220)
+            .frame(width: 240)
     }
     
     private var statusIndicator: some View {
@@ -324,10 +324,10 @@ fileprivate struct AxisBarView: View {
                 Image("fillAxisImage")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 220)
+                    .frame(width: 240)
                 
                 HStack {
-                    VStack(spacing: 0) {
+                    VStack(spacing: 2) {
                         HStack(alignment: .bottom, spacing: 2) {
                             Text("L")
                             Text("\(axis.axisNumber)")
@@ -340,6 +340,7 @@ fileprivate struct AxisBarView: View {
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
+                                .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
                             Text(axis.getPressure(isRight: false)
@@ -348,14 +349,17 @@ fileprivate struct AxisBarView: View {
                             Text(viewModel.selectedPreassureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .padding(.bottom, 1)
+                                .opacity(0.8)
                         }
                     }
                     .fixedSize()
-                    .font(.roboto500, size: 12)
+                    .font(.roboto400, size: 14)
                     .foregroundStyle(Color.white)
-                    .frame(width: 44)
+                    .frame(width: 56)
+                    
                     Spacer()
-                    VStack {
+                    
+                    VStack(spacing: 2) {
                         HStack(alignment: .bottom, spacing: 2) {
                             Text("R")
                             Text("\(axis.axisNumber)")
@@ -368,6 +372,7 @@ fileprivate struct AxisBarView: View {
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
+                                .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
                             Text(axis.getPressure(isRight: true)
@@ -375,16 +380,18 @@ fileprivate struct AxisBarView: View {
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedPreassureType.measureMark)
                                 .font(.roboto500, size: 10)
+                                .opacity(0.8)
                                 .padding(.bottom, 1)
                         }
                     }
                     .fixedSize()
-                    .font(.roboto500, size: 12)
+                    .font(.roboto400, size: 14)
                     .foregroundStyle(Color.white)
-                    .frame(width: 44)
+                    .frame(width: 56)
                 }
             }
             .zIndex(2.0)
+            .padding(.vertical, -3)
             
             valueBar(isRight: true, axle: axis, index: index)
         }
@@ -397,12 +404,12 @@ fileprivate struct AxisBarView: View {
         return ZStack {
             Rectangle()
                 .foregroundStyle(backgroundColor)
-                .padding(.top, 2)
-                .padding(.bottom, 1)
+                .padding(.top, -0.5)
+                .padding(.bottom, -1.25)
             
             VStack {
                 Text("Axle Temp")
-                    .font(.roboto500, size: 8)
+                    .font(.roboto400, size: 8)
                 HStack(alignment: .bottom, spacing: 5) {
                     Text(viewModel.getLastTemperatureForAxle(isRight: isRight, index: axis.axisNumber - 1))
                         .font(.roboto700, size: 18)

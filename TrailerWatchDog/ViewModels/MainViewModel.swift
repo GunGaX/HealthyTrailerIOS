@@ -196,7 +196,6 @@ final class MainViewModel: ObservableObject {
     }
     
     private func checkWarnings() {
-        print("show 1")
         let axisList = dataManager.axies
         var tyresNames = ""
         var tyreCount = 0
@@ -213,7 +212,6 @@ final class MainViewModel: ObservableObject {
         }
         
         if tyreCount != 0 {
-            print("show 2")
             staleDataMessage = tyresNames
             showStaleDataAlert = true
         }
