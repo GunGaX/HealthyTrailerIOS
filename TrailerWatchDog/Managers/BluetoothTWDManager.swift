@@ -49,6 +49,7 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
         }
         
         peripheral = nil
+        print("disconnected")
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {

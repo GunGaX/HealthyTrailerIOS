@@ -30,6 +30,8 @@ final class ErrorManager: ObservableObject {
     
     var staleDataTimers: [(Timer?, Timer?)] = [(nil, nil), (nil, nil), (nil, nil), (nil, nil)]
     
+    private var updatingTimer: Timer?
+    
     init() {        
         let twdPublisher = twdManager.$connectedTWD
             .removeDuplicates()
@@ -41,12 +43,22 @@ final class ErrorManager: ObservableObject {
             .sink { twd, tpms in
                 self.twdDataChanged(twd: twd)
                 self.tpmsDataChanged(axies: tpms)
-                self.updateColors()
             }
+        
+        startUpdatingColorsTimer()
+    }
+    
+    private func startUpdatingColorsTimer() {
+        guard updatingTimer == nil else { return }
+        
+        updatingTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
+            self.updateColors()
+        }
     }
     
     private func twdDataChanged(twd: TWDModel?) {
         guard twdManager.canShowNotifications else { return }
+        guard !tpmsManager.axies.isEmpty else { return }
         guard let twd else { return }
         
         self.clearFlagsTWD()
@@ -58,6 +70,7 @@ final class ErrorManager: ObservableObject {
     
     private func tpmsDataChanged(axies: [AxiesData]) {
         guard tpmsManager.canShowNotifications else { return }
+        guard !tpmsManager.axies.isEmpty else { return }
         
         self.clearFlagsTPMS()
         let hasBigDiff = self.checkMinMaxTempTPMS(axies: axies)

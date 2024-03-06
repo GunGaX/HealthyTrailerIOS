@@ -483,7 +483,7 @@ fileprivate struct FlatAxisBarView: View {
                     }
                     .font(.roboto400, size: 16)
                     .foregroundStyle(Color.white)
-                    .frame(width: 44)
+                    .frame(width: 56)
                 }
                 .zIndex(2.0)
                 .padding(.trailing, 12)
@@ -516,7 +516,7 @@ fileprivate struct FlatAxisBarView: View {
                     }
                     .font(.roboto400, size: 16)
                     .foregroundStyle(Color.white)
-                    .frame(width: 44)
+                    .frame(width: 56)
                 }
                 .zIndex(2.0)
                 flatValueBar(isRight: true, axle: axis, index: index)

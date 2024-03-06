@@ -203,7 +203,7 @@ class DataManager: NSObject, ObservableObject {
             guard !connectedTPMSIds[index - 1].isEmpty else { return }
             let tpms = UserDefaults.standard.getObject(forKey: "lastLog_TPMS\(connectedTPMSIds[index - 1])", castTo: TPMSModel.self)
             
-            guard let tpms else { return }
+            guard let tpms else { continue }
             
             let axleIndex: Int = Int((index - 1) / 2)
             
@@ -219,6 +219,7 @@ class DataManager: NSObject, ObservableObject {
         }
         
         self.canShowNotifications = true
+        print("canShowNotification here")
     }
     
     func disconnectTWD() {
