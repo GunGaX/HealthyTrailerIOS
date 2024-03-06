@@ -20,6 +20,8 @@ struct WelcomeView: View {
             descriptionText
             permissions
             conclusionText
+            disclaimerText
+                .padding(.top, 18)
             Spacer()
             gotItButton
         }
@@ -56,6 +58,12 @@ struct WelcomeView: View {
             .multilineTextAlignment(.leading)
             .foregroundStyle(Color.textDark)
             .font(.roboto300, size: 18)
+    }
+    
+    private var disclaimerText: some View {
+        Text("This application must remain open for monitoring purposes. If you are an iOS user, we recommend running it on an older device and keeping it open. Unfortunately, on iOS, if the app is closed, alerts will not be received. Alternatively, we offer the app on the Android Play Store, where it can run seamlessly in the background without any issues.")
+            .foregroundStyle(Color.mainRed)
+            .font(.roboto500, size: 18)
     }
     
     private var gotItButton: some View {
