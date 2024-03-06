@@ -449,11 +449,11 @@ fileprivate struct FlatAxisBarView: View {
                 flatValueBar(isRight: false, axle: axis, index: index)
                 ZStack {
                     tireImage
-                    VStack(spacing: 0) {
+                    VStack(spacing: 2) {
                         HStack(alignment: .bottom, spacing: 2) {
                             Text("L")
                             Text("\(axis.axisNumber)")
-                                .font(.roboto500, size: 10)
+                                .font(.roboto500, size: 12)
                                 .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
@@ -461,18 +461,20 @@ fileprivate struct FlatAxisBarView: View {
                                 .applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedTemperatureType.measureMark)
-                                .font(.roboto500, size: 10)
+                                .font(.roboto500, size: 12)
+                                .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
                             Text(axis.getPressure(isRight: false)
                                 .applyPreassureSystem(selectedSystem: viewModel.selectedPreassureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedPreassureType.measureMark)
-                                .font(.roboto500, size: 10)
+                                .font(.roboto500, size: 12)
+                                .opacity(0.8)
                                 .padding(.bottom, 1)
                         }
                     }
-                    .font(.roboto500, size: 12)
+                    .font(.roboto400, size: 16)
                     .foregroundStyle(Color.white)
                     .frame(width: 44)
                 }
@@ -480,11 +482,11 @@ fileprivate struct FlatAxisBarView: View {
                 .padding(.trailing, 12)
                 ZStack {
                     tireImage
-                    VStack {
+                    VStack(spacing: 2) {
                         HStack(alignment: .bottom, spacing: 2) {
                             Text("R")
                             Text("\(axis.axisNumber)")
-                                .font(.roboto500, size: 10)
+                                .font(.roboto500, size: 12)
                                 .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
@@ -492,18 +494,20 @@ fileprivate struct FlatAxisBarView: View {
                                 .applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedTemperatureType.measureMark)
-                                .font(.roboto500, size: 10)
+                                .font(.roboto500, size: 12)
+                                .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
                             Text(axis.getPressure(isRight: true)
                                 .applyPreassureSystem(selectedSystem: viewModel.selectedPreassureType)
                                 .formattedToOneDecimalPlace())
                             Text(viewModel.selectedPreassureType.measureMark)
-                                .font(.roboto500, size: 10)
+                                .font(.roboto500, size: 12)
+                                .opacity(0.8)
                                 .padding(.bottom, 1)
                         }
                     }
-                    .font(.roboto500, size: 12)
+                    .font(.roboto400, size: 16)
                     .foregroundStyle(Color.white)
                     .frame(width: 44)
                 }
@@ -522,7 +526,7 @@ fileprivate struct FlatAxisBarView: View {
                 .resizable()
                 .scaledToFit()
         }
-        .frame(height: 64)
+        .frame(height: 86)
     }
     
     private func flatValueBar(isRight: Bool, axle: AxiesData, index: Int) -> some View {
@@ -532,12 +536,11 @@ fileprivate struct FlatAxisBarView: View {
         return ZStack {
             Rectangle()
                 .foregroundStyle(backgroundColor)
-                .padding(.top, 2)
-                .padding(.bottom, 1)
             
-            VStack(spacing: 0) {
+            VStack(spacing: 2) {
                 Text("Axle Temp")
-                    .font(.roboto500, size: 8)
+                    .font(.roboto400, size: 10)
+                
                 HStack(alignment: .bottom, spacing: 5) {
                     Text(viewModel.getLastTemperatureForAxle(isRight: isRight, index: axis.axisNumber - 1))
                         .font(.roboto700, size: 18)
@@ -546,13 +549,14 @@ fileprivate struct FlatAxisBarView: View {
                         .font(.roboto700, size: 10)
                         .padding(.bottom, 3)
                 }
+                
                 TireTemperaturePlotView(
                     data: viewModel.getTemperatureArrayForAxle(isRight: isRight, index: axis.axisNumber - 1),
                     foregroundColor: foregroundColor
                 )
                 .padding(.horizontal)
                 .padding(isRight ? .leading : .trailing, 10)
-                .frame(height: 24)
+                .frame(height: 34)
             }
             .foregroundStyle(foregroundColor)
             .padding(.vertical, 6)
