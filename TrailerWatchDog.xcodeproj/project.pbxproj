@@ -48,6 +48,7 @@
 		B65FADD42B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65FADD32B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift */; };
 		B66F4B1D2B2799DA0001E143 /* TPMSModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */; };
 		B671C0572B0F9A940034DE77 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C0562B0F9A940034DE77 /* DataManager.swift */; };
+		B67DE33F2B98C39600F6AAA9 /* MainRedButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67DE33E2B98C39600F6AAA9 /* MainRedButtonStyle.swift */; };
 		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
 		B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */; };
 		B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */; };
@@ -111,6 +112,7 @@
 		B65FADD32B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetSensorsConfirmationView.swift; sourceTree = "<group>"; };
 		B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPMSModel.swift; sourceTree = "<group>"; };
 		B671C0562B0F9A940034DE77 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		B67DE33E2B98C39600F6AAA9 /* MainRedButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRedButtonStyle.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* TrailerWatchDog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrailerWatchDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerWatchDogApp.swift; sourceTree = "<group>"; };
 		B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			children = (
 				B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */,
 				B63E7C262B038E2400ECA81B /* MainGreenButtonStyle.swift */,
+				B67DE33E2B98C39600F6AAA9 /* MainRedButtonStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				B63E7BF82AFE5F1100ECA81B /* SettingsView.swift in Sources */,
 				B63E7C072AFFA7B500ECA81B /* DefaultDoubleSliderView.swift in Sources */,
 				B6058EF02B163B0300D84AD3 /* UserDefaultsExtension.swift in Sources */,
+				B67DE33F2B98C39600F6AAA9 /* MainRedButtonStyle.swift in Sources */,
 				B63E7BFC2AFE606500ECA81B /* LoggedHistoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

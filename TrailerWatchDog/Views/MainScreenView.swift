@@ -28,23 +28,30 @@ struct MainScreenView: View {
             VStack(spacing: 0) {
                 MainHeaderView()
                 
-                ScrollView {
-                    HStack {
-                        statusIndicator
-                            .padding(.leading, -12)
-                        Spacer()
-                        connectionSection
-                            .padding(.trailing)
+                GeometryReader { geometry in
+                    ScrollView {
+                        VStack {
+                            HStack {
+                                statusIndicator
+                                    .padding(.leading, -12)
+                                Spacer()
+                                connectionSection
+                                    .padding(.trailing)
+                            }
+                            .padding(.top, 30)
+                            HStack {
+                                graphButton
+                                Spacer()
+                            }
+                            .padding()
+                            
+                            trailer
+                            
+                            Spacer()
+                            logOutButton
+                        }
+                        .frame(minHeight: geometry.size.height)
                     }
-                    .padding(.top, 30)
-                    HStack {
-                        graphButton
-                        Spacer()
-                        logOutButton
-                    }
-                    .padding()
-                    
-                    trailer
                 }
             }
             .ignoresSafeArea(.container, edges: .top)
@@ -71,10 +78,9 @@ struct MainScreenView: View {
                 viewModel.isTWDConnected = false
             }
         } label: {
-            Image("logOutIcon")
-                .resizable()
-                .frame(width: 32, height: 32)
+            Text("Exit")
         }
+        .buttonStyle(.mainRedButton)
     }
     
     private var graphButton: some View {
@@ -113,7 +119,7 @@ struct MainScreenView: View {
             Image("fillTrailerTop")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 240)
+                .frame(width: 248)
             
             ForEach(dataManager.axies.indices, id: \.self) { index in
                 AxisBarView(axis: $dataManager.axies[index], index: index)
@@ -125,7 +131,7 @@ struct MainScreenView: View {
             Image("fillTrailerBack")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 240)
+                .frame(width: 248)
         }
     }
     
@@ -133,7 +139,7 @@ struct MainScreenView: View {
         Image("separatingAxisImage")
             .resizable()
             .scaledToFit()
-            .frame(width: 240)
+            .frame(width: 248)
     }
     
     private var statusIndicator: some View {
@@ -323,8 +329,9 @@ fileprivate struct AxisBarView: View {
             ZStack {
                 Image("fillAxisImage")
                     .resizable()
-                    .scaledToFit()
-                    .frame(width: 240)
+                    .scaledToFill()
+                    .frame(height: 80)
+                    .frame(maxWidth: 240)
                 
                 HStack {
                     VStack(spacing: 2) {
@@ -354,7 +361,7 @@ fileprivate struct AxisBarView: View {
                     }
                     .font(.roboto400, size: 14)
                     .foregroundStyle(Color.white)
-                    .frame(width: 56)
+                    .frame(width: 52)
                     
                     Spacer()
                     
@@ -385,14 +392,15 @@ fileprivate struct AxisBarView: View {
                     }
                     .font(.roboto400, size: 14)
                     .foregroundStyle(Color.white)
-                    .frame(width: 56)
+                    .frame(width: 52)
                 }
             }
             .zIndex(2.0)
-            .padding(.vertical, -3)
             
             valueBar(isRight: true, axle: axis, index: index)
         }
+        .frame(height: 80)
+        .padding(.vertical, -1)
     }
     
     private func valueBar(isRight: Bool, axle: AxiesData, index: Int) -> some View {
@@ -402,8 +410,7 @@ fileprivate struct AxisBarView: View {
         return ZStack {
             Rectangle()
                 .foregroundStyle(backgroundColor)
-                .padding(.top, -0.5)
-                .padding(.bottom, -1.25)
+                .frame(height: 80)
             
             VStack {
                 Text("Axle Temp")
@@ -421,10 +428,10 @@ fileprivate struct AxisBarView: View {
                     foregroundColor: foregroundColor
                 )
                 .padding(.horizontal)
-                .padding(isRight ? .leading : .trailing, 10)
                 .frame(height: 24)
             }
             .foregroundStyle(foregroundColor)
+            .padding(isRight ? .leading : .trailing, 14)
             .padding(isRight ? .trailing : .leading, -10)
         }
     }
@@ -562,6 +569,7 @@ fileprivate struct FlatAxisBarView: View {
             .padding(.vertical, 6)
         }
         .padding(isRight ? .leading : .trailing, -10)
+        .frame(height: 86)
     }
 }
 
