@@ -174,5 +174,9 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
         
         return temperature
     }
+    
+    public func resetDiscoveredPeripherals() {
+        discoveredPeripherals = []
+    }
 }
 

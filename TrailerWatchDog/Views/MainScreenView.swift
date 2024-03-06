@@ -352,7 +352,6 @@ fileprivate struct AxisBarView: View {
                                 .opacity(0.8)
                         }
                     }
-                    .fixedSize()
                     .font(.roboto400, size: 14)
                     .foregroundStyle(Color.white)
                     .frame(width: 56)
@@ -384,7 +383,6 @@ fileprivate struct AxisBarView: View {
                                 .padding(.bottom, 1)
                         }
                     }
-                    .fixedSize()
                     .font(.roboto400, size: 14)
                     .foregroundStyle(Color.white)
                     .frame(width: 56)
