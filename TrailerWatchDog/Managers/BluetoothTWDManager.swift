@@ -17,7 +17,7 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
     
     private var centralManager: CBCentralManager!
     
-    private var peripheral: CBPeripheral?
+    var peripheral: CBPeripheral?
     private var characteristicData: [CBCharacteristic] = []
     
     var fetchedTemperatureLine: String = ""
@@ -49,7 +49,6 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
         }
         
         peripheral = nil
-        print("disconnected")
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -67,6 +66,10 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheral.discoverServices(nil)
         peripheral.delegate = self
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        self.peripheral = nil
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
