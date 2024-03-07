@@ -49,6 +49,7 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
         }
         
         peripheral = nil
+        print("disconnected")
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -173,6 +174,10 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
         guard components.count == 2, let temperature = Double(components[1].replacingOccurrences(of: " F>", with: "").replacingOccurrences(of: "F>", with: "").replacingOccurrences(of: "F></R>", with: "")) else { return nil }
         
         return temperature
+    }
+    
+    public func resetDiscoveredPeripherals() {
+        discoveredPeripherals = []
     }
 }
 

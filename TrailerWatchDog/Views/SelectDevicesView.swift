@@ -30,6 +30,9 @@ struct SelectDevicesView: View {
             twdManager.setupBluetooth()
             viewModel.getConnectedDeviceIDs()
         }
+        .onDisappear {
+            twdManager.resetDiscoveredPeripherals()
+        }
     }
     
     private var deviceItems: some View {
