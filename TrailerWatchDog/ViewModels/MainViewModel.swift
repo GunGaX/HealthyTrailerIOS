@@ -202,11 +202,11 @@ final class MainViewModel: ObservableObject {
         
         for index in axisList.indices {
             if !axisList[index].isFresh(isRight: false) {
-                tyresNames += "Left sensor \(index) hasn't reported in over five minutes, please check sensor\n"
+                tyresNames += "Left sensor \(index + 1) hasn't reported in over five minutes, please check sensor\n"
                 tyreCount += 1
             }
             if !axisList[index].isFresh(isRight: true) {
-                tyresNames += "Right sensor \(index) hasn't reported in over five minutes, please check sensor\n"
+                tyresNames += "Right sensor \(index + 1) hasn't reported in over five minutes, please check sensor\n"
                 tyreCount += 1
             }
         }
@@ -218,6 +218,8 @@ final class MainViewModel: ObservableObject {
     }
     
     public func startCheckWarningTimer() {
+        guard staleWarningTimer == nil else { return }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 240) {
             self.staleWarningTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { timer in
                 self.checkWarnings()
@@ -228,6 +230,33 @@ final class MainViewModel: ObservableObject {
     public func stopCheckWarningTimer() {
         staleWarningTimer?.invalidate()
         staleWarningTimer = nil
+    }
+    
+    public func appSwitchedToBackground() {
+        guard let connectedId = twdManager.peripheral?.identifier else { return }
+        
+        UserDefaults.standard.setObject(connectedId, forKey: "lastConnectedTWDId")
+    }
+    
+    public func appSwitchedToForeground() {
+        guard twdManager.peripheral == nil else { return }
+        
+        twdManager.setupBluetooth()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            guard let lastConnectedId = UserDefaults.standard.getObject(forKey: "lastConnectedTWDId", castTo: String.self) else { return }
+            
+            for peripheral in self.twdManager.discoveredPeripherals {
+                if peripheral.identifier.uuidString == lastConnectedId {
+                    self.twdManager.connectToDevice(peripheral: peripheral)
+                    print("connected")
+                }
+            }
+        }
+    }
+    
+    public func forgetLastConnectedTWD() {
+        UserDefaults.standard.removeObject(forKey: "lastConnectedTWDId")
     }
     
 //

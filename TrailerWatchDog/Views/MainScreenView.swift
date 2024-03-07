@@ -11,6 +11,7 @@ struct MainScreenView: View {
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var viewModel: MainViewModel
     @EnvironmentObject var errorManager: ErrorManager
+    @Environment(\.scenePhase) var scenePhase
     
     @StateObject private var dataManager = DataManager.shared
     
@@ -65,6 +66,13 @@ struct MainScreenView: View {
             .attentionAlert($errorManager.tpmsTemperatureDifferenceNotificationError.show, messageText: errorManager.tpmsTemperatureDifferenceNotificationError.message)
             .attentionAlert($errorManager.tpmsPressureNotificationError.show, messageText: errorManager.tpmsPressureNotificationError.message)
             .attentionAlert($viewModel.showStaleDataAlert, messageText: viewModel.staleDataMessage)
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .inactive || newPhase == .background  {
+                    viewModel.appSwitchedToBackground()
+                } else if newPhase == .active {
+                    viewModel.appSwitchedToForeground()
+                }
+            }
         }
     }
     
@@ -76,6 +84,7 @@ struct MainScreenView: View {
                 dataManager.disconnectTWD()
                 BluetoothTWDManager.shared.disconnectFromDevice()
                 viewModel.isTWDConnected = false
+                viewModel.forgetLastConnectedTWD()
             }
         } label: {
             Text("Exit")
