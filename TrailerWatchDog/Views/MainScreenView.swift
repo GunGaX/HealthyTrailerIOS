@@ -78,14 +78,7 @@ struct MainScreenView: View {
     
     private var logOutButton: some View {
         Button {
-            withAnimation {
-                viewModel.stopUploadingData()
-                viewModel.stopCheckWarningTimer()
-                dataManager.disconnectTWD()
-                BluetoothTWDManager.shared.disconnectFromDevice()
-                viewModel.isTWDConnected = false
-                viewModel.forgetLastConnectedTWD()
-            }
+            exit(0)
         } label: {
             Text("Exit")
         }

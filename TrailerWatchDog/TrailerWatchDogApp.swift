@@ -21,10 +21,19 @@ struct TrailerWatchDogApp: App {
                 .environmentObject(errorManager)
                 .preferredColorScheme(.light)
                 .onAppear {
-                    if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() {
-                        navigationManager.appState = .app
-                    }
+                    disableDisplaySleep()
+                    checkPermissions()
                 }
+        }
+    }
+    
+    private func disableDisplaySleep() {
+        UIApplication.shared.isIdleTimerDisabled = true
+    }
+    
+    private func checkPermissions() {
+        if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() {
+            navigationManager.appState = .app
         }
     }
 }
