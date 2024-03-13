@@ -219,7 +219,6 @@ class DataManager: NSObject, ObservableObject {
         }
         
         self.canShowNotifications = true
-        print("canShowNotification here")
     }
     
     func disconnectTWD() {

@@ -259,6 +259,15 @@ final class MainViewModel: ObservableObject {
         UserDefaults.standard.removeObject(forKey: "lastConnectedTWDId")
     }
     
+    public func disconnectFromTWD() {
+        stopUploadingData()
+        stopCheckWarningTimer()
+        dataManager.disconnectTWD()
+        twdManager.disconnectFromDevice()
+        isTWDConnected = false
+        forgetLastConnectedTWD()
+    }
+    
 //
 //    public func createDirectory() {
 //        FileRepository.shared.createSubdirectory(withName: "Folder 1")

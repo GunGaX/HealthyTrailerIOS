@@ -17,7 +17,7 @@ class BluetoothTWDManager: NSObject, ObservableObject, CBCentralManagerDelegate,
     
     private var centralManager: CBCentralManager!
     
-    var peripheral: CBPeripheral?
+    @Published var peripheral: CBPeripheral?
     private var characteristicData: [CBCharacteristic] = []
     
     var fetchedTemperatureLine: String = ""

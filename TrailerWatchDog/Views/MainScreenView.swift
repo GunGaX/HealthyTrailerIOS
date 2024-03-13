@@ -19,6 +19,8 @@ struct MainScreenView: View {
     @State private var showAddConfirmationAlert = false
     @State private var showForgetSensorsConfirmationAlert = false
     
+    @State private var showDisconnectingError = false
+    
     @State private var tireToConnectText = "LEFT 1"
     @State private var connectedTPMSCount: Int = 0
     
@@ -66,11 +68,20 @@ struct MainScreenView: View {
             .attentionAlert($errorManager.tpmsTemperatureDifferenceNotificationError.show, messageText: errorManager.tpmsTemperatureDifferenceNotificationError.message)
             .attentionAlert($errorManager.tpmsPressureNotificationError.show, messageText: errorManager.tpmsPressureNotificationError.message)
             .attentionAlert($viewModel.showStaleDataAlert, messageText: viewModel.staleDataMessage)
+            .attentionAlert($showDisconnectingError, messageText: "Error with Axle modules, please check connections")
             .onChange(of: scenePhase) { newPhase in
                 if newPhase == .inactive || newPhase == .background  {
                     viewModel.appSwitchedToBackground()
                 } else if newPhase == .active {
                     viewModel.appSwitchedToForeground()
+                }
+            }
+            .onChange(of: viewModel.twdManager.peripheral) { newValue in
+                if newValue == nil {
+                    withAnimation {
+                        viewModel.disconnectFromTWD()
+                        showDisconnectingError = true
+                    }
                 }
             }
         }
