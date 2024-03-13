@@ -75,9 +75,9 @@ final class SettingsViewModel: ObservableObject {
     }
     
     /// In Kpa
-    let preassureMinBound = 0.0
+    let preassureMinBound = 10.0
     let preassureMaxBound = 1206.0
-    @Published var preassureMinValue = 0.0 {
+    @Published var preassureMinValue = 100.0 {
         didSet {
             savePreassureMinValue()
         }
