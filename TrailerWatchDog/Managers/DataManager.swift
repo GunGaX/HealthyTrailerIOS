@@ -329,22 +329,15 @@ class DataManager: NSObject, ObservableObject {
         latestRow += ",\(haveTire)"
 
         for key in tpms_last_tick.keys {
-            let pressure_kpa = tpms_pressure_kpa[key]
             let pressure_kpa_persist = tpms_pressure_kpa_persist[key]
-            let pressure_psi = (pressure_kpa ?? 0 * 0.14503773779)
-            let pressure_psi_persist = (pressure_kpa_persist ?? 0 * 0.14503773779)
-            let temperature_c = tpms_temperature_c[key]
+            
             let temperature_c_persist = tpms_temperature_c_persist[key]
-            let temperature_f = ((temperature_c ?? 0 * 9/5) + 32)
             let temperature_f_persist = ((temperature_c_persist ?? 0 * 9/5) + 32)
 
             let f_pressure_kpa: Double = 0
             let f_pressure_psi: Double = 0
             let f_temperature_c: Double = 0
             let f_temperature_f: Double = 0
-            
-            var f_pressure_psi_screen: Double = 0
-            var f_temperature_f_screen: Double = 0
             
             let formatPsi = NumberFormatter()
             formatPsi.minimumFractionDigits = 2
@@ -355,33 +348,17 @@ class DataManager: NSObject, ObservableObject {
             let formatSeconds = NumberFormatter()
             formatSeconds.minimumFractionDigits = 1
             formatSeconds.maximumFractionDigits = 1
-            
-            var haveVal = false
-            
+                        
             var finalPreassure = -1000.0
             
-            if (pressure_kpa_persist ?? 0 >= 0.5) && (pressure_kpa_persist ?? 0 < 300.0) {
-                finalPreassure = Double(pressure_kpa_persist ?? 0)
-                haveVal = true
-            } else {
-                f_pressure_psi_screen = 0
-            }
+            finalPreassure = Double(pressure_kpa_persist ?? 0)
             
             var finalTemperature = -1000.0
             
             if (temperature_c_persist != 0.0) {
                 finalTemperature = temperature_f_persist
-            } else {
-                f_temperature_f_screen = 0
             }
-            let secSinceLastTick: Double = abs(tpms_last_tick[key]?.timeIntervalSinceNow ?? 0)
-            var f_sec_screen: Double = 0
-            if (haveVal) {
-                f_sec_screen = secSinceLastTick
-            } else {
-                f_sec_screen = 0
-            }
-            
+                        
             latestRow += ",\(f_pressure_kpa),\(f_pressure_psi),\(f_temperature_c),\(f_temperature_f)"
             
             for index in 0..<axies.count {
@@ -490,13 +467,12 @@ extension DataManager: CBCentralManagerDelegate {
 
         if connectedTPMSIds.contains(name) {
             let haveGoodTick = ((pressureConv != 0.0) || (temperatureConv != 0.0))
-            if (haveGoodTick) {
+            if (haveGoodTick) {                
                 didGetTireData = true
                 tpms_pressure_kpa[name] = pressureConv
                 tpms_temperature_c[name] = temperatureConv
-                if pressureConv != 0.0 {
-                    tpms_pressure_kpa_persist[name] = pressureConv
-                }
+                tpms_pressure_kpa_persist[name] = pressureConv
+                
                 if temperatureConv != 0.0 {
                     tpms_temperature_c_persist[name] = temperatureConv
                 }
