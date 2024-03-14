@@ -32,34 +32,24 @@ final class ErrorManager: ObservableObject {
     
     private var updatingTimer: Timer?
     
-    init() {        
-        let twdPublisher = twdManager.$connectedTWD
-            .removeDuplicates()
-        
-        let tpmsPublisher = tpmsManager.$axies
-            .removeDuplicates()
-        
-        cancellable = Publishers.CombineLatest(twdPublisher, tpmsPublisher)
-            .sink { twd, tpms in
-                self.twdDataChanged(twd: twd)
-                self.tpmsDataChanged(axies: tpms)
-            }
-        
-        startUpdatingColorsTimer()
+    init() {
+        startCheckingForErrors()
     }
     
-    private func startUpdatingColorsTimer() {
+    private func startCheckingForErrors() {
         guard updatingTimer == nil else { return }
         
         updatingTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
             self.updateColors()
+            self.twdDataChanged()
+            self.tpmsDataChanged()
         }
     }
     
-    private func twdDataChanged(twd: TWDModel?) {
+    private func twdDataChanged() {
         guard twdManager.canShowNotifications else { return }
         guard !tpmsManager.axies.isEmpty else { return }
-        guard let twd else { return }
+        guard let twd = twdManager.connectedTWD else { return }
         
         self.clearFlagsTWD()
         let hasBigDiff = self.checkMinMaxTempTWD(twd: twd)
@@ -68,9 +58,11 @@ final class ErrorManager: ObservableObject {
         self.setTemperatureOverheatTWD(isOverheat: hasOverheat)
     }
     
-    private func tpmsDataChanged(axies: [AxiesData]) {
+    private func tpmsDataChanged() {
         guard tpmsManager.canShowNotifications else { return }
         guard !tpmsManager.axies.isEmpty else { return }
+        
+        let axies = tpmsManager.axies
         
         self.clearFlagsTPMS()
         let hasBigDiff = self.checkMinMaxTempTPMS(axies: axies)
@@ -333,7 +325,7 @@ final class ErrorManager: ObservableObject {
                 if axies[index].getPressure(isRight: false) < minPressure {
                     tpmsManager.axies[index].isLeftCriticalTPMS = true
                     isOutOfBound = true
-                    
+                                        
                     if axies[index].getPressure(isRight: false) == 0.0 {
                         messageBuilder += "Left wheel \(index + 1) has flat tire or sensor is unscrewed\n"
                     } else {
@@ -353,7 +345,7 @@ final class ErrorManager: ObservableObject {
                 if axies[index].getPressure(isRight: true) < minPressure {
                     tpmsManager.axies[index].isRightCriticalTPMS = true
                     isOutOfBound = true
-                    
+                                        
                     if axies[index].getPressure(isRight: true) == 0.0 {
                         messageBuilder += "Right wheel \(index + 1) has flat tire or sensor is unscrewed\n"
                     } else {
