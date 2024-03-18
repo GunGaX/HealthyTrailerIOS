@@ -12,8 +12,7 @@ struct MainHeaderView: View {
     
     var body: some View {
         HStack(spacing: 20) {
-            twdLogo
-            title
+           Text("fkjdkf remove")
             threeDotsIcon
         }
         .padding(.horizontal)
@@ -21,21 +20,6 @@ struct MainHeaderView: View {
         .padding(.top, ScreenUtils.statusBarHeight)
         .frame(height: 120)
         .headerShadowRectangle()
-    }
-    
-    private var title: some View {
-        Image("TWDTitle")
-            .resizable()
-            .scaledToFit()
-            .frame(height: 22)
-            .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    
-    private var twdLogo: some View {
-        Image("TWDLogo")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 58, height: 58)
     }
     
     private var threeDotsIcon: some View {
