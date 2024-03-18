@@ -1,6 +1,6 @@
 //
 //  ConfirmationAddNewTPMSView.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 10.01.2024.
 //

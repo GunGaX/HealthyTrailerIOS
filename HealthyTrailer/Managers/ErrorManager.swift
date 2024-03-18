@@ -1,6 +1,6 @@
 //
 //  ErrorManager.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 26.02.2024.
 //

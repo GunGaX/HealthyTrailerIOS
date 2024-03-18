@@ -1,6 +1,6 @@
 //
 //  MainScreenView.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 08.11.2023.
 //

@@ -1,6 +1,6 @@
 //
 //  DataManager.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 23.11.2023.
 //

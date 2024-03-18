@@ -1,6 +1,6 @@
 //
 //  TWDModel.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 06.12.2023.
 //

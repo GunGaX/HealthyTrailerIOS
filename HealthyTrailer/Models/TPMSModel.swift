@@ -1,6 +1,6 @@
 //
 //  TPMSModel.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 11.12.2023.
 //

@@ -49,7 +49,7 @@
 		B66F4B1D2B2799DA0001E143 /* TPMSModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */; };
 		B671C0572B0F9A940034DE77 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C0562B0F9A940034DE77 /* DataManager.swift */; };
 		B67DE33F2B98C39600F6AAA9 /* MainRedButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67DE33E2B98C39600F6AAA9 /* MainRedButtonStyle.swift */; };
-		B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */; };
+		B68CE6A92AFBD5EB0047E644 /* HealthyTrailerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6A82AFBD5EB0047E644 /* HealthyTrailerApp.swift */; };
 		B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */; };
 		B68CE6AD2AFBD5ED0047E644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */; };
 		B68CE6B02AFBD5ED0047E644 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B68CE6AF2AFBD5ED0047E644 /* Preview Assets.xcassets */; };
@@ -114,7 +114,7 @@
 		B671C0562B0F9A940034DE77 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		B67DE33E2B98C39600F6AAA9 /* MainRedButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRedButtonStyle.swift; sourceTree = "<group>"; };
 		B68CE6A52AFBD5EB0047E644 /* HealthyTrailer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthyTrailer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerWatchDogApp.swift; sourceTree = "<group>"; };
+		B68CE6A82AFBD5EB0047E644 /* HealthyTrailerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthyTrailerApp.swift; sourceTree = "<group>"; };
 		B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		B68CE6AC2AFBD5ED0047E644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B68CE6AF2AFBD5ED0047E644 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				B68CE6CD2AFD0D180047E644 /* Info.plist */,
-				B68CE6A82AFBD5EB0047E644 /* TrailerWatchDogApp.swift */,
+				B68CE6A82AFBD5EB0047E644 /* HealthyTrailerApp.swift */,
 				B63E7C2A2B03A37700ECA81B /* RootView.swift */,
 				B616556C2B90F77800F4794B /* Sounds */,
 				B63E7BF22AFD79E400ECA81B /* Helpers */,
@@ -461,7 +461,7 @@
 				B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */,
 				B61655652B84FCF000F4794B /* SelectDevicesView.swift in Sources */,
 				B6DB0B2D2B065C9F00DEF890 /* FileRepository.swift in Sources */,
-				B68CE6A92AFBD5EB0047E644 /* TrailerWatchDogApp.swift in Sources */,
+				B68CE6A92AFBD5EB0047E644 /* HealthyTrailerApp.swift in Sources */,
 				B68CE6BE2AFD0A040047E644 /* MainViewModel.swift in Sources */,
 				B63E7BF12AFD79CC00ECA81B /* ViewExtensions.swift in Sources */,
 				B63E7C032AFE86AF00ECA81B /* DefaultSignleSliderView.swift in Sources */,
@@ -611,11 +611,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"TrailerWatchDog/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"HealthyTrailer/Preview Content\"";
 				DEVELOPMENT_TEAM = PXD5F88JRN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TrailerWatchDog/Info.plist;
+				INFOPLIST_FILE = HealthyTrailer/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TWD devices.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TPMS devices.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TrailerWatchDog uses your location to track speed and elevation. ";
@@ -648,11 +648,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"TrailerWatchDog/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"HealthyTrailer/Preview Content\"";
 				DEVELOPMENT_TEAM = PXD5F88JRN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TrailerWatchDog/Info.plist;
+				INFOPLIST_FILE = HealthyTrailer/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TWD devices.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TPMS devices.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TrailerWatchDog uses your location to track speed and elevation. ";

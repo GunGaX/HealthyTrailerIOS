@@ -1,6 +1,6 @@
 //
 //  ConnectTMPSDevicesView.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 29.11.2023.
 //

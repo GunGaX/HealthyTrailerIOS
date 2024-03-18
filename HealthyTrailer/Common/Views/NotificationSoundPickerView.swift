@@ -1,6 +1,6 @@
 //
 //  NotificationSoundPickerView.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 11.11.2023.
 //
@@ -8,12 +8,12 @@
 import SwiftUI
 
 enum NotificationSound: CaseIterable, Codable {
-    case chime, trailerWatchDog
+    case chime, HealthyTrailer
     
     var title: String {
         switch self {
         case .chime: "Chime"
-        case .trailerWatchDog: "TrailerWatchdog"
+        case .HealthyTrailer: "HealthyTrailer"
         }
     }
 }

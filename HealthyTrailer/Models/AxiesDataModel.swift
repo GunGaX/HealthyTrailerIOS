@@ -1,6 +1,6 @@
 //
 //  AxiesDataModel.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 13.11.2023.
 //

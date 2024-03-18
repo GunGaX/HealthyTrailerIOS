@@ -1,6 +1,6 @@
 //
-//  TrailerWatchDogApp.swift
-//  TrailerWatchDog
+//  HealthyTrailerApp.swift
+//  HealthyTrailerApp
 //
 //  Created by Dmytro Savka on 08.11.2023.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct TrailerWatchDogApp: App {
+struct HealthyTrailerApp: App {
     @StateObject var navigationManager = NavigationManager()
     @StateObject private var viewModel = MainViewModel()
     @StateObject private var errorManager = ErrorManager()

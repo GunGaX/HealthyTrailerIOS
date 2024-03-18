@@ -1,6 +1,6 @@
 //
 //  BluetoothTWDManager.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 14.02.2024.
 //

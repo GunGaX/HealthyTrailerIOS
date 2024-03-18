@@ -1,6 +1,6 @@
 //
 //  TireDataModel.swift
-//  TrailerWatchDog
+//  HealthyTrailer
 //
 //  Created by Dmytro Savka on 27.11.2023.
 //
