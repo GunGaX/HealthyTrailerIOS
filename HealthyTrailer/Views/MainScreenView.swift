@@ -69,21 +69,6 @@ struct MainScreenView: View {
             .attentionAlert($errorManager.tpmsPressureNotificationError.show, messageText: errorManager.tpmsPressureNotificationError.message)
             .attentionAlert($viewModel.showStaleDataAlert, messageText: viewModel.staleDataMessage)
             .attentionAlert($showDisconnectingError, messageText: "Error with Axle modules, please check connections")
-            .onChange(of: scenePhase) { newPhase in
-                if newPhase == .inactive || newPhase == .background  {
-                    viewModel.appSwitchedToBackground()
-                } else if newPhase == .active {
-                    viewModel.appSwitchedToForeground()
-                }
-            }
-            .onChange(of: viewModel.twdManager.peripheral) { newValue in
-                if newValue == nil {
-                    withAnimation {
-                        viewModel.disconnectFromTWD()
-                        showDisconnectingError = true
-                    }
-                }
-            }
         }
     }
     
@@ -110,7 +95,7 @@ struct MainScreenView: View {
     
     @ViewBuilder
     private var trailer: some View {
-        if viewModel.isTWDConnected {
+        if viewModel.isConnected {
             if viewModel.displayingMode {
                 fillTrailer
             } else {
@@ -157,7 +142,7 @@ struct MainScreenView: View {
     
     private var statusIndicator: some View {
         HStack(spacing: 14) {
-            Image(systemName: viewModel.isTWDConnected ? "checkmark" : "xmark")
+            Image(systemName: viewModel.isConnected ? "checkmark" : "xmark")
                 .foregroundStyle(Color.white)
                 .frame(width: 15, height: 15)
                 .bold()
@@ -165,7 +150,7 @@ struct MainScreenView: View {
                 .padding(.leading, 10)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .foregroundStyle(viewModel.isTWDConnected ? Color.mainGreen : Color.mainRed)
+                        .foregroundStyle(viewModel.isConnected ? Color.mainGreen : Color.mainRed)
                 )
             
             Text("Status")
@@ -176,9 +161,8 @@ struct MainScreenView: View {
     
     @ViewBuilder
     private var connectionSection: some View {
-        if viewModel.isTWDConnected {
+        if viewModel.isConnected {
             VStack(alignment: .trailing) {
-                connectedDeviceInfo
                 connectTMPSButton
             }
             .frame(maxWidth: 150)
@@ -187,22 +171,12 @@ struct MainScreenView: View {
         }
     }
     
-    private var connectedDeviceInfo: some View {
-        VStack(alignment: .trailing, spacing: 0) {
-            Text("Connected:")
-                .foregroundStyle(Color.textDark)
-            
-            Text(viewModel.connectedTWD?.name ?? "No name")
-                .foregroundStyle(Color.mainBlue)
-        }
-        .font(.roboto500, size: 16)
-    }
-    
     private var tryToConnectButton: some View {
         Button {
-            navigationManager.path.append(SelectDevicePathItem())
+            dataManager.setup(connectedAxiesCount: 2)
+            viewModel.isConnected = true
         } label: {
-            Text("Try to connect")
+            Text("Connect")
         }
         .buttonStyle(.mainBlueButton)
     }
@@ -249,7 +223,7 @@ struct MainScreenView: View {
     private func startConnectingTPMS(text: String) {
         showConnectingTPMSAlert = false
         
-        guard let connectedTWDId = dataManager.connectedTWDId, let axiesCount = dataManager.connectedTWDAxiesCount else { return }
+        guard let axiesCount = dataManager.connectedAxiesCount else { return }
         
         connectedTPMSCount += 1
         let connectedTPMSIndex = viewModel.orderedIndeces[connectedTPMSCount - 1]
@@ -262,7 +236,7 @@ struct MainScreenView: View {
         dataManager.performLastConnectedTPMSAction(connectedDevices: viewModel.connectedOrderedTPMSIds)
         viewModel.updateTPMSConnectionStatus(id: text, isConnected: true)
         
-        let newTPMS = TPMSModel(id: text, connectedToTWDWithId: connectedTWDId, tireData: TireData.emptyData)
+        let newTPMS = TPMSModel(id: text, tireData: TireData.emptyData)
         
         let axleIndex = Int((connectedTPMSIndex - 1) / 2)
         if connectedTPMSIndex % 2 == 1 {
@@ -293,11 +267,11 @@ struct MainScreenView: View {
     }
     
     private func addNewTPMSSensorsAction() {
-        guard  let axiesCount = dataManager.connectedTWDAxiesCount else { return }
+        guard let axiesCount = dataManager.connectedAxiesCount else { return }
         
         viewModel.stopUploadingData()
         dataManager.connectedTPMSIds = []
-        dataManager.saveConnectedTPMStoTWD()
+        dataManager.saveConnectedTPMS()
         
         for index in 0..<axiesCount {
             dataManager.axies[index].leftTire = TPMSModel.emptyState
@@ -310,11 +284,11 @@ struct MainScreenView: View {
     }
     
     private func forgetTPMSSensorsAction() {
-        guard  let axiesCount = dataManager.connectedTWDAxiesCount else { return }
+        guard let axiesCount = dataManager.connectedAxiesCount else { return }
         
         viewModel.stopUploadingData()
         viewModel.unChainTPMSDevices()
-        dataManager.deleteConnectedTPMStoTWD()
+        dataManager.deleteConnectedTPMS()
         dataManager.connectedTPMSIds = []
         
         for index in 0..<axiesCount {
@@ -429,7 +403,7 @@ fileprivate struct AxisBarView: View {
                 Text("Axle Temp")
                     .font(.roboto400, size: 8)
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text(viewModel.getLastTemperatureForAxle(isRight: isRight, index: axis.axisNumber - 1))
+                    Text("0.0")
                         .font(.roboto700, size: 18)
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
@@ -437,7 +411,7 @@ fileprivate struct AxisBarView: View {
                         .padding(.bottom, 3)
                 }
                 TireTemperaturePlotView(
-                    data: viewModel.getTemperatureArrayForAxle(isRight: isRight, index: axis.axisNumber - 1),
+                    data: [0.0, 0.0, 0.0],
                     foregroundColor: foregroundColor
                 )
                 .padding(.horizontal)
@@ -562,7 +536,7 @@ fileprivate struct FlatAxisBarView: View {
                     .font(.roboto400, size: 10)
                 
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text(viewModel.getLastTemperatureForAxle(isRight: isRight, index: axis.axisNumber - 1))
+                    Text("0.0")
                         .font(.roboto700, size: 18)
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
@@ -571,7 +545,7 @@ fileprivate struct FlatAxisBarView: View {
                 }
                 
                 TireTemperaturePlotView(
-                    data: viewModel.getTemperatureArrayForAxle(isRight: isRight, index: axis.axisNumber - 1),
+                    data: [0.0, 0.0, 0.0],
                     foregroundColor: foregroundColor
                 )
                 .padding(.horizontal)

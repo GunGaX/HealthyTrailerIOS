@@ -40,4 +40,3 @@ struct FolderDetailsPathItem: PathItem {
 struct LogFileDetailsPathItem: PathItem {    
     let file: HistoryFileModel
 }
-struct SelectDevicePathItem: PathItem { }

@@ -20,8 +20,6 @@ struct TerminalView: View {
                     statusIndicator
                         .padding(.leading, -12)
                     Spacer()
-                    connectionSection
-                        .padding(.trailing)
                 }
                 .padding(.top, 30)
                 
@@ -36,7 +34,7 @@ struct TerminalView: View {
     
     private var statusIndicator: some View {
         HStack(spacing: 14) {
-            Image(systemName: viewModel.isTWDConnected ? "checkmark" : "xmark")
+            Image(systemName: viewModel.isConnected ? "checkmark" : "xmark")
                 .foregroundStyle(Color.white)
                 .frame(width: 15, height: 15)
                 .bold()
@@ -44,7 +42,7 @@ struct TerminalView: View {
                 .padding(.leading, 10)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .foregroundStyle(viewModel.isTWDConnected ? Color.mainGreen : Color.mainRed)
+                        .foregroundStyle(viewModel.isConnected ? Color.mainGreen : Color.mainRed)
                 )
             
             Text("Status")
@@ -53,30 +51,10 @@ struct TerminalView: View {
         }
     }
     
-    @ViewBuilder
-    private var connectionSection: some View {
-        if viewModel.isTWDConnected {
-            connectedDeviceInfo
-        } else {
-            tryToConnectButton
-        }
-    }
-    
-    private var connectedDeviceInfo: some View {
-        VStack(alignment: .trailing, spacing: 0) {
-            Text("Connected:")
-                .foregroundStyle(Color.textDark)
-            
-            Text(viewModel.connectedTWD?.name ?? "No name")
-                .foregroundStyle(Color.mainBlue)
-        }
-        .font(.roboto500, size: 16)
-    }
-    
     private var tryToConnectButton: some View {
         Button {
             withAnimation {
-                viewModel.isTWDConnected = true
+                viewModel.isConnected = true
             }
         } label: {
             Text("Try to connect")

@@ -46,8 +46,7 @@ class DataManager: NSObject, ObservableObject {
     @Published var latestRow: String = csvHeader
     @Published var screenText: String = "..."
     
-    var connectedTWDId: String?
-    var connectedTWDAxiesCount: Int?
+    var connectedAxiesCount: Int?
     
     @Published var axies: [AxiesData] = []
     
@@ -156,16 +155,14 @@ class DataManager: NSObject, ObservableObject {
         super.init()
     }
     
-    func setup(connectedTWDId: String?, connectedTWDAxiesCount: Int?) {
-        guard let connectedTWDId, let connectedTWDAxiesCount else { return }
-        self.connectedTWDId = connectedTWDId
-        self.connectedTWDAxiesCount = connectedTWDAxiesCount
+    func setup(connectedAxiesCount: Int) {
+        self.connectedAxiesCount = connectedAxiesCount
         
-        for index in 0..<connectedTWDAxiesCount {
+        for index in 0..<connectedAxiesCount {
             axies.append(AxiesData(axisNumber: index + 1, leftTire: TPMSModel.emptyState, rightTire: TPMSModel.emptyState))
         }
         
-        fetchConnectedTPMStoTWD()
+        fetchConnectedTPMS()
         
         loadLastData()
         
@@ -221,16 +218,13 @@ class DataManager: NSObject, ObservableObject {
         self.canShowNotifications = true
     }
     
-    func disconnectTWD() {
+    func disconnect() {
         axies = []
-        connectedTWDId = nil
-        connectedTWDAxiesCount = nil
+        connectedAxiesCount = nil
         connectedTPMSIds = []
     }
     
     func saveLastConnectedTPMSDevices() {
-        guard connectedTWDId != nil else { return }
-        
         UserDefaults.standard.setObject(connectedTPMSIds, forKey: "LastConnectedTPMSDevices")
     }
     
@@ -246,29 +240,23 @@ class DataManager: NSObject, ObservableObject {
         }
     }
     
-    func saveConnectedTPMStoTWD() {
-        guard let connectedTWDId else { return }
-        
-        UserDefaults.standard.setObject(connectedTPMSIds, forKey: "TPMSDevicesForTWD\(connectedTWDId)")
+    func saveConnectedTPMS() {
+        UserDefaults.standard.setObject(connectedTPMSIds, forKey: "connectedTPMSDevices")
     }
     
-    func deleteConnectedTPMStoTWD() {
-        guard let connectedTWDId else { return }
-        
-        UserDefaults.standard.removeObject(forKey: "TPMSDevicesForTWD\(connectedTWDId)")
+    func deleteConnectedTPMS() {
+        UserDefaults.standard.removeObject(forKey: "connectedTPMSDevices")
     }
     
-    func fetchConnectedTPMStoTWD() {
-        guard let connectedTWDId else { return }
-        
-        if let retrievedIds = UserDefaults.standard.getObject(forKey: "TPMSDevicesForTWD\(connectedTWDId)", castTo: [String].self) {
+    func fetchConnectedTPMS() {
+        if let retrievedIds = UserDefaults.standard.getObject(forKey: "connectedTPMSDevices)", castTo: [String].self) {
             connectedTPMSIds = retrievedIds
         }
     }
     
     func performLastConnectedTPMSAction(connectedDevices: [String]) {        
         connectedTPMSIds = connectedDevices
-        saveConnectedTPMStoTWD()
+        saveConnectedTPMS()
         saveLastConnectedTPMSDevices()
     }
     

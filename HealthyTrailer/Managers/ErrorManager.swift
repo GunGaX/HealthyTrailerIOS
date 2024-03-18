@@ -10,7 +10,6 @@ import Combine
 
 final class ErrorManager: ObservableObject {        
     private var settingsViewModel = SettingsViewModel.shared
-    private var twdManager = BluetoothTWDManager.shared
     private var tpmsManager = DataManager.shared
     
     private var cancellable: AnyCancellable?
@@ -41,21 +40,8 @@ final class ErrorManager: ObservableObject {
         
         updatingTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
             self.updateColors()
-            self.twdDataChanged()
             self.tpmsDataChanged()
         }
-    }
-    
-    private func twdDataChanged() {
-        guard twdManager.canShowNotifications else { return }
-        guard !tpmsManager.axies.isEmpty else { return }
-        guard let twd = twdManager.connectedTWD else { return }
-        
-        self.clearFlagsTWD()
-        let hasBigDiff = self.checkMinMaxTempTWD(twd: twd)
-        let hasOverheat = self.checkOverheatTWD(twd: twd)
-        self.setMaxDifferenceTWD(hasMaxDiff: hasBigDiff)
-        self.setTemperatureOverheatTWD(isOverheat: hasOverheat)
     }
     
     private func tpmsDataChanged() {
@@ -97,31 +83,6 @@ final class ErrorManager: ObservableObject {
         return settingsViewModel.preassureMaxValue
     }
     
-    private func checkOverheatTWD(twd: TWDModel) -> Bool {
-        let maxAllowedTemperature = getMaxAllowedTemperatureTWD()
-        var messageBuilder = ""
-        var hasOverheat = false
-        
-        for index in 0..<twd.leftAxle.count {
-            if twd.leftAxle[index].last ?? 0.0 > maxAllowedTemperature {
-                messageBuilder += "Left TWD sensor \(index + 1) is over temperature threshold\n"
-                tpmsManager.axies[index].isLeftCriticalTWD = true
-                hasOverheat = true
-            }
-            
-            if twd.rightAxle[index].last ?? 0.0 > maxAllowedTemperature {
-                messageBuilder += "Right TWD sensor \(index + 1) is over temperature threshold\n"
-                tpmsManager.axies[index].isRightCriticalTWD = true
-                hasOverheat = true
-            }
-        }
-        
-        twdOverheatNotificationError.changed = self.twdOverheatNotificationError.message != messageBuilder
-        twdOverheatNotificationError.message = messageBuilder
-        
-        return hasOverheat
-    }
-    
     private func checkOverheatTPMS(axies: [AxiesData]) -> Bool {
         let maxAllowedTemperature = getMaxAllowedTemperatureTPMS()
         var messageBuilder = ""
@@ -149,115 +110,6 @@ final class ErrorManager: ObservableObject {
         tpmsOverheatNotificationError.message = messageBuilder
         
         return hasOverheat
-    }
-    
-    private func checkMinMaxTempTWD(twd: TWDModel) -> Bool {
-        var minTemp = Double.infinity
-        var maxTemp = -Double.infinity
-        var messageBuilder = ""
-        
-        for index in 0..<twd.leftAxle.count {
-            if let newMaxTemp = twd.leftAxle[index].max(), newMaxTemp > maxTemp {
-                maxTemp = newMaxTemp
-            }
-            if let newMinTemp = twd.leftAxle[index].min(), newMinTemp < minTemp {
-                minTemp = newMinTemp
-            }
-            
-            if let newMaxTemp = twd.rightAxle[index].max(), newMaxTemp > maxTemp {
-                maxTemp = newMaxTemp
-            }
-            if let newMinTemp = twd.rightAxle[index].min(), newMinTemp < minTemp {
-                minTemp = newMinTemp
-            }
-        }
-        
-        let maxDiff = self.getMaxAllowedDifferenceTWD()
-        var hasBigDiff = false
-        if maxTemp - minTemp < maxDiff {
-            self.twdTemperatureDifferenceNotificationError.message = messageBuilder
-            return false
-        }
-        
-        var overMaxRowsIndeces: [Int] = []
-        var overMinRowsIndeces: [Int] = []
-        
-        for index in twd.leftAxle.indices {
-            if let currentTemperature = twd.leftAxle[index].last, currentTemperature + maxDiff < maxTemp {
-                overMaxRowsIndeces.append(index)
-            }
-            if let currentTemperature = twd.leftAxle[index].last, currentTemperature - maxDiff > minTemp {
-                overMinRowsIndeces.append(index)
-            }
-            
-            if let currentTemperature = twd.rightAxle[index].last, currentTemperature + maxDiff < maxTemp {
-                overMaxRowsIndeces.append(index)
-            }
-            if let currentTemperature = twd.rightAxle[index].last, currentTemperature - maxDiff > minTemp {
-                overMinRowsIndeces.append(index)
-            }
-        }
-        
-        if overMinRowsIndeces.count < overMaxRowsIndeces.count {
-            for index in twd.leftAxle.indices {
-                if !overMinRowsIndeces.contains(index) {
-                    continue
-                }
-                
-                if let currentTemperature = twd.leftAxle[index].last, currentTemperature - maxDiff > minTemp {
-                    tpmsManager.axies[index].isLeftCriticalTWD = true
-                    hasBigDiff = true
-                    messageBuilder += "Left TWD sensor \(index + 1) is over max temperature difference\n"
-                }
-                
-                if let currentTemperature = twd.rightAxle[index].last, currentTemperature - maxDiff > minTemp {
-                    tpmsManager.axies[index].isRightCriticalTWD = true
-                    hasBigDiff = true
-                    messageBuilder += "Right TWD sensor \(index + 1) is over max temperature difference\n"
-                }
-            }
-        } else if overMinRowsIndeces.count > overMaxRowsIndeces.count {
-            for index in twd.leftAxle.indices {
-                if !overMaxRowsIndeces.contains(index) {
-                    continue
-                }
-                
-                if let currentTemperature = twd.leftAxle[index].last, currentTemperature + maxDiff < maxTemp {
-                    tpmsManager.axies[index].isLeftCriticalTWD = true
-                    hasBigDiff = true
-                    messageBuilder += "Left TWD sensor \(index + 1) is over max temperature difference\n"
-                }
-                
-                if let currentTemperature = twd.rightAxle[index].last, currentTemperature + maxDiff < maxTemp {
-                    tpmsManager.axies[index].isRightCriticalTWD = true
-                    hasBigDiff = true
-                    messageBuilder += "Right TWD sensor \(index + 1) is over max temperature difference\n"
-                }
-            }
-        } else {
-            var criticalSensoursCount = 0
-            
-            for index in twd.leftAxle.indices {
-                if let currentTemperature = twd.leftAxle[index].last, currentTemperature + maxDiff < maxTemp || currentTemperature - maxDiff > minTemp {
-                    tpmsManager.axies[index].isLeftCriticalTWD = true
-                    hasBigDiff = true
-                    criticalSensoursCount += 1
-                }
-                
-                if let currentTemperature = twd.rightAxle[index].last, currentTemperature + maxDiff < maxTemp || currentTemperature - maxDiff > minTemp {
-                    tpmsManager.axies[index].isRightCriticalTWD = true
-                    hasBigDiff = true
-                    criticalSensoursCount += 1
-                }
-            }
-            
-            criticalSensoursCount /= 2
-            messageBuilder += "\(criticalSensoursCount) or more sensors is over max temperature difference\n"
-        }
-        
-        twdTemperatureDifferenceNotificationError.changed = self.twdTemperatureDifferenceNotificationError.message != messageBuilder
-        twdTemperatureDifferenceNotificationError.message = messageBuilder
-        return hasBigDiff
     }
     
     private func checkMinMaxTempTPMS(axies: [AxiesData]) -> Bool {
@@ -367,32 +219,12 @@ final class ErrorManager: ObservableObject {
         return isOutOfBound
     }
     
-    private func setTemperatureOverheatTWD(isOverheat: Bool) {
-        if twdOverheatNotificationError.error != isOverheat || twdOverheatNotificationError.changed {
-            twdOverheatNotificationError.changed = false
-            twdOverheatNotificationError.error = isOverheat
-            if twdOverheatNotificationError.error {
-                twdOverheatNotificationError.show = true
-            }
-        }
-    }
-    
     private func setTemperatureOverheatTPMS(isOverheat: Bool) {
         if tpmsOverheatNotificationError.error != isOverheat || tpmsOverheatNotificationError.changed {
             tpmsOverheatNotificationError.changed = false
             tpmsOverheatNotificationError.error = isOverheat
             if tpmsOverheatNotificationError.error {
                 tpmsOverheatNotificationError.show = true
-            }
-        }
-    }
-    
-    private func setMaxDifferenceTWD(hasMaxDiff: Bool) {
-        if twdTemperatureDifferenceNotificationError.error != hasMaxDiff || twdTemperatureDifferenceNotificationError.changed {
-            twdTemperatureDifferenceNotificationError.changed = false
-            twdTemperatureDifferenceNotificationError.error = hasMaxDiff
-            if twdTemperatureDifferenceNotificationError.error {
-                twdTemperatureDifferenceNotificationError.show = true
             }
         }
     }
@@ -421,13 +253,6 @@ final class ErrorManager: ObservableObject {
         for index in tpmsManager.axies.indices {
             tpmsManager.axies[index].isLeftCriticalTPMS = false
             tpmsManager.axies[index].isRightCriticalTPMS = false
-        }
-    }
-    
-    private func clearFlagsTWD() {
-        for index in tpmsManager.axies.indices {
-            tpmsManager.axies[index].isLeftCriticalTWD = false
-            tpmsManager.axies[index].isRightCriticalTWD = false
         }
     }
     

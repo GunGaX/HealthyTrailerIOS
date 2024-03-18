@@ -26,8 +26,5 @@ struct NavigationDestinationsViewModifier: ViewModifier {
             .navigationDestination(for: LogFileDetailsPathItem.self) { pathItem in
                 LogFileDetailsView(file: pathItem.file)
             }
-            .navigationDestination(for: SelectDevicePathItem.self) { pathItem in
-                SelectDevicesView()
-            }
     }
 }

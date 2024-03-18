@@ -12,15 +12,13 @@ import AVFAudio
 
 final class MainViewModel: ObservableObject {
     var dataManager = DataManager.shared
-    var twdManager = BluetoothTWDManager.shared
     
     var settingsViewModel = SettingsViewModel.shared
     
     var alertSoundPlayer: AVAudioPlayer?
     var dogBarkSoundPlayer: AVAudioPlayer?
     
-    @Published var isTWDConnected = false
-    @Published var connectedTWD: TWDModel?
+    @Published var isConnected = false
     
     @Published var displayingMode = true
     
@@ -47,9 +45,6 @@ final class MainViewModel: ObservableObject {
     var staleWarningTimer: Timer?
     
     init() {
-        twdManager.$connectedTWD
-            .assign(to: &$connectedTWD)
-        
         settingsViewModel.$selectedSound
             .assign(to: &$selectedSound)
         settingsViewModel.$selectedTemperatureType
@@ -87,7 +82,6 @@ final class MainViewModel: ObservableObject {
     public func startTimerAndUploadingData() {
         uploadingTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
             self.updateLastTPMSValuesData()
-            self.twdManager.updateLastTWDValuesData()
         }
     }
     
@@ -104,22 +98,6 @@ final class MainViewModel: ObservableObject {
             if !dataManager.axies[index].rightTire.id.isEmpty {
                 UserDefaults.standard.setObject(dataManager.axies[index].rightTire, forKey: "lastLog_TPMS\(dataManager.axies[index].rightTire.id)")
             }
-        }
-    }
-    
-    public func getLastTemperatureForAxle(isRight: Bool, index: Int) -> String {
-        if isRight {
-            return connectedTWD?.rightAxle[index].last?.applyTemperatureSystem(selectedSystem: selectedTemperatureType).formattedToOneDecimalPlace().description ?? ""
-        } else {
-            return connectedTWD?.leftAxle[index].last?.applyTemperatureSystem(selectedSystem: selectedTemperatureType).formattedToOneDecimalPlace().description ?? ""
-        }
-    }
-    
-    public func getTemperatureArrayForAxle(isRight: Bool, index: Int) -> [Double] {
-        if isRight {
-            return connectedTWD?.rightAxle[index] ?? []
-        } else {
-            return connectedTWD?.leftAxle[index] ?? []
         }
     }
     
@@ -232,40 +210,11 @@ final class MainViewModel: ObservableObject {
         staleWarningTimer = nil
     }
     
-    public func appSwitchedToBackground() {
-        guard let connectedId = twdManager.peripheral?.identifier else { return }
-        
-        UserDefaults.standard.setObject(connectedId, forKey: "lastConnectedTWDId")
-    }
-    
-    public func appSwitchedToForeground() {
-        guard twdManager.peripheral == nil else { return }
-        
-        twdManager.setupBluetooth()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            guard let lastConnectedId = UserDefaults.standard.getObject(forKey: "lastConnectedTWDId", castTo: String.self) else { return }
-            
-            for peripheral in self.twdManager.discoveredPeripherals {
-                if peripheral.identifier.uuidString == lastConnectedId {
-                    self.twdManager.connectToDevice(peripheral: peripheral)
-                    print("connected")
-                }
-            }
-        }
-    }
-    
-    public func forgetLastConnectedTWD() {
-        UserDefaults.standard.removeObject(forKey: "lastConnectedTWDId")
-    }
-    
     public func disconnectFromTWD() {
         stopUploadingData()
         stopCheckWarningTimer()
-        dataManager.disconnectTWD()
-        twdManager.disconnectFromDevice()
-        isTWDConnected = false
-        forgetLastConnectedTWD()
+        dataManager.disconnect()
+        isConnected = false
     }
     
 //
