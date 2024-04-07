@@ -9,6 +9,8 @@ import SwiftUI
 
 struct WelcomeView: View {
     @EnvironmentObject var navigationManager: NavigationManager
+    @EnvironmentObject var viewModel: MainViewModel
+    
     @ObservedObject var locationManager = LocationManager.shared
     @ObservedObject var bluetoothManager = BluetoothManager.shared
     
@@ -20,6 +22,9 @@ struct WelcomeView: View {
             descriptionText
             permissions
             conclusionText
+                .padding(.bottom, 14)
+            axiesText
+            countPicker
             Spacer()
             gotItButton
         }
@@ -58,8 +63,21 @@ struct WelcomeView: View {
             .font(.roboto300, size: 18)
     }
     
+    private var countPicker: some View {
+        AxiesCountPickerView(selectedCount: $viewModel.selectedAxiesCountState)
+    }
+    
+    private var axiesText: some View {
+        Text("Please select how many axies do you want to track")
+            .fontWeight(.bold)
+            .multilineTextAlignment(.leading)
+            .foregroundStyle(Color.textDark)
+            .font(.roboto300, size: 18)
+    }
+    
     private var gotItButton: some View {
         Button {
+            UserDefaults.standard.setValue(viewModel.selectedAxiesCountState, forKey: "axiesCount")
             if locationManager.checkIfAccessIsGranted() && bluetoothManager.checkBluetooth() {
                 navigationManager.appState = .app
             } else {

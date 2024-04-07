@@ -41,6 +41,7 @@
 		B63E7C292B039F2A00ECA81B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C282B039F2A00ECA81B /* LocationManager.swift */; };
 		B63E7C2B2B03A37700ECA81B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C2A2B03A37700ECA81B /* RootView.swift */; };
 		B63E7C2D2B03B98F00ECA81B /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7C2C2B03B98F00ECA81B /* BluetoothManager.swift */; };
+		B64976C62BC3174A008EF180 /* AxiesCountPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64976C52BC3174A008EF180 /* AxiesCountPickerView.swift */; };
 		B65FADD22B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65FADD12B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift */; };
 		B65FADD42B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65FADD32B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift */; };
 		B66F4B1D2B2799DA0001E143 /* TPMSModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */; };
@@ -102,6 +103,7 @@
 		B63E7C282B039F2A00ECA81B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B63E7C2A2B03A37700ECA81B /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B63E7C2C2B03B98F00ECA81B /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		B64976C52BC3174A008EF180 /* AxiesCountPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxiesCountPickerView.swift; sourceTree = "<group>"; };
 		B65FADD12B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationAddNewTPMSView.swift; sourceTree = "<group>"; };
 		B65FADD32B4E1E3F0079A91C /* ForgetSensorsConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetSensorsConfirmationView.swift; sourceTree = "<group>"; };
 		B66F4B1C2B2799DA0001E143 /* TPMSModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPMSModel.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				B63E7C062AFFA7B500ECA81B /* DefaultDoubleSliderView.swift */,
 				B63E7C082AFFB33400ECA81B /* NotificationSoundPickerView.swift */,
 				B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */,
+				B64976C52BC3174A008EF180 /* AxiesCountPickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				B63E7BF82AFE5F1100ECA81B /* SettingsView.swift in Sources */,
 				B63E7C072AFFA7B500ECA81B /* DefaultDoubleSliderView.swift in Sources */,
 				B6058EF02B163B0300D84AD3 /* UserDefaultsExtension.swift in Sources */,
+				B64976C62BC3174A008EF180 /* AxiesCountPickerView.swift in Sources */,
 				B67DE33F2B98C39600F6AAA9 /* MainRedButtonStyle.swift in Sources */,
 				B63E7BFC2AFE606500ECA81B /* LoggedHistoryView.swift in Sources */,
 			);
