@@ -249,7 +249,7 @@ class DataManager: NSObject, ObservableObject {
     }
     
     func fetchConnectedTPMS() {
-        if let retrievedIds = UserDefaults.standard.getObject(forKey: "connectedTPMSDevices)", castTo: [String].self) {
+        if let retrievedIds = UserDefaults.standard.getObject(forKey: "connectedTPMSDevices", castTo: [String].self) {
             connectedTPMSIds = retrievedIds
         }
     }
