@@ -269,6 +269,7 @@ struct MainScreenView: View {
         dataManager.loadLastData()
         viewModel.startTimerAndUploadingData()
         viewModel.startUpdatingHisoryTimer()
+        viewModel.startUploadingTerminalLogs()
     }
     
     private func addNewTPMSSensorsAction() {

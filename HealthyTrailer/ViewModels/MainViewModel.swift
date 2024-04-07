@@ -26,7 +26,7 @@ final class MainViewModel: ObservableObject {
     @Published var selectedTemperatureType: TemperatureType = .fahrenheit
     @Published var selectedPreassureType: PreasureType = .kpa
     
-    @Published var terminalLogs: [TerminalLog] = TerminalLog.mockLogs
+    @Published var terminalLogs: [TerminalLog] = []
     
     @Published var logFoldersPaths: [String] = []
     @Published var logFiles: [String: HistoryFileModel] = [:]
@@ -44,6 +44,7 @@ final class MainViewModel: ObservableObject {
     
     var staleWarningTimer: Timer?
     var updatingHistoryTimer: Timer?
+    var updatingTerminalTimer: Timer?
     
     init() {
         settingsViewModel.$selectedSound
@@ -227,27 +228,32 @@ final class MainViewModel: ObservableObject {
         isConnected = false
     }
     
-//
-//    public func createDirectory() {
-//        FileRepository.shared.createSubdirectory(withName: "Folder 1")
-//        FileRepository.shared.createSubdirectory(withName: "Folder 2")
-//        FileRepository.shared.createSubdirectory(withName: "Folder 3")
-//    }
-//    
-//    public func createFiles(path: String) {
-//        var file = HistoryFileModel(title: "file for test", content: "content \n content \n content \n fajlskjdflkja iofjqiwhdf askdjf kajksdjf ajskd jfkasjldkf jioqwjdfioj akdsljfk lajsldf ", creationDate: Date.now)
-//        FileRepository.shared.writeToFile(file: file, atFolder: path)
-//        
-//        file = HistoryFileModel(title: "file for test one ", content: "3fasdfkfjkaj skldf ajsdf ladf ", creationDate: Date.now)
-//        FileRepository.shared.writeToFile(file: file, atFolder: path)
-//        
-//        file = HistoryFileModel(title: "some logs will be here", content: "content \n content \n content \n fajlskjdflkja iofjqiwhdf askdjf kajksdjf ajskd jfkasjldkf jioqwjdfioj akdsljfk lajsldf ", creationDate: Date.now)
-//        FileRepository.shared.writeToFile(file: file, atFolder: path)
-//        
-//        file = HistoryFileModel(title: "ijijfi  fdf", content: "content \n content \n content \n fajlskjdflkja iofjqiwhdf askdjf kajksdjf ajskd jfkasjldkf jioqwjdfioj akdsljfk lajsldf ", creationDate: Date.now)
-//        FileRepository.shared.writeToFile(file: file, atFolder: path)
-//        
-//        file = HistoryFileModel(title: "file for test 1 more", content: "content \n content \n content \n fajlskjdflkja iofjqiwhdf askdjf kajksdjf ajskd jfkasjldkf jioqwjdfioj akdsljfk lajsldf ", creationDate: Date.now)
-//        FileRepository.shared.writeToFile(file: file, atFolder: path)
-//    }
+    public func startUploadingTerminalLogs() {
+        self.updatingHistoryTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
+            self.uploadTerminalLog()
+        }
+    }
+    
+    private func uploadTerminalLog() {
+        var currentLog: String = "<L>"
+        for index in self.dataManager.axies.indices {
+            currentLog += "<LT\(index + 1):\(self.dataManager.axies[index].leftTire.tireData.temperature.formattedToOneDecimalPlace())F>"
+            if index + 1 != self.dataManager.axies.count {
+                currentLog += ","
+            }
+        }
+        currentLog += "</L>,<R>"
+        for index in self.dataManager.axies.indices {
+            currentLog += "<RT\(index + 1):\(self.dataManager.axies[index].rightTire.tireData.temperature.formattedToOneDecimalPlace())F>"
+            if index + 1 != self.dataManager.axies.count {
+                currentLog += ","
+            }
+        }
+        currentLog += "</R>"
+        
+        if terminalLogs.count >= 100 {
+            terminalLogs.removeFirst()
+        }
+        terminalLogs.append(TerminalLog(time: Date.now, text: currentLog))
+    }
 }

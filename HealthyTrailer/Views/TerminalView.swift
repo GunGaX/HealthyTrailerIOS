@@ -11,23 +11,37 @@ struct TerminalView: View {
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var viewModel: MainViewModel
     
+    @Namespace var bottomID
+    
     var body: some View {
         VStack(spacing: 0) {
             SecondaryHeaderView(titleText: "Terminal")
             
-            ScrollView {
-                HStack {
-                    statusIndicator
-                        .padding(.leading, -12)
-                    Spacer()
-                }
-                .padding(.top, 30)
-                
-                logs
-                    .padding(.horizontal)
+            ScrollViewReader { proxy in
+                ScrollView {
+                    HStack {
+                        statusIndicator
+                            .padding(.leading, -12)
+                        Spacer()
+                    }
                     .padding(.top, 30)
+                    
+                    logs
+                        .padding(.horizontal)
+                        .padding(.top, 30)
+                    
+                    HStack { EmptyView() }
+                        .id(bottomID)
+                        .padding(.bottom, 50)
+                }
+                .onChange(of: viewModel.terminalLogs.last) { _ in
+                    withAnimation(.spring(duration: 0.2)) {
+                        proxy.scrollTo(bottomID)
+                    }
+                }
             }
         }
+        .animation(.spring(duration: 0.2), value: viewModel.terminalLogs)
         .ignoresSafeArea(.container, edges: .top)
         .navigationBarBackButtonHidden()
     }
@@ -51,17 +65,6 @@ struct TerminalView: View {
         }
     }
     
-    private var tryToConnectButton: some View {
-        Button {
-            withAnimation {
-                viewModel.isConnected = true
-            }
-        } label: {
-            Text("Try to connect")
-        }
-        .buttonStyle(.mainBlueButton)
-    }
-    
     private var logs: some View {
         VStack(spacing: 8) {
             ForEach(viewModel.terminalLogs, id: \.self) { log in
@@ -72,9 +75,10 @@ struct TerminalView: View {
                     Text(log.text)
                         .foregroundColor(Color.textDark)
                 }
-                .font(.roboto400, size: 14)
+                .font(.roboto400, size: 18)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
