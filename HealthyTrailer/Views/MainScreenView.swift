@@ -173,7 +173,7 @@ struct MainScreenView: View {
     
     private var tryToConnectButton: some View {
         Button {
-            dataManager.setup(connectedAxiesCount: 2)
+            dataManager.setup(connectedAxiesCount: viewModel.selectedAxiesCountState)
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 saveAndStartWorking()
             }

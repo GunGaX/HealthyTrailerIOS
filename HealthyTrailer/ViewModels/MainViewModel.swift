@@ -18,6 +18,8 @@ final class MainViewModel: ObservableObject {
     var alertSoundPlayer: AVAudioPlayer?
     var dogBarkSoundPlayer: AVAudioPlayer?
     
+    @Published var selectedAxiesCountState: Int = 2
+    
     @Published var isConnected = false
     
     @Published var displayingMode = true
@@ -47,6 +49,13 @@ final class MainViewModel: ObservableObject {
     var updatingTerminalTimer: Timer?
     
     init() {
+        var count = UserDefaults.standard.integer(forKey: "axiesCount")
+        guard count != 0 else {
+            count = 2
+            return
+        }
+        self.selectedAxiesCountState = count
+        
         settingsViewModel.$selectedSound
             .assign(to: &$selectedSound)
         settingsViewModel.$selectedTemperatureType
