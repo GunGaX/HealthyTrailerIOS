@@ -43,6 +43,7 @@ final class MainViewModel: ObservableObject {
     var connectedOrderedTPMSIds: [String] = []
     
     var staleWarningTimer: Timer?
+    var updatingHistoryTimer: Timer?
     
     init() {
         settingsViewModel.$selectedSound
@@ -201,6 +202,15 @@ final class MainViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 240) {
             self.staleWarningTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { timer in
                 self.checkWarnings()
+            }
+        }
+    }
+    
+    public func startUpdatingHisoryTimer() {
+        self.updatingHistoryTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
+            for index in self.dataManager.axies.indices {
+                self.dataManager.axies[index].leftTire.tireData.updateTemperatureHistory()
+                self.dataManager.axies[index].rightTire.tireData.updateTemperatureHistory()
             }
         }
     }
