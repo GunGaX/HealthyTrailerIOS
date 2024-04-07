@@ -12,7 +12,7 @@ struct MainHeaderView: View {
     
     var body: some View {
         HStack(spacing: 20) {
-           Text("fkjdkf remove")
+            title
             threeDotsIcon
         }
         .padding(.horizontal)
@@ -22,9 +22,15 @@ struct MainHeaderView: View {
         .headerShadowRectangle()
     }
     
+    private var title: some View {
+        Text("Healthy Trailer")
+             .font(.title)
+             .bold()
+             .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
     private var threeDotsIcon: some View {
         Menu {
-            loggedHistoryButton
             terminalButton
             settingsButton
         } label: {
@@ -36,14 +42,6 @@ struct MainHeaderView: View {
                 .foregroundColor(.black)
                 .padding(10)
                 .contentShape(Rectangle())
-        }
-    }
-    
-    private var loggedHistoryButton: some View {
-        Button {
-            navigationManager.append(HistoryPathItem())
-        } label: {
-            Text("Directory")
         }
     }
     
