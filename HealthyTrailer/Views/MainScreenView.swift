@@ -174,6 +174,9 @@ struct MainScreenView: View {
     private var tryToConnectButton: some View {
         Button {
             dataManager.setup(connectedAxiesCount: 2)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                saveAndStartWorking()
+            }
             viewModel.isConnected = true
         } label: {
             Text("Connect")
@@ -259,11 +262,13 @@ struct MainScreenView: View {
     }
     
     private func saveAndStartWorking() {
+        guard !dataManager.connectedTPMSIds.isEmpty else { return }
         tireToConnectText = "LEFT 1"
         connectedTPMSCount = 0
         
         dataManager.loadLastData()
         viewModel.startTimerAndUploadingData()
+        viewModel.startUpdatingHisoryTimer()
     }
     
     private func addNewTPMSSensorsAction() {
@@ -329,14 +334,6 @@ fileprivate struct AxisBarView: View {
                                 .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.getTemperature(isRight: false)
-                                .applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType)
-                                .formattedToOneDecimalPlace())
-                            Text(viewModel.selectedTemperatureType.measureMark)
-                                .font(.roboto500, size: 10)
-                                .opacity(0.8)
-                        }
-                        HStack(alignment: .bottom, spacing: 2) {
                             Text(axis.getPressure(isRight: false)
                                 .applyPreassureSystem(selectedSystem: viewModel.selectedPreassureType)
                                 .formattedToOneDecimalPlace())
@@ -356,14 +353,6 @@ fileprivate struct AxisBarView: View {
                         HStack(alignment: .bottom, spacing: 2) {
                             Text("R")
                             Text("\(axis.axisNumber)")
-                                .font(.roboto500, size: 10)
-                                .opacity(0.8)
-                        }
-                        HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.getTemperature(isRight: true)
-                                .applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType)
-                                .formattedToOneDecimalPlace())
-                            Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 10)
                                 .opacity(0.8)
                         }
@@ -400,10 +389,10 @@ fileprivate struct AxisBarView: View {
                 .frame(height: 80)
             
             VStack {
-                Text("Axle Temp")
+                Text("Tire Temp")
                     .font(.roboto400, size: 8)
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text("0.0")
+                    Text(isRight ? axle.rightTire.tireData.temperatureHistory.last?.applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType).formattedToOneDecimalPlace().description ?? "0.0" : axle.leftTire.tireData.temperatureHistory.last?.applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType).formattedToOneDecimalPlace().description ?? "0.0")
                         .font(.roboto700, size: 18)
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
@@ -411,7 +400,7 @@ fileprivate struct AxisBarView: View {
                         .padding(.bottom, 3)
                 }
                 TireTemperaturePlotView(
-                    data: [0.0, 0.0, 0.0],
+                    data: isRight ? axle.rightTire.tireData.temperatureHistory : axle.leftTire.tireData.temperatureHistory,
                     foregroundColor: foregroundColor
                 )
                 .padding(.horizontal)
@@ -451,14 +440,6 @@ fileprivate struct FlatAxisBarView: View {
                                 .opacity(0.8)
                         }
                         HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.getTemperature(isRight: false)
-                                .applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType)
-                                .formattedToOneDecimalPlace())
-                            Text(viewModel.selectedTemperatureType.measureMark)
-                                .font(.roboto500, size: 12)
-                                .opacity(0.8)
-                        }
-                        HStack(alignment: .bottom, spacing: 2) {
                             Text(axis.getPressure(isRight: false)
                                 .applyPreassureSystem(selectedSystem: viewModel.selectedPreassureType)
                                 .formattedToOneDecimalPlace())
@@ -480,14 +461,6 @@ fileprivate struct FlatAxisBarView: View {
                         HStack(alignment: .bottom, spacing: 2) {
                             Text("R")
                             Text("\(axis.axisNumber)")
-                                .font(.roboto500, size: 12)
-                                .opacity(0.8)
-                        }
-                        HStack(alignment: .bottom, spacing: 2) {
-                            Text(axis.getTemperature(isRight: true)
-                                .applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType)
-                                .formattedToOneDecimalPlace())
-                            Text(viewModel.selectedTemperatureType.measureMark)
                                 .font(.roboto500, size: 12)
                                 .opacity(0.8)
                         }
@@ -532,11 +505,11 @@ fileprivate struct FlatAxisBarView: View {
                 .foregroundStyle(backgroundColor)
             
             VStack(spacing: 2) {
-                Text("Axle Temp")
+                Text("Tire Temp")
                     .font(.roboto400, size: 10)
                 
                 HStack(alignment: .bottom, spacing: 5) {
-                    Text("0.0")
+                    Text(isRight ? axle.rightTire.tireData.temperatureHistory.last?.applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType).formattedToOneDecimalPlace().description ?? "0.0" : axle.leftTire.tireData.temperatureHistory.last?.applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType).formattedToOneDecimalPlace().description ?? "0.0")
                         .font(.roboto700, size: 18)
                     
                     Text(viewModel.selectedTemperatureType.measureMark)
@@ -545,7 +518,7 @@ fileprivate struct FlatAxisBarView: View {
                 }
                 
                 TireTemperaturePlotView(
-                    data: [0.0, 0.0, 0.0],
+                    data: isRight ? axle.rightTire.tireData.temperatureHistory : axle.leftTire.tireData.temperatureHistory,
                     foregroundColor: foregroundColor
                 )
                 .padding(.horizontal)
