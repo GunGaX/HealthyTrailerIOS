@@ -12,3 +12,14 @@
 "These permissions are essential for the app to function effectively and provide you with its features." = "These permissions are essential for the app to function effectively and provide you with its features.";
 "Please select how many axies do you want to track" = "Please select how many axies do you want to track";
 "Ok, got it" = "Ok, got it";
+
+"App needs to allow Location Permission to continue" = "App needs to allow Location Permission to continue";
+"Open settings" = "Open settings";
+
+"Settings" = "Settings";
+"Max allowed TPMS sensor temperature" = "Max allowed TPMS sensor temperature";
+"Max allowed difference in TPMS sensor temperature" = "Max allowed difference in TPMS sensor temperature";
+"Expected pressure range:" = "Expected pressure range:";
+"Axles:" = "Axles:";
+"This parameter is determined automatically" = "This parameter is determined automatically";
+"Notification sound" = "Notification sound";

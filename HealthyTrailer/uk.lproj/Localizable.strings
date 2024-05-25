@@ -12,3 +12,14 @@
 "These permissions are essential for the app to function effectively and provide you with its features." = "Ці дозволи є необхідними для ефективної роботи додатку та надання його функцій.";
 "Please select how many axies do you want to track" = "Будь ласка, виберіть, скільки осей ви хочете відстежувати";
 "Ok, got it" = "Зрозуміло";
+
+"App needs to allow Location Permission to continue" = "Додатку потрібно дозволити доступ до місцезнаходження, щоб продовжити";
+"Open settings" = "Відкрити налаштування";
+
+"Settings" = "Налаштування";
+"Max allowed TPMS sensor temperature" = "Максимальна дозволена температура датчика TPMS";
+"Max allowed difference in TPMS sensor temperature" = "Максимальна довзолена різниця в температурі датчика TPMS";
+"Expected pressure range:" = "Очікуваний діапазон тиску:";
+"Axles:" = "Осей:";
+"This parameter is determined automatically" = "Цей параметр визначається автоматично";
+"Notification sound" = "Звук сповіщення";
