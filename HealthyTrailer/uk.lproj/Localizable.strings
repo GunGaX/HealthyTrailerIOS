@@ -33,4 +33,10 @@
 "Add TPMS sensors to trailer" = "Додати TPMS сенсор до трейлера";
 "Forget connected TPMS sensors" = "Забути підключений TPMS сенсор";
 "Tire Temp" = "Температура колеса";
-"Axis" = "Вісь"
+"Axis" = "Вісь";
+
+"RIGHT" = "Правий";
+"LEFT" = "Лівий";
+
+"Left sensor _ hasn't reported in over five minutes, please check sensor\n" = "Лівий датчик %@ не повідомляв протягом понад п'яти хвилин, будь ласка, перевірте датчик\n"
+"Right sensor _ hasn't reported in over five minutes, please check sensor\n" = "Правий датчик %@ не повідомляв протягом понад п'яти хвилин, будь ласка, перевірте датчик\n";

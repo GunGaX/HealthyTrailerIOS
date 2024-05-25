@@ -79,10 +79,10 @@ final class MainViewModel: ObservableObject {
         }
         
         for i in 1...n {
-            connectingTextArray.append("LEFT \(i)")
+            connectingTextArray.append(.init("LEFT \(i)"))
         }
         for i in 1...n {
-            connectingTextArray.append("RIGHT \(i)")
+            connectingTextArray.append(.init("RIGHT \(i)"))
         }
         
         for _ in 1...(n * 2) {
@@ -191,11 +191,11 @@ final class MainViewModel: ObservableObject {
         
         for index in axisList.indices {
             if !axisList[index].isFresh(isRight: false) {
-                tyresNames += "Left sensor \(index + 1) hasn't reported in over five minutes, please check sensor\n"
+                tyresNames += .init("Left sensor \(index + 1) hasn't reported in over five minutes, please check sensor\n")
                 tyreCount += 1
             }
             if !axisList[index].isFresh(isRight: true) {
-                tyresNames += "Right sensor \(index + 1) hasn't reported in over five minutes, please check sensor\n"
+                tyresNames += .init("Right sensor \(index + 1) hasn't reported in over five minutes, please check sensor\n")
                 tyreCount += 1
             }
         }

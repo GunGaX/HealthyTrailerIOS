@@ -34,3 +34,8 @@
 "Forget connected TPMS sensors" = "Forget connected TPMS sensors";
 "Tire Temp" = "Tire Temp";
 "Axis" = "Axis";
+
+"RIGHT" = "RIGHT";
+"LEFT" = "LEFT";
+"Left sensor _ hasn't reported in over five minutes, please check sensor\n" = "Left sensor %@ hasn't reported in over five minutes, please check sensor\n";
+"Right sensor _ hasn't reported in over five minutes, please check sensor\n" = "Right sensor %@ hasn't reported in over five minutes, please check sensor\n";
