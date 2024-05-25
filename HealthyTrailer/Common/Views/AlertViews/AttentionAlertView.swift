@@ -60,7 +60,7 @@ struct AttentionView: View {
     }
     
     private var title: some View {
-        Text("Attention!")
+        Text(.init("Attention!"))
             .font(.roboto500, size: 20)
             .foregroundStyle(Color.mainRed)
             .frame(maxWidth: .infinity, alignment: .leading)

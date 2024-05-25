@@ -51,3 +51,18 @@
 "Right wheel _ has to low pressure\n" = "Праве колесо %@ має надто низький тиск\n";
 "Left wheel _ has to high pressure\n" = "Ліве колесо %@ має надто високий тиск\n";
 "Right wheel _ has to high pressure\n" = "Праве колесо %@ має надто високий тиск\n";
+
+"Add new TPMS sensors" = "Додати новий TPMS сенсор";
+"Listening for new sensors" = "Сканую на нові сенсори";
+"Please install the TMPS sensor for tire:" = "Будь ласка, встановіть TPMS сенсор на колесо:";
+"Previously known sensors:" = "Раніше підключені сенсори:";
+"Forget known sensors" = "Забути раніше підключені сенсори";
+"Cancel" = "Скасувати";
+"Yes" = "Так";
+
+"Do you really want to add new TPMS sensors?" = "Ви дійсно хочете підключити нові TPMS сенсори?";
+
+"Forget TPMS sensors" = "Забути TPMS сенсори";
+"Are you sure you want to forgot all TMPS sensors assigned to this trailer?" = "Ви впевнені, що хочете забути усі підключені TPMS сенсори?";
+
+"Attention!" = "Увага!";

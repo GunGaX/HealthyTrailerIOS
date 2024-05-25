@@ -51,3 +51,17 @@
 "Left wheel _ has to high pressure\n" = "Left wheel %@ has to high pressure\n";
 "Right wheel _ has to high pressure\n" = "Right wheel %@ has to high pressure\n";
 
+"Add new TPMS sensors" = "Add new TPMS sensors";
+"Listening for new sensors" = "Listening for new sensors";
+"Please install the TMPS sensor for tire:" = "Please install the TMPS sensor for tire:";
+"Previously known sensors:" = "Previously known sensors:";
+"Forget known sensors" = "Forget known sensors";
+"Cancel" = "Cancel";
+"Yes" = "Yes";
+
+"Do you really want to add new TPMS sensors?" = "Do you really want to add new TPMS sensors?";
+
+"Forget TPMS sensors" = "Forget TPMS sensors";
+"Are you sure you want to forgot all TMPS sensors assigned to this trailer?" = "Are you sure you want to forgot all TMPS sensors assigned to this trailer?";
+
+"Attention!" = "Attention!";
