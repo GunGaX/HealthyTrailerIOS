@@ -39,3 +39,15 @@
 "LEFT" = "LEFT";
 "Left sensor _ hasn't reported in over five minutes, please check sensor\n" = "Left sensor %@ hasn't reported in over five minutes, please check sensor\n";
 "Right sensor _ hasn't reported in over five minutes, please check sensor\n" = "Right sensor %@ hasn't reported in over five minutes, please check sensor\n";
+
+"Left wheel _ is over temperature threshold\n" = "Left wheel %@ is over temperature threshold\n";
+"Right wheel _ is over temperature threshold\n" = "Right wheel %@ is over temperature threshold\n";
+"Left wheel _ is over max temperature difference\n" = "Left wheel %@ is over max temperature difference\n";
+"Right wheel _ is over max temperature difference\n" = "Right wheel %@ is over max temperature difference\n";
+"Left wheel _ has flat tire or sensor is unscrewed\n" = "Left wheel %@ has flat tire or sensor is unscrewed\n";
+"Right wheel _ has flat tire or sensor is unscrewed\n" = "Right wheel %@ has flat tire or sensor is unscrewed\n";
+"Left wheel _ has to low pressure\n" = "Left wheel %@ has to low pressure\n";
+"Right wheel _ has to low pressure\n" = "Right wheel %@ has to low pressure\n";
+"Left wheel _ has to high pressure\n" = "Left wheel %@ has to high pressure\n";
+"Right wheel _ has to high pressure\n" = "Right wheel %@ has to high pressure\n";
+

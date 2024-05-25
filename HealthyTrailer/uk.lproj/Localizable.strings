@@ -38,5 +38,16 @@
 "RIGHT" = "Правий";
 "LEFT" = "Лівий";
 
-"Left sensor _ hasn't reported in over five minutes, please check sensor\n" = "Лівий датчик %@ не повідомляв протягом понад п'яти хвилин, будь ласка, перевірте датчик\n"
+"Left sensor _ hasn't reported in over five minutes, please check sensor\n" = "Лівий датчик %@ не повідомляв протягом понад п'яти хвилин, будь ласка, перевірте датчик\n";
 "Right sensor _ hasn't reported in over five minutes, please check sensor\n" = "Правий датчик %@ не повідомляв протягом понад п'яти хвилин, будь ласка, перевірте датчик\n";
+
+"Left wheel _ is over temperature threshold\n" = "Лівe колесо %@ перевищує поріг температури\n";
+"Right wheel _ is over temperature threshold\n" = "Праве колесо %@ перевищує поріг температури\n";
+"Left wheel _ is over max temperature difference\n" = "Ліве колесо %@ перевищує максимальну різницю температур\n";
+"Right wheel _ is over max temperature difference\n" = "Праве колесо %@ перевищує максимальну різницю температур\n";
+"Left wheel _ has flat tire or sensor is unscrewed\n" = "Ліве колесо %@ проколоте або сенсор не прикріплений\n";
+"Right wheel _ has flat tire or sensor is unscrewed\n" = "Праве колесо %@ проколоте або сенсор не прикріплений\n";
+"Left wheel _ has to low pressure\n" = "Ліве колесо %@ має надто низький тиск\n";
+"Right wheel _ has to low pressure\n" = "Праве колесо %@ має надто низький тиск\n";
+"Left wheel _ has to high pressure\n" = "Ліве колесо %@ має надто високий тиск\n";
+"Right wheel _ has to high pressure\n" = "Праве колесо %@ має надто високий тиск\n";
