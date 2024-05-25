@@ -26,3 +26,11 @@
 
 "Terminal" = "Термінал";
 "Status" = "Статус";
+
+"Exit" = "Вийти";
+"Error with Axle modules, please check connections" = "Помилка з модулями осі, перевірте підключення";
+"Connect" = "Підключити";
+"Add TPMS sensors to trailer" = "Додати TPMS сенсор до трейлера";
+"Forget connected TPMS sensors" = "Забути підключений TPMS сенсор";
+"Tire Temp" = "Температура колеса";
+"Axis" = "Вісь"

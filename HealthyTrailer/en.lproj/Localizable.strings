@@ -26,3 +26,11 @@
 
 "Terminal" = "Terminal";
 "Status" = "Status";
+
+"Exit" = "Exit";
+"Error with Axle modules, please check connections" = "Error with Axle modules, please check connections";
+"Connect" = "Connect";
+"Add TPMS sensors to trailer" = "Add TPMS sensors to trailer";
+"Forget connected TPMS sensors" = "Forget connected TPMS sensors";
+"Tire Temp" = "Tire Temp";
+"Axis" = "Axis";
