@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  HealthyTrailer
+
+  Created by Dmytro Savka on 19.05.2024.
+  
+*/
+
+"Welcome to Healthy Trailer App" = "Ласково просимо до Healthy Trailer додатку";
+"This is a security and safety for your trailer in one click. To use this application, you must grant the following permissions:" = "Це безпека та захист вашого трейлера, яка може керуватись одним кліком. Щоб використовувати цей додаток, вам потрібно надати наступні дозволи";
+"• Access to your device's location \n• Bluetooth activation" = "• Доступ до місцезнаходження вашого пристрою \n• Активація Bluetooth";
+"These permissions are essential for the app to function effectively and provide you with its features." = "Ці дозволи є необхідними для ефективної роботи додатку та надання його функцій.";
+"Please select how many axies do you want to track" = "Будь ласка, виберіть, скільки осей ви хочете відстежувати";
+"Ok, got it" = "Зрозуміло";
