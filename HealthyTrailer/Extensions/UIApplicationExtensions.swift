@@ -68,3 +68,25 @@ struct ScreenUtils {
     static var isVerySmallDisplay: Bool { height < 700 }
     static var isSmallDisplay: Bool { height < 815 }
 }
+
+extension UIApplication {
+    func topViewController(base: UIViewController? = nil) -> UIViewController? {
+        let base = base ?? self.connectedScenes
+            .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+            .first?.rootViewController
+
+        if let nav = base as? UINavigationController {
+            return topViewController(base: nav.visibleViewController)
+        }
+
+        if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return topViewController(base: selected)
+        }
+
+        if let presented = base?.presentedViewController {
+            return topViewController(base: presented)
+        }
+
+        return base
+    }
+}
