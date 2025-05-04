@@ -9,25 +9,41 @@ import Foundation
 import SwiftUI
 
 enum AppState {
-    case welcome, allowPermissions, app
+    case auth, welcome, allowPermissions, app
 }
 
 protocol PathItem: Hashable, Codable { }
 
 final class NavigationManager: ObservableObject {
-    @Published var appState: AppState = .welcome
+    @Published var appState: AppState = .auth
     @Published var path: NavigationPath = NavigationPath()
+    @Published var authPath: NavigationPath = NavigationPath()
     
     func append<T: PathItem>(_ pathItem: T) {
-        path.append(pathItem)
+        switch appState {
+        case .auth:
+            authPath.append(pathItem)
+        case .welcome, .allowPermissions, .app:
+            path.append(pathItem)
+        }
     }
     
     func removeLast(_ k: Int = 1) {
-        path.removeLast(k)
+        switch appState {
+        case .auth:
+            authPath.removeLast(k)
+        case .welcome, .allowPermissions, .app:
+            path.removeLast(k)
+        }
     }
     
     func resetCurrentPath() {
-        path = NavigationPath()
+        switch appState {
+        case .auth:
+            authPath = NavigationPath()
+        case .welcome, .allowPermissions, .app:
+            path = NavigationPath()
+        }
     }
 }
 

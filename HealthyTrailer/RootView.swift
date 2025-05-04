@@ -20,6 +20,7 @@ struct RootView: View {
                 ProgressView()
             } else {
                 switch navigationManager.appState {
+                case .auth: UserTypeView()
                 case .welcome: WelcomeView()
                 case .allowPermissions: AllowPermissionsView()
                 case .app: MainScreenView()
@@ -29,7 +30,7 @@ struct RootView: View {
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 if locationManager.checkIfAccessIsGranted() && bluetoothManager.checkBluetooth() {
-                    navigationManager.appState = .app
+//                    navigationManager.appState = .app
                     isLoading = false
                 } else {
                     isLoading = false

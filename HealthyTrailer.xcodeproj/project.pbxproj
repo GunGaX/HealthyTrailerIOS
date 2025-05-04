@@ -28,6 +28,7 @@
 		B61C28C52DC7F81F00CE3BC9 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C28C42DC7F81F00CE3BC9 /* UserModel.swift */; };
 		B61C28C72DC7F86600CE3BC9 /* SignInGoogleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C28C62DC7F85800CE3BC9 /* SignInGoogleHelper.swift */; };
 		B61C28C92DC7F88900CE3BC9 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C28C82DC7F88300CE3BC9 /* FirestoreManager.swift */; };
+		B61C28F12DC7FDE400CE3BC9 /* UserTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C28F02DC7FDE400CE3BC9 /* UserTypeView.swift */; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
 		B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */; };
 		B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */; };
@@ -96,6 +97,7 @@
 		B61C28C42DC7F81F00CE3BC9 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		B61C28C62DC7F85800CE3BC9 /* SignInGoogleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInGoogleHelper.swift; sourceTree = "<group>"; };
 		B61C28C82DC7F88300CE3BC9 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		B61C28F02DC7FDE400CE3BC9 /* UserTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeView.swift; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBlueButtonStyle.swift; sourceTree = "<group>"; };
 		B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 		B68CE6BB2AFD09DE0047E644 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B61C28F02DC7FDE400CE3BC9 /* UserTypeView.swift */,
 				B63E7C222B0389CE00ECA81B /* WelcomeView.swift */,
 				B63E7C242B038D5400ECA81B /* AllowPermissionsView.swift */,
 				B68CE6AA2AFBD5EB0047E644 /* MainScreenView.swift */,
@@ -487,6 +490,7 @@
 				B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */,
 				B61655672B8CD01300F4794B /* ErrorManager.swift in Sources */,
 				B63E7C252B038D5400ECA81B /* AllowPermissionsView.swift in Sources */,
+				B61C28F12DC7FDE400CE3BC9 /* UserTypeView.swift in Sources */,
 				B63E7BEC2AFD23ED00ECA81B /* UIApplicationExtensions.swift in Sources */,
 				B61C28C72DC7F86600CE3BC9 /* SignInGoogleHelper.swift in Sources */,
 				B63E7C292B039F2A00ECA81B /* LocationManager.swift in Sources */,
