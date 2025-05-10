@@ -26,5 +26,11 @@ struct NavigationDestinationsViewModifier: ViewModifier {
             .navigationDestination(for: LogFileDetailsPathItem.self) { pathItem in
                 LogFileDetailsView(file: pathItem.file)
             }
+            .navigationDestination(for: AuthViewPathItem.self) { pathItem in
+                AuthView(authType: pathItem.authType)
+            }
+            .navigationDestination(for: ResetPasswordViewPathItem.self) { pathItem in
+                ResetPasswordView()
+            }
     }
 }

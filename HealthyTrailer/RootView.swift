@@ -20,7 +20,7 @@ struct RootView: View {
                 ProgressView()
             } else {
                 switch navigationManager.appState {
-                case .auth: UserTypeView()
+                case .launched: UserTypeView()
                 case .welcome: WelcomeView()
                 case .allowPermissions: AllowPermissionsView()
                 case .app: MainScreenView()

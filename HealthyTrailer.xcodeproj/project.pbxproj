@@ -15,7 +15,6 @@
 		B616556F2B90F77800F4794B /* dogbark_alert.wav in Resources */ = {isa = PBXBuildFile; fileRef = B616556D2B90F77800F4794B /* dogbark_alert.wav */; };
 		B61655702B90F77800F4794B /* alert_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B616556E2B90F77800F4794B /* alert_sound.mp3 */; };
 		B616559D2B973B8D00F4794B /* NotificationErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B616559C2B973B8D00F4794B /* NotificationErrorModel.swift */; };
-		B61C28AD2DC7E97200CE3BC9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B61C28AC2DC7E97100CE3BC9 /* GoogleService-Info.plist */; };
 		B61C28B02DC7EA9600CE3BC9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B61C28AF2DC7EA9600CE3BC9 /* FirebaseAnalytics */; };
 		B61C28B22DC7EA9600CE3BC9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B61C28B12DC7EA9600CE3BC9 /* FirebaseAuth */; };
 		B61C28B42DC7EA9600CE3BC9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = B61C28B32DC7EA9600CE3BC9 /* FirebaseCrashlytics */; };
@@ -29,6 +28,16 @@
 		B61C28C72DC7F86600CE3BC9 /* SignInGoogleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C28C62DC7F85800CE3BC9 /* SignInGoogleHelper.swift */; };
 		B61C28C92DC7F88900CE3BC9 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C28C82DC7F88300CE3BC9 /* FirestoreManager.swift */; };
 		B61C28F12DC7FDE400CE3BC9 /* UserTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C28F02DC7FDE400CE3BC9 /* UserTypeView.swift */; };
+		B61C2A722DD0066F00CE3BC9 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A712DD0066F00CE3BC9 /* AuthView.swift */; };
+		B61C2A742DD006B700CE3BC9 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A732DD006B100CE3BC9 /* AuthViewModel.swift */; };
+		B61C2A762DD006D700CE3BC9 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A752DD006D700CE3BC9 /* Validator.swift */; };
+		B61C2A782DD0097800CE3BC9 /* AlertData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A772DD0097800CE3BC9 /* AlertData.swift */; };
+		B61C2A7A2DD00AAF00CE3BC9 /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A792DD00AAF00CE3BC9 /* AuthTextField.swift */; };
+		B61C2A7C2DD00CB700CE3BC9 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A7B2DD00CB700CE3BC9 /* PrimaryButtonStyle.swift */; };
+		B61C2A7E2DD00FD500CE3BC9 /* CollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A7D2DD00FCB00CE3BC9 /* CollectionExtension.swift */; };
+		B61C2A802DD010DC00CE3BC9 /* AppleAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A7F2DD010DC00CE3BC9 /* AppleAuthService.swift */; };
+		B61C2A822DD019ED00CE3BC9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B61C2A812DD019ED00CE3BC9 /* GoogleService-Info.plist */; };
+		B61C2A862DD01BC100CE3BC9 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A852DD01BC100CE3BC9 /* ResetPasswordView.swift */; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
 		B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */; };
 		B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */; };
@@ -92,12 +101,21 @@
 		B616556D2B90F77800F4794B /* dogbark_alert.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dogbark_alert.wav; sourceTree = "<group>"; };
 		B616556E2B90F77800F4794B /* alert_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alert_sound.mp3; sourceTree = "<group>"; };
 		B616559C2B973B8D00F4794B /* NotificationErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationErrorModel.swift; sourceTree = "<group>"; };
-		B61C28AC2DC7E97100CE3BC9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B61C28BB2DC7F72D00CE3BC9 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		B61C28C42DC7F81F00CE3BC9 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		B61C28C62DC7F85800CE3BC9 /* SignInGoogleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInGoogleHelper.swift; sourceTree = "<group>"; };
 		B61C28C82DC7F88300CE3BC9 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		B61C28F02DC7FDE400CE3BC9 /* UserTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeView.swift; sourceTree = "<group>"; };
+		B61C2A712DD0066F00CE3BC9 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		B61C2A732DD006B100CE3BC9 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		B61C2A752DD006D700CE3BC9 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		B61C2A772DD0097800CE3BC9 /* AlertData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertData.swift; sourceTree = "<group>"; };
+		B61C2A792DD00AAF00CE3BC9 /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
+		B61C2A7B2DD00CB700CE3BC9 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
+		B61C2A7D2DD00FCB00CE3BC9 /* CollectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionExtension.swift; sourceTree = "<group>"; };
+		B61C2A7F2DD010DC00CE3BC9 /* AppleAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthService.swift; sourceTree = "<group>"; };
+		B61C2A812DD019ED00CE3BC9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B61C2A852DD01BC100CE3BC9 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBlueButtonStyle.swift; sourceTree = "<group>"; };
 		B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
@@ -197,6 +215,7 @@
 		B63E7BE22AFD153800ECA81B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B61C2A7D2DD00FCB00CE3BC9 /* CollectionExtension.swift */,
 				B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */,
 				B63E7BEB2AFD23ED00ECA81B /* UIApplicationExtensions.swift */,
 				B63E7BF02AFD79CC00ECA81B /* ViewExtensions.swift */,
@@ -210,6 +229,7 @@
 		B63E7BE52AFD181200ECA81B /* Styles */ = {
 			isa = PBXGroup;
 			children = (
+				B61C2A7B2DD00CB700CE3BC9 /* PrimaryButtonStyle.swift */,
 				B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */,
 				B63E7C262B038E2400ECA81B /* MainGreenButtonStyle.swift */,
 				B67DE33E2B98C39600F6AAA9 /* MainRedButtonStyle.swift */,
@@ -220,7 +240,7 @@
 		B63E7BE82AFD1E0500ECA81B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B6058EF12B1764DF00D84AD3 /* AlertViews */,
+				B61C2A792DD00AAF00CE3BC9 /* AuthTextField.swift */,
 				B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */,
 				B63E7BF52AFE5D1900ECA81B /* SecondaryHeaderView.swift */,
 				B63E7BFD2AFE659C00ECA81B /* TireTemperaturePlotView.swift */,
@@ -229,6 +249,7 @@
 				B63E7C082AFFB33400ECA81B /* NotificationSoundPickerView.swift */,
 				B63E7C1D2B02936400ECA81B /* MeasurementTypePickerView.swift */,
 				B64976C52BC3174A008EF180 /* AxiesCountPickerView.swift */,
+				B6058EF12B1764DF00D84AD3 /* AlertViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -251,6 +272,9 @@
 		B63E7BF22AFD79E400ECA81B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B61C2A7F2DD010DC00CE3BC9 /* AppleAuthService.swift */,
+				B61C2A772DD0097800CE3BC9 /* AlertData.swift */,
+				B61C2A752DD006D700CE3BC9 /* Validator.swift */,
 				B61C28C62DC7F85800CE3BC9 /* SignInGoogleHelper.swift */,
 				B63E7BF32AFD79FB00ECA81B /* NavigationDestinationModifier.swift */,
 				B63E7C0A2B02269F00ECA81B /* ViewModifiers.swift */,
@@ -293,7 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				B68CE6CD2AFD0D180047E644 /* Info.plist */,
-				B61C28AC2DC7E97100CE3BC9 /* GoogleService-Info.plist */,
+				B61C2A812DD019ED00CE3BC9 /* GoogleService-Info.plist */,
 				B68CE6A82AFBD5EB0047E644 /* HealthyTrailerApp.swift */,
 				B63E7C2A2B03A37700ECA81B /* RootView.swift */,
 				B616556C2B90F77800F4794B /* Sounds */,
@@ -322,6 +346,8 @@
 		B68CE6BB2AFD09DE0047E644 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B61C2A852DD01BC100CE3BC9 /* ResetPasswordView.swift */,
+				B61C2A712DD0066F00CE3BC9 /* AuthView.swift */,
 				B61C28F02DC7FDE400CE3BC9 /* UserTypeView.swift */,
 				B63E7C222B0389CE00ECA81B /* WelcomeView.swift */,
 				B63E7C242B038D5400ECA81B /* AllowPermissionsView.swift */,
@@ -338,6 +364,7 @@
 		B68CE6BC2AFD09F20047E644 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B61C2A732DD006B100CE3BC9 /* AuthViewModel.swift */,
 				B68CE6BD2AFD0A040047E644 /* MainViewModel.swift */,
 				B61655682B8CE6CA00F4794B /* SettingsViewModel.swift */,
 			);
@@ -454,7 +481,7 @@
 				B65BA40E2BF97A9700DB960F /* Localizable.strings in Resources */,
 				B68CE6B02AFBD5ED0047E644 /* Preview Assets.xcassets in Resources */,
 				B61655702B90F77800F4794B /* alert_sound.mp3 in Resources */,
-				B61C28AD2DC7E97200CE3BC9 /* GoogleService-Info.plist in Resources */,
+				B61C2A822DD019ED00CE3BC9 /* GoogleService-Info.plist in Resources */,
 				B68CE6CA2AFD0C2A0047E644 /* Roboto-Thin.ttf in Resources */,
 				B68CE6C92AFD0C2A0047E644 /* Roboto-Regular.ttf in Resources */,
 				B616556F2B90F77800F4794B /* dogbark_alert.wav in Resources */,
@@ -474,6 +501,7 @@
 				B6DB0B292B06418100DEF890 /* TerminalLogModel.swift in Sources */,
 				B63E7BFA2AFE604500ECA81B /* TerminalView.swift in Sources */,
 				B68CE6AB2AFBD5EB0047E644 /* MainScreenView.swift in Sources */,
+				B61C2A862DD01BC100CE3BC9 /* ResetPasswordView.swift in Sources */,
 				B6DB0B2F2B07926C00DEF890 /* HistoryFileModel.swift in Sources */,
 				B63E7C0D2B02297300ECA81B /* AxiesDataModel.swift in Sources */,
 				B6058EF32B17651500D84AD3 /* ConnectTMPSDevicesView.swift in Sources */,
@@ -485,6 +513,7 @@
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
 				B63E7C232B0389CE00ECA81B /* WelcomeView.swift in Sources */,
 				B6DB0B312B079E4700DEF890 /* FolderDetailsView.swift in Sources */,
+				B61C2A7A2DD00AAF00CE3BC9 /* AuthTextField.swift in Sources */,
 				B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */,
 				B63E7C092AFFB33400ECA81B /* NotificationSoundPickerView.swift in Sources */,
 				B63E7BFE2AFE659C00ECA81B /* TireTemperaturePlotView.swift in Sources */,
@@ -502,17 +531,23 @@
 				B65FADD22B4E1C1C0079A91C /* ConfirmationAddNewTPMSView.swift in Sources */,
 				B61655692B8CE6CA00F4794B /* SettingsViewModel.swift in Sources */,
 				B616556B2B8E740700F4794B /* AttentionAlertView.swift in Sources */,
+				B61C2A762DD006D700CE3BC9 /* Validator.swift in Sources */,
+				B61C2A722DD0066F00CE3BC9 /* AuthView.swift in Sources */,
 				B63E7BF62AFE5D1900ECA81B /* SecondaryHeaderView.swift in Sources */,
 				B63E7C272B038E2400ECA81B /* MainGreenButtonStyle.swift in Sources */,
+				B61C2A7E2DD00FD500CE3BC9 /* CollectionExtension.swift in Sources */,
 				B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */,
 				B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */,
 				B6DB0B2D2B065C9F00DEF890 /* FileRepository.swift in Sources */,
+				B61C2A782DD0097800CE3BC9 /* AlertData.swift in Sources */,
 				B68CE6A92AFBD5EB0047E644 /* HealthyTrailerApp.swift in Sources */,
 				B68CE6BE2AFD0A040047E644 /* MainViewModel.swift in Sources */,
+				B61C2A7C2DD00CB700CE3BC9 /* PrimaryButtonStyle.swift in Sources */,
 				B61C28C92DC7F88900CE3BC9 /* FirestoreManager.swift in Sources */,
 				B63E7BF12AFD79CC00ECA81B /* ViewExtensions.swift in Sources */,
 				B63E7C032AFE86AF00ECA81B /* DefaultSignleSliderView.swift in Sources */,
 				B616559D2B973B8D00F4794B /* NotificationErrorModel.swift in Sources */,
+				B61C2A802DD010DC00CE3BC9 /* AppleAuthService.swift in Sources */,
 				B63E7C2D2B03B98F00ECA81B /* BluetoothManager.swift in Sources */,
 				B6DB0B332B07AB0800DEF890 /* LogFileDetailsView.swift in Sources */,
 				B63E7BF42AFD79FB00ECA81B /* NavigationDestinationModifier.swift in Sources */,
@@ -522,6 +557,7 @@
 				B63E7C072AFFA7B500ECA81B /* DefaultDoubleSliderView.swift in Sources */,
 				B6058EF02B163B0300D84AD3 /* UserDefaultsExtension.swift in Sources */,
 				B64976C62BC3174A008EF180 /* AxiesCountPickerView.swift in Sources */,
+				B61C2A742DD006B700CE3BC9 /* AuthViewModel.swift in Sources */,
 				B67DE33F2B98C39600F6AAA9 /* MainRedButtonStyle.swift in Sources */,
 				B63E7BFC2AFE606500ECA81B /* LoggedHistoryView.swift in Sources */,
 				B61C28BC2DC7F73400CE3BC9 /* AuthManager.swift in Sources */,
@@ -676,6 +712,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HealthyTrailer/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TWD devices.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TPMS devices.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TrailerWatchDog uses your location to track speed and elevation. ";
@@ -713,6 +750,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HealthyTrailer/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TWD devices.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TPMS devices.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TrailerWatchDog uses your location to track speed and elevation. ";

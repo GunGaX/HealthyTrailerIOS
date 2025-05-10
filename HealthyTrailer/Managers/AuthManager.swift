@@ -14,15 +14,17 @@ final class AuthManager {
     
     private init() {}
     
-    func signUp(email: String, password: String) async throws -> User {
+    func signUp(email: String, password: String) async throws -> UserModel? {
         let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
-        print(authDataResult)
-        
-        return authDataResult.user
+        if let user = authDataResult.user.getModel() {
+            try await FirestoreManager.shared.createUser(user: user)
+        }
+        return authDataResult.user.getModel()
     }
     
-    func signIn(email: String, password: String) async throws {
+    func signIn(email: String, password: String) async throws -> UserModel? {
         try await Auth.auth().signIn(withEmail: email, password: password)
+        return Auth.auth().currentUser?.getModel()
     }
     
     func signOut() throws {

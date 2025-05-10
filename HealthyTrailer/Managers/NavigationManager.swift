@@ -9,19 +9,19 @@ import Foundation
 import SwiftUI
 
 enum AppState {
-    case auth, welcome, allowPermissions, app
+    case launched, welcome, allowPermissions, app
 }
 
 protocol PathItem: Hashable, Codable { }
 
 final class NavigationManager: ObservableObject {
-    @Published var appState: AppState = .auth
+    @Published var appState: AppState = .launched
     @Published var path: NavigationPath = NavigationPath()
     @Published var authPath: NavigationPath = NavigationPath()
     
     func append<T: PathItem>(_ pathItem: T) {
         switch appState {
-        case .auth:
+        case .launched:
             authPath.append(pathItem)
         case .welcome, .allowPermissions, .app:
             path.append(pathItem)
@@ -30,7 +30,7 @@ final class NavigationManager: ObservableObject {
     
     func removeLast(_ k: Int = 1) {
         switch appState {
-        case .auth:
+        case .launched:
             authPath.removeLast(k)
         case .welcome, .allowPermissions, .app:
             path.removeLast(k)
@@ -39,7 +39,7 @@ final class NavigationManager: ObservableObject {
     
     func resetCurrentPath() {
         switch appState {
-        case .auth:
+        case .launched:
             authPath = NavigationPath()
         case .welcome, .allowPermissions, .app:
             path = NavigationPath()
@@ -56,3 +56,7 @@ struct FolderDetailsPathItem: PathItem {
 struct LogFileDetailsPathItem: PathItem {    
     let file: HistoryFileModel
 }
+struct AuthViewPathItem: PathItem {
+    let authType: AuthType
+}
+struct ResetPasswordViewPathItem: PathItem {}

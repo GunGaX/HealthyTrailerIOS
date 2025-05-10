@@ -60,14 +60,14 @@ struct UserTypeView: View {
     private var buttons: some View {
         VStack(spacing: 16) {
             Button {
-//                navigationManager.appState = .auth(.signIn)
+                navigationManager.append(AuthViewPathItem(authType: .signIn))
             } label: {
                 Text("Login")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.mainBlueButton)
             Button {
-//                navigationManager.appState = .auth(.signUp)
+                navigationManager.append(AuthViewPathItem(authType: .signUp))
             } label: {
                 Text("Sign Up")
                     .frame(maxWidth: .infinity)
