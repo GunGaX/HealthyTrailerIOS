@@ -76,6 +76,8 @@ class DataManager: NSObject, ObservableObject {
     
     var canShowNotifications = false
     
+    var isMonitoring: Bool = false
+    
     func log(_ message:String) {
         if (useOSConsoleLog) {
             os_log("%@", log: .default, type: .info, message)
@@ -246,6 +248,9 @@ class DataManager: NSObject, ObservableObject {
     
     func deleteConnectedTPMS() {
         UserDefaults.standard.removeObject(forKey: "connectedTPMSDevices")
+        
+        let defaults = UserDefaults(suiteName: "group.HealthyTrailerData")
+        defaults?.set(false, forKey: "isMonitoring")
     }
     
     func fetchConnectedTPMS() {
@@ -258,6 +263,9 @@ class DataManager: NSObject, ObservableObject {
         connectedTPMSIds = connectedDevices
         saveConnectedTPMS()
         saveLastConnectedTPMSDevices()
+        
+        let defaults = UserDefaults(suiteName: "group.HealthyTrailerData")
+        defaults?.set(true, forKey: "isMonitoring")
     }
     
     func newData() {

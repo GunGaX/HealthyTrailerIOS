@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -38,6 +38,9 @@
 		B61C2A802DD010DC00CE3BC9 /* AppleAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A7F2DD010DC00CE3BC9 /* AppleAuthService.swift */; };
 		B61C2A822DD019ED00CE3BC9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B61C2A812DD019ED00CE3BC9 /* GoogleService-Info.plist */; };
 		B61C2A862DD01BC100CE3BC9 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61C2A852DD01BC100CE3BC9 /* ResetPasswordView.swift */; };
+		B61C2A8E2DD1581A00CE3BC9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B61C2A8D2DD1581A00CE3BC9 /* WidgetKit.framework */; };
+		B61C2A902DD1581A00CE3BC9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B61C2A8F2DD1581A00CE3BC9 /* SwiftUI.framework */; };
+		B61C2AA12DD1581C00CE3BC9 /* ListeningWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B61C2A8B2DD1581A00CE3BC9 /* ListeningWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
 		B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */; };
 		B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */; };
@@ -92,6 +95,30 @@
 		B6DB0B332B07AB0800DEF890 /* LogFileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DB0B322B07AB0800DEF890 /* LogFileDetailsView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B61C2A9F2DD1581C00CE3BC9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B68CE69D2AFBD5EB0047E644 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B61C2A8A2DD1581A00CE3BC9;
+			remoteInfo = ListeningWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B61C2AA62DD1581C00CE3BC9 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B61C2AA12DD1581C00CE3BC9 /* ListeningWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B6058EEF2B163B0300D84AD3 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		B6058EF22B17651500D84AD3 /* ConnectTMPSDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTMPSDevicesView.swift; sourceTree = "<group>"; };
@@ -116,6 +143,11 @@
 		B61C2A7F2DD010DC00CE3BC9 /* AppleAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthService.swift; sourceTree = "<group>"; };
 		B61C2A812DD019ED00CE3BC9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B61C2A852DD01BC100CE3BC9 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
+		B61C2A8B2DD1581A00CE3BC9 /* ListeningWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ListeningWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B61C2A8D2DD1581A00CE3BC9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		B61C2A8F2DD1581A00CE3BC9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		B61C2AA72DD1661F00CE3BC9 /* HealthyTrailer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthyTrailer.entitlements; sourceTree = "<group>"; };
+		B61C2AA82DD1672900CE3BC9 /* ListeningWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ListeningWidgetExtension.entitlements; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBlueButtonStyle.swift; sourceTree = "<group>"; };
 		B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
@@ -173,7 +205,30 @@
 		B6DB0B322B07AB0800DEF890 /* LogFileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B61C2AA22DD1581C00CE3BC9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B61C2A8A2DD1581A00CE3BC9 /* ListeningWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		B61C2A912DD1581A00CE3BC9 /* ListeningWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (B61C2AA22DD1581C00CE3BC9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = ListeningWidget; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		B61C2A882DD1581A00CE3BC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B61C2A902DD1581A00CE3BC9 /* SwiftUI.framework in Frameworks */,
+				B61C2A8E2DD1581A00CE3BC9 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B68CE6A22AFBD5EB0047E644 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -210,6 +265,15 @@
 				B616556E2B90F77800F4794B /* alert_sound.mp3 */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		B61C2A8C2DD1581A00CE3BC9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B61C2A8D2DD1581A00CE3BC9 /* WidgetKit.framework */,
+				B61C2A8F2DD1581A00CE3BC9 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B63E7BE22AFD153800ECA81B /* Extensions */ = {
@@ -300,7 +364,10 @@
 		B68CE69C2AFBD5EB0047E644 = {
 			isa = PBXGroup;
 			children = (
+				B61C2AA82DD1672900CE3BC9 /* ListeningWidgetExtension.entitlements */,
 				B68CE6A72AFBD5EB0047E644 /* HealthyTrailer */,
+				B61C2A912DD1581A00CE3BC9 /* ListeningWidget */,
+				B61C2A8C2DD1581A00CE3BC9 /* Frameworks */,
 				B68CE6A62AFBD5EB0047E644 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -309,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				B68CE6A52AFBD5EB0047E644 /* HealthyTrailer.app */,
+				B61C2A8B2DD1581A00CE3BC9 /* ListeningWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -316,6 +384,7 @@
 		B68CE6A72AFBD5EB0047E644 /* HealthyTrailer */ = {
 			isa = PBXGroup;
 			children = (
+				B61C2AA72DD1661F00CE3BC9 /* HealthyTrailer.entitlements */,
 				B68CE6CD2AFD0D180047E644 /* Info.plist */,
 				B61C2A812DD019ED00CE3BC9 /* GoogleService-Info.plist */,
 				B68CE6A82AFBD5EB0047E644 /* HealthyTrailerApp.swift */,
@@ -406,6 +475,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B61C2A8A2DD1581A00CE3BC9 /* ListeningWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B61C2AA32DD1581C00CE3BC9 /* Build configuration list for PBXNativeTarget "ListeningWidgetExtension" */;
+			buildPhases = (
+				B61C2A872DD1581A00CE3BC9 /* Sources */,
+				B61C2A882DD1581A00CE3BC9 /* Frameworks */,
+				B61C2A892DD1581A00CE3BC9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B61C2A912DD1581A00CE3BC9 /* ListeningWidget */,
+			);
+			name = ListeningWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = ListeningWidgetExtension;
+			productReference = B61C2A8B2DD1581A00CE3BC9 /* ListeningWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B68CE6A42AFBD5EB0047E644 /* HealthyTrailer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B68CE6B32AFBD5ED0047E644 /* Build configuration list for PBXNativeTarget "HealthyTrailer" */;
@@ -413,10 +504,12 @@
 				B68CE6A12AFBD5EB0047E644 /* Sources */,
 				B68CE6A22AFBD5EB0047E644 /* Frameworks */,
 				B68CE6A32AFBD5EB0047E644 /* Resources */,
+				B61C2AA62DD1581C00CE3BC9 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B61C2AA02DD1581C00CE3BC9 /* PBXTargetDependency */,
 			);
 			name = HealthyTrailer;
 			packageProductDependencies = (
@@ -440,9 +533,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					B61C2A8A2DD1581A00CE3BC9 = {
+						CreatedOnToolsVersion = 16.3;
+					};
 					B68CE6A42AFBD5EB0047E644 = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
@@ -467,11 +563,19 @@
 			projectRoot = "";
 			targets = (
 				B68CE6A42AFBD5EB0047E644 /* HealthyTrailer */,
+				B61C2A8A2DD1581A00CE3BC9 /* ListeningWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B61C2A892DD1581A00CE3BC9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B68CE6A32AFBD5EB0047E644 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -494,6 +598,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B61C2A872DD1581A00CE3BC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B68CE6A12AFBD5EB0047E644 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -566,6 +677,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B61C2AA02DD1581C00CE3BC9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B61C2A8A2DD1581A00CE3BC9 /* ListeningWidgetExtension */;
+			targetProxy = B61C2A9F2DD1581C00CE3BC9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		B65BA40C2BF97A9700DB960F /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -579,6 +698,66 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B61C2AA42DD1581C00CE3BC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ListeningWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PXD5F88JRN;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ListeningWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ListeningWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.GunGaX.HealthyTrailer.ListeningWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B61C2AA52DD1581C00CE3BC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ListeningWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PXD5F88JRN;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ListeningWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ListeningWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.GunGaX.HealthyTrailer.ListeningWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		B68CE6B12AFBD5ED0047E644 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -704,6 +883,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HealthyTrailer/HealthyTrailer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -742,6 +922,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HealthyTrailer/HealthyTrailer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -777,6 +958,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B61C2AA32DD1581C00CE3BC9 /* Build configuration list for PBXNativeTarget "ListeningWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B61C2AA42DD1581C00CE3BC9 /* Debug */,
+				B61C2AA52DD1581C00CE3BC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B68CE6A02AFBD5EB0047E644 /* Build configuration list for PBXProject "HealthyTrailer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
