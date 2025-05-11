@@ -278,7 +278,7 @@ struct AuthView: View {
                 if user != nil {
                     DispatchQueue.main.async {
                         navigationManager.resetCurrentPath()
-                        navigationManager.appState = .app
+                        navigationManager.setupNavigationStatus()
                     }
                 } else {
                     showToast(withError: errorMessage)
@@ -289,7 +289,7 @@ struct AuthView: View {
                 if user != nil {
                     DispatchQueue.main.async {
                         navigationManager.resetCurrentPath()
-                        navigationManager.appState = .app
+                        navigationManager.setupNavigationStatus()
                     }
                 } else {
                     showToast(withError: errorMessage)
@@ -303,7 +303,7 @@ struct AuthView: View {
             if userModel != nil {
                 DispatchQueue.main.async {
                     navigationManager.resetCurrentPath()
-                    navigationManager.appState = .app
+                    navigationManager.setupNavigationStatus()
                 }
             } else {
                 showToast(withError: errorMessage)
@@ -329,7 +329,7 @@ struct AuthView: View {
             
             DispatchQueue.main.async {
                 navigationManager.resetCurrentPath()
-                navigationManager.appState = .app
+                navigationManager.setupNavigationStatus()
             }
         }
     }

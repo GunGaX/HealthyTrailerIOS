@@ -45,6 +45,24 @@ final class NavigationManager: ObservableObject {
             path = NavigationPath()
         }
     }
+    
+    func setupNavigationStatus() {
+        let user = try? AuthManager.shared.getLoggedUser()
+        
+        if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() {
+            if user != nil {
+                self.appState = .app
+            } else {
+                self.appState = .launched
+            }
+        } else {
+            if UserDefaults.standard.integer(forKey: "axiesCount") != 0 {
+                self.appState = .allowPermissions
+            } else {
+                self.appState = .welcome
+            }
+        }
+    }
 }
 
 struct SettingPathItem: PathItem { }

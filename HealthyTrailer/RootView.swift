@@ -12,7 +12,7 @@ struct RootView: View {
     @StateObject var locationManager = LocationManager.shared
     @StateObject var bluetoothManager = BluetoothManager.shared
     
-    @State private var isLoading = true
+    @State private var isLoading = false
     
     var body: some View {
         Group {
@@ -29,12 +29,7 @@ struct RootView: View {
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                if locationManager.checkIfAccessIsGranted() && bluetoothManager.checkBluetooth() {
-//                    navigationManager.appState = .app
-                    isLoading = false
-                } else {
-                    isLoading = false
-                }
+                navigationManager.setupNavigationStatus()
             }
         }
         .onChange(of: bluetoothManager.bluetoothEnabled) { _ in

@@ -31,6 +31,9 @@ struct SettingsView: View {
                     
                     notificationSection
                         .padding(.bottom, 30)
+                    
+                    logOutButton
+                        .padding(.bottom, 30)
                 }
                 .padding(.horizontal)
             }
@@ -79,6 +82,16 @@ struct SettingsView: View {
         HStack {
             PreassureTypePickerView(selectedPreassureType: $viewModel.selectedPreassureType)
             TemperatureTypePickerView(selectedPreassureType: $viewModel.selectedTemperatureType)
+        }
+    }
+    
+    private var logOutButton: some View {
+        Button {
+            try? AuthManager.shared.logOut()
+            navigationManager.setupNavigationStatus()
+        } label: {
+            Text("Log out")
+                .foregroundStyle(Color.red)
         }
     }
 }

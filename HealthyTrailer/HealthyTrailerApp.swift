@@ -25,7 +25,7 @@ struct HealthyTrailerApp: App {
                 .preferredColorScheme(.light)
                 .onAppear {
                     disableDisplaySleep()
-                    checkPermissions()
+//                    checkPermissions()
                 }
         }
     }
@@ -34,11 +34,11 @@ struct HealthyTrailerApp: App {
         UIApplication.shared.isIdleTimerDisabled = true
     }
     
-    private func checkPermissions() {
-        if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() {
-            navigationManager.appState = .app
-        }
-    }
+//    private func checkPermissions() {
+//        if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() {
+//            navigationManager.appState = .app
+//        }
+//    }
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
