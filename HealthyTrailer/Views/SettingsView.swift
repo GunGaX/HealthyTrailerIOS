@@ -32,6 +32,7 @@ struct SettingsView: View {
                     notificationSection
                         .padding(.bottom, 30)
                     
+                    testButton
                     logOutButton
                         .padding(.bottom, 30)
                 }
@@ -93,6 +94,16 @@ struct SettingsView: View {
             Text("Log out")
                 .foregroundStyle(Color.red)
         }
+    }
+    
+    @ViewBuilder
+    private var testButton: some View {
+//        Button {
+//            DataManager.shared.uploadDataToFirestore()
+//        } label: {
+//            Text("TEST")
+//        }
+//        .padding(.bottom, 30)
     }
 }
 

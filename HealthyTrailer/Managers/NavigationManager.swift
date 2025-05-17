@@ -49,7 +49,7 @@ final class NavigationManager: ObservableObject {
     func setupNavigationStatus() {
         let user = try? AuthManager.shared.getLoggedUser()
         
-        if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() {
+        if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() && UserDefaults.standard.integer(forKey: "axiesCount") != 0 {
             if user != nil {
                 self.appState = .app
             } else {

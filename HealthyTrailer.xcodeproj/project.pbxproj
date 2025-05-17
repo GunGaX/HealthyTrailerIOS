@@ -41,6 +41,8 @@
 		B61C2A8E2DD1581A00CE3BC9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B61C2A8D2DD1581A00CE3BC9 /* WidgetKit.framework */; };
 		B61C2A902DD1581A00CE3BC9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B61C2A8F2DD1581A00CE3BC9 /* SwiftUI.framework */; };
 		B61C2AA12DD1581C00CE3BC9 /* ListeningWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B61C2A8B2DD1581A00CE3BC9 /* ListeningWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B628BF042DD92204009CB9AB /* DataHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628BF032DD921FE009CB9AB /* DataHistoryModel.swift */; };
+		B628BF2C2DD93FCF009CB9AB /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628BF2B2DD93FCF009CB9AB /* DataModel.swift */; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
 		B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */; };
 		B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */; };
@@ -148,6 +150,8 @@
 		B61C2A8F2DD1581A00CE3BC9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		B61C2AA72DD1661F00CE3BC9 /* HealthyTrailer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthyTrailer.entitlements; sourceTree = "<group>"; };
 		B61C2AA82DD1672900CE3BC9 /* ListeningWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ListeningWidgetExtension.entitlements; sourceTree = "<group>"; };
+		B628BF032DD921FE009CB9AB /* DataHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHistoryModel.swift; sourceTree = "<group>"; };
+		B628BF2B2DD93FCF009CB9AB /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBlueButtonStyle.swift; sourceTree = "<group>"; };
 		B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
@@ -349,6 +353,8 @@
 		B63E7BFF2AFE67CE00ECA81B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B628BF2B2DD93FCF009CB9AB /* DataModel.swift */,
+				B628BF032DD921FE009CB9AB /* DataHistoryModel.swift */,
 				B61C28C42DC7F81F00CE3BC9 /* UserModel.swift */,
 				B63E7C002AFE67E000ECA81B /* ChartDataModel.swift */,
 				B6DB0B282B06418100DEF890 /* TerminalLogModel.swift */,
@@ -623,6 +629,7 @@
 				B68CE6D02AFD0DCC0047E644 /* CustomFonts.swift in Sources */,
 				B63E7BEF2AFD78EC00ECA81B /* NavigationManager.swift in Sources */,
 				B63E7C232B0389CE00ECA81B /* WelcomeView.swift in Sources */,
+				B628BF042DD92204009CB9AB /* DataHistoryModel.swift in Sources */,
 				B6DB0B312B079E4700DEF890 /* FolderDetailsView.swift in Sources */,
 				B61C2A7A2DD00AAF00CE3BC9 /* AuthTextField.swift in Sources */,
 				B63E7C012AFE67E000ECA81B /* ChartDataModel.swift in Sources */,
@@ -653,6 +660,7 @@
 				B61C2A782DD0097800CE3BC9 /* AlertData.swift in Sources */,
 				B68CE6A92AFBD5EB0047E644 /* HealthyTrailerApp.swift in Sources */,
 				B68CE6BE2AFD0A040047E644 /* MainViewModel.swift in Sources */,
+				B628BF2C2DD93FCF009CB9AB /* DataModel.swift in Sources */,
 				B61C2A7C2DD00CB700CE3BC9 /* PrimaryButtonStyle.swift in Sources */,
 				B61C28C92DC7F88900CE3BC9 /* FirestoreManager.swift in Sources */,
 				B63E7BF12AFD79CC00ECA81B /* ViewExtensions.swift in Sources */,
