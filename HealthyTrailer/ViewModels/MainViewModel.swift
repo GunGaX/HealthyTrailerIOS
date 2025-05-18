@@ -19,6 +19,7 @@ final class MainViewModel: ObservableObject {
     var dogBarkSoundPlayer: AVAudioPlayer?
     
     @Published var selectedAxiesCountState: Int = 2
+    @Published var selectedVehicleState: VehicleType = .car
     
     @Published var isConnected = false
     

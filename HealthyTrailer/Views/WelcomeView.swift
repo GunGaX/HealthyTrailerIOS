@@ -15,20 +15,30 @@ struct WelcomeView: View {
     @ObservedObject var bluetoothManager = BluetoothManager.shared
     
     var body: some View {
-        VStack(spacing: 20) {
-            Spacer()
-            title
-                .padding(.bottom, 14)
-            descriptionText
-            permissions
-            conclusionText
-                .padding(.bottom, 14)
-            axiesText
-            countPicker
-            Spacer()
-            gotItButton
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 20) {
+                Spacer()
+                title
+                    .padding(.bottom, 14)
+                descriptionText
+                permissions
+                conclusionText
+                    .padding(.bottom, 14)
+                
+                vehicleText
+                vehiclePicker
+                Spacer()
+                
+                if viewModel.selectedVehicleState == .car {
+                    axiesText
+                    countPicker
+                    Spacer()
+                }
+                
+                gotItButton
+            }
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
     }
     
     private var title: some View {
@@ -65,6 +75,7 @@ struct WelcomeView: View {
     
     private var countPicker: some View {
         AxiesCountPickerView(selectedCount: $viewModel.selectedAxiesCountState)
+            .zIndex(2)
     }
     
     private var axiesText: some View {
@@ -74,8 +85,23 @@ struct WelcomeView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .foregroundStyle(Color.textDark)
             .font(.roboto300, size: 18)
+            .zIndex(1)
     }
     
+    private var vehiclePicker: some View {
+        VehicleTypePickerView(selectedType: $viewModel.selectedVehicleState)
+            .zIndex(2)
+    }
+    
+    private var vehicleText: some View {
+        Text(.init("Please select your vehicle type"))
+            .fontWeight(.bold)
+            .multilineTextAlignment(.leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .foregroundStyle(Color.textDark)
+            .font(.roboto300, size: 18)
+    }
+        
     private var gotItButton: some View {
         Button {
             Task { @MainActor in
@@ -92,6 +118,8 @@ struct WelcomeView: View {
                 .padding(.horizontal)
         }
         .buttonStyle(.mainBlueButton)
+        .zIndex(1)
+        .padding(.top, 20)
     }
 }
 
