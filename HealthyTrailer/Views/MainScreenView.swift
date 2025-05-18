@@ -309,6 +309,7 @@ struct MainScreenView: View {
 }
 
 fileprivate struct AxisBarView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var viewModel: MainViewModel
     @EnvironmentObject var errorManager: ErrorManager
     
@@ -318,6 +319,9 @@ fileprivate struct AxisBarView: View {
     var body: some View {
         HStack(spacing: -20) {
             valueBar(isRight: false, axle: axis, index: index)
+                .onTapGesture {
+                    navigationManager.append(ChartScreenPathItem(sensorId: "A3B30457-1D53-4F56-A778-73A03F583CA2"))
+                }
             
             ZStack {
                 Image("fillAxisImage")
@@ -375,6 +379,9 @@ fileprivate struct AxisBarView: View {
             .zIndex(2.0)
             
             valueBar(isRight: true, axle: axis, index: index)
+                .onTapGesture {
+                    navigationManager.append(ChartScreenPathItem(sensorId: "A3B30457-1D53-4F56-A778-73A03F583CA2"))
+                }
         }
         .frame(height: 80)
         .padding(.vertical, -1)
@@ -415,6 +422,7 @@ fileprivate struct AxisBarView: View {
 }
 
 fileprivate struct FlatAxisBarView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var viewModel: MainViewModel
     @EnvironmentObject var errorManager: ErrorManager
     
@@ -431,6 +439,10 @@ fileprivate struct FlatAxisBarView: View {
             
             HStack(spacing: 0) {
                 flatValueBar(isRight: false, axle: axis, index: index)
+                    .onTapGesture {
+                        navigationManager.append(ChartScreenPathItem(sensorId: "A3B30457-1D53-4F56-A778-73A03F583CA2"))
+                    }
+                
                 ZStack {
                     tireImage
                     VStack(spacing: 2) {
@@ -480,7 +492,11 @@ fileprivate struct FlatAxisBarView: View {
                     .frame(width: 56)
                 }
                 .zIndex(2.0)
+                
                 flatValueBar(isRight: true, axle: axis, index: index)
+                    .onTapGesture {
+                        navigationManager.append(ChartScreenPathItem(sensorId: "A3B30457-1D53-4F56-A778-73A03F583CA2"))
+                    }
             }
         }
     }

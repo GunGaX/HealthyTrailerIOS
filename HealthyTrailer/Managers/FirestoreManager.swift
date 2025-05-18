@@ -35,6 +35,11 @@ final class FirestoreManager {
             .getDocument(as: UserModel.self)
     }
     
+    func updateUser(userID: String, fields: [String: Any]) async throws {
+        try await userDocument(userID: userID)
+            .updateData(fields)
+    }
+    
     private func dataDocument(id: String) -> DocumentReference {
         dataCollection.document(id)
     }
@@ -42,12 +47,11 @@ final class FirestoreManager {
     func addOrUpdateDataHistory(_ newData: DataHistoryModel) async throws {
         let querySnapshot = try await dataCollection
             .whereField("id", isEqualTo: newData.id)
-            .whereField("userId", isEqualTo: newData.userId)
-            .whereField("sensorId", isEqualTo: newData.sensorId)
+            .whereField("user_id", isEqualTo: newData.userId)
+            .whereField("sensor_id", isEqualTo: newData.sensorId)
             .getDocuments()
         
         if let document = querySnapshot.documents.first {
-            
             var existing = try document.data(as: DataHistoryModel.self)
             existing.data += newData.data
             
@@ -59,5 +63,19 @@ final class FirestoreManager {
     
     func deleteDataHistory(id: String) async throws {
         try await dataDocument(id: id).delete()
+    }
+    
+    func getDataHistory(userId: String, sensorId: String) async throws -> DataHistoryModel? {
+        let querySnapshot = try await dataCollection
+            .whereField("user_id", isEqualTo: userId)
+            .whereField("sensor_id", isEqualTo: sensorId)
+            .getDocuments()
+        
+        if let document = querySnapshot.documents.first {
+            let data = try document.data(as: DataHistoryModel.self)
+            return data
+        } else {
+            return nil
+        }
     }
 }

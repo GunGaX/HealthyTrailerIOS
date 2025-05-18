@@ -32,5 +32,8 @@ struct NavigationDestinationsViewModifier: ViewModifier {
             .navigationDestination(for: ResetPasswordViewPathItem.self) { pathItem in
                 ResetPasswordView()
             }
+            .navigationDestination(for: ChartScreenPathItem.self) { pathItem in
+                ChartScreen(sensorId: pathItem.sensorId)
+            }
     }
 }

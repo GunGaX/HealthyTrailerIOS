@@ -78,11 +78,14 @@ struct WelcomeView: View {
     
     private var gotItButton: some View {
         Button {
-            UserDefaults.standard.setValue(viewModel.selectedAxiesCountState, forKey: "axiesCount")
-            if locationManager.checkIfAccessIsGranted() && bluetoothManager.checkBluetooth() {
-                navigationManager.appState = .app
-            } else {
-                navigationManager.appState = .allowPermissions
+            Task { @MainActor in
+                UserDefaults.standard.setValue(viewModel.selectedAxiesCountState, forKey: "axiesCount")
+                
+                let user = try AuthManager.shared.getLoggedUser()
+                try await FirestoreManager.shared.updateUser(userID: user.userId, fields: [
+                    UserModel.CodingKeys.axiesCount.rawValue: viewModel.selectedAxiesCountState
+                ])
+                navigationManager.setupNavigationStatus()
             }
         } label: {
             Text(.init("Ok, got it"))

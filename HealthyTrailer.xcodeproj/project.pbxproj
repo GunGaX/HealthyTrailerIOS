@@ -43,6 +43,8 @@
 		B61C2AA12DD1581C00CE3BC9 /* ListeningWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B61C2A8B2DD1581A00CE3BC9 /* ListeningWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B628BF042DD92204009CB9AB /* DataHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628BF032DD921FE009CB9AB /* DataHistoryModel.swift */; };
 		B628BF2C2DD93FCF009CB9AB /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628BF2B2DD93FCF009CB9AB /* DataModel.swift */; };
+		B628BF2E2DDA8153009CB9AB /* ChartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628BF2D2DDA8153009CB9AB /* ChartScreen.swift */; };
+		B628BF302DDA81A8009CB9AB /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628BF2F2DDA81A8009CB9AB /* ChartViewModel.swift */; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
 		B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */; };
 		B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */; };
@@ -152,6 +154,8 @@
 		B61C2AA82DD1672900CE3BC9 /* ListeningWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ListeningWidgetExtension.entitlements; sourceTree = "<group>"; };
 		B628BF032DD921FE009CB9AB /* DataHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHistoryModel.swift; sourceTree = "<group>"; };
 		B628BF2B2DD93FCF009CB9AB /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		B628BF2D2DDA8153009CB9AB /* ChartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScreen.swift; sourceTree = "<group>"; };
+		B628BF2F2DDA81A8009CB9AB /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBlueButtonStyle.swift; sourceTree = "<group>"; };
 		B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
@@ -421,6 +425,7 @@
 		B68CE6BB2AFD09DE0047E644 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B628BF2D2DDA8153009CB9AB /* ChartScreen.swift */,
 				B61C2A852DD01BC100CE3BC9 /* ResetPasswordView.swift */,
 				B61C2A712DD0066F00CE3BC9 /* AuthView.swift */,
 				B61C28F02DC7FDE400CE3BC9 /* UserTypeView.swift */,
@@ -439,6 +444,7 @@
 		B68CE6BC2AFD09F20047E644 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B628BF2F2DDA81A8009CB9AB /* ChartViewModel.swift */,
 				B61C2A732DD006B100CE3BC9 /* AuthViewModel.swift */,
 				B68CE6BD2AFD0A040047E644 /* MainViewModel.swift */,
 				B61655682B8CE6CA00F4794B /* SettingsViewModel.swift */,
@@ -641,6 +647,7 @@
 				B63E7BEC2AFD23ED00ECA81B /* UIApplicationExtensions.swift in Sources */,
 				B61C28C72DC7F86600CE3BC9 /* SignInGoogleHelper.swift in Sources */,
 				B63E7C292B039F2A00ECA81B /* LocationManager.swift in Sources */,
+				B628BF302DDA81A8009CB9AB /* ChartViewModel.swift in Sources */,
 				B63E7C2B2B03A37700ECA81B /* RootView.swift in Sources */,
 				B63E7C052AFF9DD800ECA81B /* DoubleExtensions.swift in Sources */,
 				B63E7C0B2B02269F00ECA81B /* ViewModifiers.swift in Sources */,
@@ -651,6 +658,7 @@
 				B616556B2B8E740700F4794B /* AttentionAlertView.swift in Sources */,
 				B61C2A762DD006D700CE3BC9 /* Validator.swift in Sources */,
 				B61C2A722DD0066F00CE3BC9 /* AuthView.swift in Sources */,
+				B628BF2E2DDA8153009CB9AB /* ChartScreen.swift in Sources */,
 				B63E7BF62AFE5D1900ECA81B /* SecondaryHeaderView.swift in Sources */,
 				B63E7C272B038E2400ECA81B /* MainGreenButtonStyle.swift in Sources */,
 				B61C2A7E2DD00FD500CE3BC9 /* CollectionExtension.swift in Sources */,

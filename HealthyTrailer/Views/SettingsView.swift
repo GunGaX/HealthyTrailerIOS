@@ -88,6 +88,7 @@ struct SettingsView: View {
     
     private var logOutButton: some View {
         Button {
+            UserDefaults.standard.removeObject(forKey: "axiesCount")
             try? AuthManager.shared.logOut()
             navigationManager.setupNavigationStatus()
         } label: {

@@ -102,7 +102,8 @@ extension User {
             userId: self.uid,
             firstName: names.fistName ?? "",
             lastName: names.lastName ?? "",
-            emailAdress: email
+            emailAdress: email,
+            axiesCount: nil
         )
     }
     
@@ -115,7 +116,8 @@ extension User {
             userId: self.uid,
             firstName: names.fistName ?? "",
             lastName: names.lastName ?? "",
-            emailAdress: email
+            emailAdress: email,
+            axiesCount: nil
         )
     }
     

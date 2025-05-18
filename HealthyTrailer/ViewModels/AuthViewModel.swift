@@ -89,6 +89,7 @@ class AuthViewModel: ObservableObject {
         Task {
             do {
                 let userModel = try await AuthManager.shared.signUp(email: email, password: password)
+                UserDefaults.standard.setValue(userModel?.axiesCount ?? 0, forKey: "axiesCount")
                 completion(userModel, nil)
             } catch {
                 completion(nil, error.localizedDescription)
@@ -106,6 +107,7 @@ class AuthViewModel: ObservableObject {
         Task {
             do {
                 let userModel = try await AuthManager.shared.signIn(email: email, password: password)
+                UserDefaults.standard.setValue(userModel?.axiesCount ?? 0, forKey: "axiesCount")
                 completion(userModel, nil)
             } catch {
                 print("[AuthViewModel] Error signIn: \(error)")
@@ -136,6 +138,7 @@ class AuthViewModel: ObservableObject {
                 let helper = SignInGoogleHelper()
                 let tokens = try await helper.signIn()
                 let userModel = try await AuthManager.shared.signInWithGoogle(tokens: tokens)
+                UserDefaults.standard.setValue(userModel.user?.axiesCount ?? 0, forKey: "axiesCount")
                 completion(userModel.user, nil)
             } catch {
                 print("[AuthViewModel] Error signInGoogle: \(error)")
@@ -150,8 +153,9 @@ class AuthViewModel: ObservableObject {
         Task {
             do {
                 let authResult = try await appleAuthService.login()
-                let authModel = UserModel(userId: authResult.0.user.uid, firstName: "", lastName: "", emailAdress: authResult.0.user.email ?? "")
+                let authModel = UserModel(userId: authResult.0.user.uid, firstName: "", lastName: "", emailAdress: authResult.0.user.email ?? "", axiesCount: nil)
                 try await AuthManager.shared.signInWithApple(authModel)
+                UserDefaults.standard.setValue(authModel.axiesCount, forKey: "axiesCount")
                 completion(authModel, nil)
             } catch {
                 completion(nil, error)

@@ -49,17 +49,21 @@ final class NavigationManager: ObservableObject {
     func setupNavigationStatus() {
         let user = try? AuthManager.shared.getLoggedUser()
         
-        if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() && UserDefaults.standard.integer(forKey: "axiesCount") != 0 {
+        if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() {
             if user != nil {
-                self.appState = .app
+                if UserDefaults.standard.integer(forKey: "axiesCount") == 0 {
+                    self.appState = .welcome
+                } else {
+                    self.appState = .app
+                }
             } else {
                 self.appState = .launched
             }
         } else {
-            if UserDefaults.standard.integer(forKey: "axiesCount") != 0 {
+            if user != nil {
                 self.appState = .allowPermissions
             } else {
-                self.appState = .welcome
+                self.appState = .launched
             }
         }
     }
@@ -78,3 +82,6 @@ struct AuthViewPathItem: PathItem {
     let authType: AuthType
 }
 struct ResetPasswordViewPathItem: PathItem {}
+struct ChartScreenPathItem: PathItem {
+    let sensorId: String
+}

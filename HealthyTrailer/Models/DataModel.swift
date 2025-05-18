@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DataModel: Codable {
+struct DataModel: Codable, Identifiable {
     let id: String
     let date: Date
     let temperature: Double
