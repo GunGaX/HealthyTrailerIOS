@@ -74,6 +74,8 @@ struct MainScreenView: View {
     
     private var logOutButton: some View {
         Button {
+            let defaults = UserDefaults(suiteName: "group.HealthyTrailerData")
+            defaults?.set(false, forKey: "isMonitoring")
             exit(0)
         } label: {
             Text(.init("Exit"))
@@ -178,6 +180,8 @@ struct MainScreenView: View {
                 saveAndStartWorking()
             }
             viewModel.isConnected = true
+            let defaults = UserDefaults(suiteName: "group.HealthyTrailerData")
+            defaults?.set(true, forKey: "isMonitoring")
         } label: {
             Text(.init("Connect"))
         }
