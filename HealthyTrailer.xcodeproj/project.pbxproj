@@ -45,6 +45,7 @@
 		B628BF2C2DD93FCF009CB9AB /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628BF2B2DD93FCF009CB9AB /* DataModel.swift */; };
 		B628BF2E2DDA8153009CB9AB /* ChartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628BF2D2DDA8153009CB9AB /* ChartScreen.swift */; };
 		B628BF302DDA81A8009CB9AB /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628BF2F2DDA81A8009CB9AB /* ChartViewModel.swift */; };
+		B628C0B42DE25D36009CB9AB /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628C0B32DE25D2A009CB9AB /* SettingsModel.swift */; };
 		B63E7BE42AFD154C00ECA81B /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */; };
 		B63E7BE72AFD182100ECA81B /* MainBlueButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */; };
 		B63E7BEA2AFD1E1200ECA81B /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */; };
@@ -156,6 +157,7 @@
 		B628BF2B2DD93FCF009CB9AB /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		B628BF2D2DDA8153009CB9AB /* ChartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScreen.swift; sourceTree = "<group>"; };
 		B628BF2F2DDA81A8009CB9AB /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
+		B628C0B32DE25D2A009CB9AB /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		B63E7BE32AFD154C00ECA81B /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		B63E7BE62AFD182100ECA81B /* MainBlueButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBlueButtonStyle.swift; sourceTree = "<group>"; };
 		B63E7BE92AFD1E1200ECA81B /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 		B63E7BFF2AFE67CE00ECA81B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B628C0B32DE25D2A009CB9AB /* SettingsModel.swift */,
 				B628BF2B2DD93FCF009CB9AB /* DataModel.swift */,
 				B628BF032DD921FE009CB9AB /* DataHistoryModel.swift */,
 				B61C28C42DC7F81F00CE3BC9 /* UserModel.swift */,
@@ -657,6 +660,7 @@
 				B61655692B8CE6CA00F4794B /* SettingsViewModel.swift in Sources */,
 				B616556B2B8E740700F4794B /* AttentionAlertView.swift in Sources */,
 				B61C2A762DD006D700CE3BC9 /* Validator.swift in Sources */,
+				B628C0B42DE25D36009CB9AB /* SettingsModel.swift in Sources */,
 				B61C2A722DD0066F00CE3BC9 /* AuthView.swift in Sources */,
 				B628BF2E2DDA8153009CB9AB /* ChartScreen.swift in Sources */,
 				B63E7BF62AFE5D1900ECA81B /* SecondaryHeaderView.swift in Sources */,

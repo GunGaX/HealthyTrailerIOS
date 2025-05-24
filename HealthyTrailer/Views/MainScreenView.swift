@@ -25,6 +25,7 @@ struct MainScreenView: View {
     @State private var connectedTPMSCount: Int = 0
     
     @State private var connectedTPMSDevices: [String] = []
+    @AppStorage("vehicleType") var vehicleType: VehicleType = .car
     
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
@@ -48,7 +49,11 @@ struct MainScreenView: View {
                             }
                             .padding()
                             
-                            trailer
+                            if vehicleType == .motorcycle {
+                                motorcycle
+                            } else {
+                                trailer
+                            }
                             
                             Spacer()
                             logOutButton
@@ -83,15 +88,18 @@ struct MainScreenView: View {
         .buttonStyle(.mainRedButton)
     }
     
+    @ViewBuilder
     private var graphButton: some View {
-        Button {
-            withAnimation {
-                viewModel.displayingMode.toggle()
+        if vehicleType != .motorcycle {
+            Button {
+                withAnimation {
+                    viewModel.displayingMode.toggle()
+                }
+            } label: {
+                Image(viewModel.displayingMode ? "graphIcon" : "twoRectanglesIcon")
+                    .resizable()
+                    .frame(width: 32, height: 32)
             }
-        } label: {
-            Image(viewModel.displayingMode ? "graphIcon" : "twoRectanglesIcon")
-                .resizable()
-                .frame(width: 32, height: 32)
         }
     }
     
@@ -108,8 +116,27 @@ struct MainScreenView: View {
         }
     }
     
+    @ViewBuilder
+    private var motorcycle: some View {
+        if viewModel.isConnected {
+            VStack(spacing: 10) {
+                ForEach(dataManager.axies.indices, id: \.self) { index in
+                    MotorcycleAxisBarView(axis: $dataManager.axies[index], index: index)
+                }
+            }
+        } else {
+            emptyMotorcyclePhoto
+        }
+    }
+    
     private var emptyTrailerPhoto: some View {
         Image("emptyTrailerImage")
+            .resizable()
+            .scaledToFit()
+    }
+    
+    private var emptyMotorcyclePhoto: some View {
+        Image("motorcyclePlaceholder")
             .resizable()
             .scaledToFit()
     }
@@ -472,6 +499,105 @@ fileprivate struct FlatAxisBarView: View {
                 }
                 .zIndex(2.0)
                 .padding(.trailing, 12)
+                ZStack {
+                    tireImage
+                    VStack(spacing: 2) {
+                        HStack(alignment: .bottom, spacing: 2) {
+                            Text("R")
+                            Text("\(axis.axisNumber)")
+                                .font(.roboto500, size: 12)
+                                .opacity(0.8)
+                        }
+                        HStack(alignment: .bottom, spacing: 2) {
+                            Text(axis.getPressure(isRight: true)
+                                .applyPreassureSystem(selectedSystem: viewModel.selectedPreassureType)
+                                .formattedToOneDecimalPlace())
+                            Text(viewModel.selectedPreassureType.measureMark)
+                                .font(.roboto500, size: 12)
+                                .opacity(0.8)
+                                .padding(.bottom, 1)
+                        }
+                    }
+                    .font(.roboto400, size: 16)
+                    .foregroundStyle(Color.white)
+                    .frame(width: 56)
+                }
+                .zIndex(2.0)
+                
+                flatValueBar(isRight: true, axle: axis, index: index)
+                    .onTapGesture {
+                        navigationManager.append(ChartScreenPathItem(sensorId: "A3B30457-1D53-4F56-A778-73A03F583CA2"))
+                    }
+            }
+        }
+    }
+    
+    private var tireImage: some View {
+        ZStack {
+            Image("emptyTireImage")
+                .resizable()
+                .scaledToFit()
+            Image("onTireMarksImage")
+                .resizable()
+                .scaledToFit()
+        }
+        .frame(height: 86)
+    }
+    
+    private func flatValueBar(isRight: Bool, axle: AxiesData, index: Int) -> some View {
+        let backgroundColor = isRight ? errorManager.backgroundColors[index].1 : errorManager.backgroundColors[index].0
+        let foregroundColor = isRight ? errorManager.foregroundColors[index].1 : errorManager.foregroundColors[index].0
+        
+        return ZStack {
+            Rectangle()
+                .foregroundStyle(backgroundColor)
+            
+            VStack(spacing: 2) {
+                Text(.init("Tire Temp"))
+                    .font(.roboto400, size: 10)
+                
+                HStack(alignment: .bottom, spacing: 5) {
+                    Text(isRight ? axle.rightTire.tireData.temperatureHistory.last?.applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType).formattedToOneDecimalPlace().description ?? "0.0" : axle.leftTire.tireData.temperatureHistory.last?.applyTemperatureSystem(selectedSystem: viewModel.selectedTemperatureType).formattedToOneDecimalPlace().description ?? "0.0")
+                        .font(.roboto700, size: 18)
+                    
+                    Text(viewModel.selectedTemperatureType.measureMark)
+                        .font(.roboto700, size: 10)
+                        .padding(.bottom, 3)
+                }
+                
+                TireTemperaturePlotView(
+                    data: isRight ? axle.rightTire.tireData.temperatureHistory : axle.leftTire.tireData.temperatureHistory,
+                    foregroundColor: foregroundColor
+                )
+                .padding(.horizontal)
+                .padding(isRight ? .leading : .trailing, 10)
+                .frame(height: 34)
+            }
+            .foregroundStyle(foregroundColor)
+            .padding(.vertical, 6)
+        }
+        .padding(isRight ? .leading : .trailing, -10)
+        .frame(height: 86)
+    }
+}
+
+fileprivate struct MotorcycleAxisBarView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+    @EnvironmentObject var viewModel: MainViewModel
+    @EnvironmentObject var errorManager: ErrorManager
+    
+    @Binding var axis: AxiesData
+    let index: Int
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            Text(.init("Tire \(axis.axisNumber)"))
+                .font(.roboto500, size: 16)
+                .foregroundStyle(Color.textDark)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading)
+            
+            HStack(spacing: 0) {
                 ZStack {
                     tireImage
                     VStack(spacing: 2) {

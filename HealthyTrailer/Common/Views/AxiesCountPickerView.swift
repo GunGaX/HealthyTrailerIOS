@@ -78,7 +78,7 @@ struct AxiesCountPickerView: View {
     }
 }
 
-enum VehicleType: String, CaseIterable, Identifiable {
+enum VehicleType: String, CaseIterable, Identifiable, Codable {
     case car = "Car"
     case motorcycle = "Motorcycle"
     

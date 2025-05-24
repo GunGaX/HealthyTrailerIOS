@@ -11,18 +11,27 @@ import FirebaseFirestore
 enum FirestoreCollections: String {
     case users = "users"
     case data = "data"
+    case settings = "settings"
 }
 
 final class FirestoreManager {
     static let shared = FirestoreManager()
     private init() {}
     
-    //MARK: - Users flow
     private let usersCollection = Firestore.firestore().collection(FirestoreCollections.users.rawValue)
     private let dataCollection = Firestore.firestore().collection(FirestoreCollections.data.rawValue)
+    private let settingsCollection = Firestore.firestore().collection(FirestoreCollections.settings.rawValue)
     
     private func userDocument(userID: String) -> DocumentReference {
         usersCollection.document(userID)
+    }
+    
+    private func settingsDocument(id: String) -> DocumentReference {
+        settingsCollection.document(id)
+    }
+    
+    private func dataDocument(id: String) -> DocumentReference {
+        dataCollection.document(id)
     }
     
     func createUser(user: UserModel) async throws {
@@ -38,10 +47,6 @@ final class FirestoreManager {
     func updateUser(userID: String, fields: [String: Any]) async throws {
         try await userDocument(userID: userID)
             .updateData(fields)
-    }
-    
-    private func dataDocument(id: String) -> DocumentReference {
-        dataCollection.document(id)
     }
     
     func addOrUpdateDataHistory(_ newData: DataHistoryModel) async throws {
@@ -77,5 +82,32 @@ final class FirestoreManager {
         } else {
             return nil
         }
+    }
+    
+    func updateSettings(userID: String, fields: [String: Any]) async throws {
+        let querySnapshot = try await settingsCollection
+            .whereField("user_id", isEqualTo: userID)
+            .getDocuments()
+        
+        if let document = querySnapshot.documents.first {
+            try await settingsDocument(id: document.documentID).updateData(fields)
+        }
+    }
+    
+    func getSettings(userId: String) async throws -> SettingsModel? {
+        let querySnapshot = try await settingsCollection
+            .whereField("user_id", isEqualTo: userId)
+            .getDocuments()
+        
+        if let document = querySnapshot.documents.first {
+            let data = try document.data(as: SettingsModel.self)
+            return data
+        } else {
+            return nil
+        }
+    }
+    
+    func deleteSettings(id: String) async throws {
+        try await settingsDocument(id: id).delete()
     }
 }

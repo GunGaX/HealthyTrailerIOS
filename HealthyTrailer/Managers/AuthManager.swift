@@ -103,7 +103,6 @@ extension User {
             firstName: names.fistName ?? "",
             lastName: names.lastName ?? "",
             emailAdress: email,
-            axiesCount: nil
         )
     }
     
@@ -117,7 +116,6 @@ extension User {
             firstName: names.fistName ?? "",
             lastName: names.lastName ?? "",
             emailAdress: email,
-            axiesCount: nil
         )
     }
     

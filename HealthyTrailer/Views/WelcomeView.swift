@@ -106,10 +106,14 @@ struct WelcomeView: View {
         Button {
             Task { @MainActor in
                 UserDefaults.standard.setValue(viewModel.selectedAxiesCountState, forKey: "axiesCount")
+                UserDefaults.standard.setValue(viewModel.selectedVehicleState.rawValue, forKey: "vehicleType")
                 
                 let user = try AuthManager.shared.getLoggedUser()
-                try await FirestoreManager.shared.updateUser(userID: user.userId, fields: [
-                    UserModel.CodingKeys.axiesCount.rawValue: viewModel.selectedAxiesCountState
+                
+                let axiesBarCount = viewModel.selectedVehicleState == .motorcycle ? 2 : viewModel.selectedAxiesCountState
+                try await FirestoreManager.shared.updateSettings(userID: user.userId, fields: [
+                    SettingsModel.CodingKeys.axiesCount.rawValue: axiesBarCount,
+                    SettingsModel.CodingKeys.vehicleType.rawValue: viewModel.selectedVehicleState
                 ])
                 navigationManager.setupNavigationStatus()
             }

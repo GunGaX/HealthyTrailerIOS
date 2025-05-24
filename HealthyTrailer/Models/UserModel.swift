@@ -12,23 +12,19 @@ struct UserModel: Codable {
     let firstName: String
     let lastName: String
     let emailAdress: String
-    let axiesCount: Int?
     
     enum CodingKeys: String, CodingKey {
         case userId = "user_id"
         case firstName = "first_name"
         case lastName = "last_name"
         case emailAdress = "email_adress"
-        case axiesCount = "axies_count"
-        
     }
     
-    init(userId: String, firstName: String, lastName: String, emailAdress: String, axiesCount: Int?) {
+    init(userId: String, firstName: String, lastName: String, emailAdress: String) {
         self.userId = userId
         self.firstName = firstName
         self.lastName = lastName
         self.emailAdress = emailAdress
-        self.axiesCount = axiesCount
     }
     
     init(from decoder: Decoder) throws {
@@ -38,7 +34,6 @@ struct UserModel: Codable {
         self.firstName = try container.decode(String.self, forKey: .firstName)
         self.lastName = try container.decode(String.self, forKey: .lastName)
         self.emailAdress = try container.decode(String.self, forKey: .emailAdress)
-        self.axiesCount = try? container.decode(Int?.self, forKey: .axiesCount)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -48,6 +43,5 @@ struct UserModel: Codable {
         try container.encode(firstName, forKey: .firstName)
         try container.encode(lastName, forKey: .lastName)
         try container.encode(emailAdress, forKey: .emailAdress)
-        try container.encode(axiesCount, forKey: .axiesCount)
     }
 }

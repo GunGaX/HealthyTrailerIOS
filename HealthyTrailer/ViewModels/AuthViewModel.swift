@@ -89,7 +89,9 @@ class AuthViewModel: ObservableObject {
         Task {
             do {
                 let userModel = try await AuthManager.shared.signUp(email: email, password: password)
-                UserDefaults.standard.setValue(userModel?.axiesCount ?? 0, forKey: "axiesCount")
+                let settingsModel = try? await FirestoreManager.shared.getSettings(userId: userModel?.userId ?? "")
+                UserDefaults.standard.setValue(settingsModel?.axiesCount ?? 0, forKey: "axiesCount")
+                UserDefaults.standard.setValue((settingsModel?.vehicleType ?? .car).rawValue, forKey: "vehicleType")
                 completion(userModel, nil)
             } catch {
                 completion(nil, error.localizedDescription)
@@ -107,7 +109,9 @@ class AuthViewModel: ObservableObject {
         Task {
             do {
                 let userModel = try await AuthManager.shared.signIn(email: email, password: password)
-                UserDefaults.standard.setValue(userModel?.axiesCount ?? 0, forKey: "axiesCount")
+                let settingsModel = try? await FirestoreManager.shared.getSettings(userId: userModel?.userId ?? "")
+                UserDefaults.standard.setValue(settingsModel?.axiesCount ?? 0, forKey: "axiesCount")
+                UserDefaults.standard.setValue((settingsModel?.vehicleType ?? .car).rawValue, forKey: "vehicleType")
                 completion(userModel, nil)
             } catch {
                 print("[AuthViewModel] Error signIn: \(error)")
@@ -138,7 +142,11 @@ class AuthViewModel: ObservableObject {
                 let helper = SignInGoogleHelper()
                 let tokens = try await helper.signIn()
                 let userModel = try await AuthManager.shared.signInWithGoogle(tokens: tokens)
-                UserDefaults.standard.setValue(userModel.user?.axiesCount ?? 0, forKey: "axiesCount")
+                
+                let settingsModel = try? await FirestoreManager.shared.getSettings(userId: userModel.user?.userId ?? "")
+                UserDefaults.standard.setValue(settingsModel?.axiesCount ?? 0, forKey: "axiesCount")
+                UserDefaults.standard.setValue((settingsModel?.vehicleType ?? .car).rawValue, forKey: "vehicleType")
+                
                 completion(userModel.user, nil)
             } catch {
                 print("[AuthViewModel] Error signInGoogle: \(error)")
@@ -153,9 +161,13 @@ class AuthViewModel: ObservableObject {
         Task {
             do {
                 let authResult = try await appleAuthService.login()
-                let authModel = UserModel(userId: authResult.0.user.uid, firstName: "", lastName: "", emailAdress: authResult.0.user.email ?? "", axiesCount: nil)
+                let authModel = UserModel(userId: authResult.0.user.uid, firstName: "", lastName: "", emailAdress: authResult.0.user.email ?? "")
                 try await AuthManager.shared.signInWithApple(authModel)
-                UserDefaults.standard.setValue(authModel.axiesCount, forKey: "axiesCount")
+
+                let settingsModel = try? await FirestoreManager.shared.getSettings(userId: authModel.userId)
+                UserDefaults.standard.setValue(settingsModel?.axiesCount ?? 0, forKey: "axiesCount")
+                UserDefaults.standard.setValue((settingsModel?.vehicleType ?? .car).rawValue, forKey: "vehicleType")
+                
                 completion(authModel, nil)
             } catch {
                 completion(nil, error)
