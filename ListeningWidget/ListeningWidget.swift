@@ -55,7 +55,7 @@ struct ListeningWidgetEntryView : View {
         ZStack {
             Color.gray
             
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(spacing: 8) {
                 Text("HealthyTrailer")
                     .font(.headline)
                     .foregroundColor(.white)
