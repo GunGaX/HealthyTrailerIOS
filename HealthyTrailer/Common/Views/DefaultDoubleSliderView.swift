@@ -121,7 +121,10 @@ struct DefaultDoubleSliderView: View {
     private var title: some View {
         let from = fromActualValue.formattedToOneDecimalPlace()
         let to = toActualValue.formattedToOneDecimalPlace()
-        Text("\(titleText) \(from) \(selectedPreassureType.measureMark) to \(to) \(selectedPreassureType.measureMark)")
+        let localizedFormat = NSLocalizedString("PressureRangeFormat", comment: "")
+        let localizedTitle = NSLocalizedString(titleText, comment: "")
+        let result = String(format: localizedFormat, localizedTitle, from, selectedPreassureType.measureMark, to, selectedPreassureType.measureMark)
+        Text(result)
             .foregroundStyle(Color.textDark)
             .font(.roboto500, size: 16)
             .multilineTextAlignment(.leading)

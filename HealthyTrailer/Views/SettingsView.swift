@@ -92,7 +92,7 @@ struct SettingsView: View {
             try? AuthManager.shared.logOut()
             navigationManager.setupNavigationStatus()
         } label: {
-            Text("Log out")
+            Text(.init("Log out"))
                 .foregroundStyle(Color.red)
         }
     }

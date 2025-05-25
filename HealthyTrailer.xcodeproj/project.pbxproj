@@ -913,9 +913,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HealthyTrailer/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TWD devices.";
-				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TPMS devices.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TrailerWatchDog uses your location to track speed and elevation. ";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "HealthyTrailer requires Bluetooth access to read data from TPMS devices.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "HealthyTrailer requires Bluetooth access to read data from TPMS devices.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "HealthyTrailer uses your location to track speed and elevation.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -952,9 +952,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HealthyTrailer/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TWD devices.";
-				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "TrailerWatchDog requires Bluetooth access to connect to TPMS devices.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TrailerWatchDog uses your location to track speed and elevation. ";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "HealthyTrailer requires Bluetooth access to read data from TPMS devices.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "HealthyTrailer requires Bluetooth access to read data from TPMS devices.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "HealthyTrailer uses your location to track speed and elevation.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

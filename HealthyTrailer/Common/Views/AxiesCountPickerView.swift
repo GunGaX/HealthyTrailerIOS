@@ -99,7 +99,7 @@ struct VehicleTypePickerView: View {
                 .foregroundStyle(Color.mainBlue)
             
             HStack {
-                Text(selectedType.rawValue)
+                Text(.init(selectedType.rawValue))
                     .foregroundStyle(Color.textDark)
                     .font(.roboto400, size: 20)
                     .frame(maxWidth: .infinity)
@@ -132,7 +132,7 @@ struct VehicleTypePickerView: View {
         if isExpanded {
             VStack(spacing: 20) {
                 ForEach(VehicleType.allCases) { type in
-                    Text(type.rawValue)
+                    Text(.init(type.rawValue))
                         .frame(maxWidth: .infinity)
                         .contentShape(Rectangle())
                         .onTapGesture {

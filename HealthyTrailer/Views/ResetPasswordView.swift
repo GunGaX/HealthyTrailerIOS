@@ -54,7 +54,7 @@ struct ResetPasswordView: View {
                 .resizable()
                 .frame(width: 100, height: 100)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-            Text("Reset Password")
+            Text(.init("Reset Password"))
                 .font(.roboto700, size: 28)
                 .foregroundStyle(Color.green11)
                 .padding(.top, 4)
@@ -80,7 +80,7 @@ struct ResetPasswordView: View {
                 }
             }
             if !isValidEmail {
-                Text("*Please enter a valid email address")
+                Text(.init("*Please enter a valid email address"))
                     .font(.roboto400, size: 12)
                     .foregroundStyle(.red)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -94,7 +94,7 @@ struct ResetPasswordView: View {
             Button {
                 sendResetLinkAction()
             } label: {
-                Text("Continue")
+                Text(.init("Continue"))
             }
             .buttonStyle(PrimaryWithBackgroundButtonStyle(disabled: !isEnableSendButton))
             .disabled(!isEnableSendButton)

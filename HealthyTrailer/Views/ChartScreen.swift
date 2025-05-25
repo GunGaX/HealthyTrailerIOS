@@ -17,18 +17,18 @@ struct ChartScreen: View {
         VStack {
             Picker("Data Type", selection: $viewModel.selectedType) {
                 ForEach(DataType.allCases) { type in
-                    Text(type.rawValue).tag(type)
+                    Text(.init(type.rawValue)).tag(type)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
             
-            DatePicker("Select Date", selection: $viewModel.selectedDate, displayedComponents: .date)
+            DatePicker(.init("Select Date"), selection: $viewModel.selectedDate, displayedComponents: .date)
                 .datePickerStyle(.compact)
                 .padding()
             
             if viewModel.filteredData.isEmpty {
-                Text("No data")
+                Text(.init("No data"))
                     .frame(maxHeight: .infinity)
             } else {
                 chartView

@@ -129,7 +129,7 @@ struct ConnectTMPSDevicesView: View {
     }
     
     private var tireToConnectText: some View {
-        Text(tireToConnect)
+        Text(.init(tireToConnect))
             .font(.roboto400, size: 18)
             .foregroundStyle(Color.mainGrey)
             .frame(maxWidth: .infinity)

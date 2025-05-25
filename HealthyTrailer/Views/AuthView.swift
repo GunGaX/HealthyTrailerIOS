@@ -46,15 +46,15 @@ struct AuthView: View {
                 Spacer()
                 footer
             }
+            .padding(.top, 32)
+            .padding(.bottom, 27)
         }
         .padding(.horizontal, 24)
-        .padding(.top, 32)
-        .padding(.bottom, 27)
         .background(.white)
         .alert(item: $alert) { data in
             Alert(
-                title: Text(data.title),
-                message: Text(data.message),
+                title: Text(.init(data.title)),
+                message: Text(.init(data.message)),
                 dismissButton: .default(Text("OK"))
             )
         }
@@ -69,11 +69,11 @@ struct AuthView: View {
                 .resizable()
                 .frame(width: 100, height: 100)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-            Text("Welcome")
+            Text(.init("Welcome"))
                 .font(.roboto400, size: 18)
                 .foregroundStyle(Color.grayBA)
                 .padding(.top, 16)
-            Text(viewModel.authType.title)
+            Text(.init(viewModel.authType.title))
                 .font(.roboto700, size: 28)
                 .foregroundStyle(Color.green11)
                 .padding(.top, 4)
@@ -111,7 +111,7 @@ struct AuthView: View {
     private var password: some View {
         VStack(spacing: 0) {
             if viewModel.authType == .signUp {
-                Text("Password")
+                Text(.init("Password"))
                     .font(.roboto400, size: 12)
                     .foregroundStyle(Color.grayBA)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -148,7 +148,7 @@ struct AuthView: View {
     private var confirmPassword: some View {
         if viewModel.authType == .signUp {
             VStack(spacing: 0) {
-                Text("Confirm Password")
+                Text(.init("Confirm Password"))
                     .font(.roboto400, size: 12)
                     .foregroundStyle(Color.grayBA)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -184,7 +184,7 @@ struct AuthView: View {
             Button {
                 navigationManager.append(ResetPasswordViewPathItem())
             } label: {
-                Text("Forgot password?")
+                Text(.init("Forgot password?"))
                     .font(.roboto500, size: 18)
                     .foregroundStyle(Color.green11)
                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -198,7 +198,7 @@ struct AuthView: View {
         Button {
             authAction()
         } label: {
-            Text(viewModel.authType.buttonTitle)
+            Text(.init(viewModel.authType.buttonTitle))
         }
         .buttonStyle(PrimaryWithBackgroundButtonStyle(disabled: !isAuthButtonEnable))
         .disabled(!isAuthButtonEnable)
@@ -212,7 +212,7 @@ struct AuthView: View {
                 Image("google")
                     .resizable()
                     .frame(width: 20, height: 20)
-                Text("Log in with Google")
+                Text(.init("Log in with Google"))
             }
         }
         .buttonStyle(.socialLogin)
@@ -220,7 +220,7 @@ struct AuthView: View {
     }
     
     private var orTitle: some View {
-        Text("or")
+        Text(.init("or"))
             .font(.roboto500, size: 18)
             .foregroundStyle(.black)
     }
@@ -233,7 +233,7 @@ struct AuthView: View {
                 Image("apple")
                     .resizable()
                     .frame(width: 18, height: 22)
-                Text("Log in with Apple")
+                Text(.init("Log in with Apple"))
             }
         }
         .buttonStyle(.socialLogin)
@@ -242,7 +242,7 @@ struct AuthView: View {
     
     private var footer: some View {
         HStack(spacing: 4) {
-            Text(viewModel.authType.alternativeOptionTitle)
+            Text(.init(viewModel.authType.alternativeOptionTitle))
                 .font(.roboto400, size: 18)
                 .foregroundStyle(Color.gray41)
             Button {
@@ -251,7 +251,7 @@ struct AuthView: View {
                     isAuthButtonEnable = viewModel.isAuthButtonDisable()
                 }
             } label: {
-                Text(viewModel.authType.alternativeOptionButtonTitle)
+                Text(.init(viewModel.authType.alternativeOptionButtonTitle))
                     .font(.roboto500, size: 18)
                     .foregroundStyle(Color.green11)
             }
@@ -261,7 +261,7 @@ struct AuthView: View {
     
     @ViewBuilder
     private func validationErrorMessage(message: String) -> some View {
-        Text(message)
+        Text(.init(message))
             .font(.roboto400, size: 12)
             .foregroundStyle(.red)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -336,7 +336,7 @@ struct AuthView: View {
     
     private func showToast(withError error: String?) {
         if let message = error {
-            alert = AlertData(title: "Attention", message: message)
+            alert = AlertData(title: .init(), message: message)
         }
     }
 }

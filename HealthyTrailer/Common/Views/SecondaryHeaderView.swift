@@ -26,7 +26,7 @@ struct SecondaryHeaderView: View {
     }
     
     private var title: some View {
-        Text(titleText)
+        Text(.init(titleText))
             .foregroundStyle(Color.black)
             .font(.roboto700, size: 18)
     }

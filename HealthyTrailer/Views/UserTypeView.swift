@@ -62,14 +62,14 @@ struct UserTypeView: View {
             Button {
                 navigationManager.append(AuthViewPathItem(authType: .signIn))
             } label: {
-                Text("Login")
+                Text(.init("Login"))
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.mainBlueButton)
             Button {
                 navigationManager.append(AuthViewPathItem(authType: .signUp))
             } label: {
-                Text("Sign Up")
+                Text(.init("Sign Up"))
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.mainBlueButton)

@@ -65,3 +65,12 @@
 "Are you sure you want to forgot all TMPS sensors assigned to this trailer?" = "Are you sure you want to forgot all TMPS sensors assigned to this trailer?";
 
 "Attention!" = "Attention!";
+
+"LeftWheelOverTemp" = "Left wheel %d exceeds the maximum temperature difference\n";
+"LeftWheelFlatOrSensor" = "Left wheel %d is flat or the sensor is unscrewed\n";
+"LeftWheelLowPressure" = "Left wheel %d has too low pressure\n";
+"LeftWheelHighPressure" = "Left wheel %d has too high pressure\n";
+"RightWheelOverTemp" = "Right wheel %d exceeds the maximum temperature difference\n";
+"RightWheelFlatOrSensor" = "Right wheel %d is flat or the sensor is unscrewed\n";
+"RightWheelLowPressure" = "Right wheel %d has too low pressure\n";
+"RightWheelHighPressure" = "Right wheel %d has too high pressure\n";

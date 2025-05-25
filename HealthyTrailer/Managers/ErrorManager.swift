@@ -148,7 +148,7 @@ final class ErrorManager: ObservableObject {
                 if axies[index].getTemperature(isRight: false) + maxDiff < maxTemp || axies[index].getTemperature(isRight: false) - maxDiff > minTemp {
                     tpmsManager.axies[index].isLeftCriticalTPMS = true
                     hasBigDiff = true
-                    messageBuilder += .init("Left wheel \(index + 1) is over max temperature difference\n")
+                    messageBuilder += .init(String(format: NSLocalizedString("LeftWheelOverTemp", comment: ""), "\(index + 1)"))
                 }
             }
             
@@ -156,7 +156,7 @@ final class ErrorManager: ObservableObject {
                 if axies[index].getTemperature(isRight: true) + maxDiff < maxTemp || axies[index].getTemperature(isRight: true) - maxDiff > minTemp {
                     tpmsManager.axies[index].isRightCriticalTPMS = true
                     hasBigDiff = true
-                    messageBuilder += .init("Right wheel \(index + 1) is over max temperature difference\n")
+                    messageBuilder += .init(String(format: NSLocalizedString("RightWheelOverTemp", comment: ""), "\(index + 1)"))
                 }
             }
         }
@@ -179,16 +179,16 @@ final class ErrorManager: ObservableObject {
                     isOutOfBound = true
                                         
                     if axies[index].getPressure(isRight: false) == 0.0 {
-                        messageBuilder += .init("Left wheel \(index + 1) has flat tire or sensor is unscrewed\n")
+                        messageBuilder += .init(String(format: NSLocalizedString("LeftWheelFlatOrSensor", comment: ""), index + 1))
                     } else {
-                        messageBuilder += .init("Left wheel \(index + 1) has to low pressure\n")
+                        messageBuilder += .init(String(format: NSLocalizedString("LeftWheelLowPressure", comment: ""), index + 1))
                     }
                     
                     if axies[index].getPressure(isRight: false) > maxPressure {
                         tpmsManager.axies[index].isLeftCriticalTPMS = true
                         isOutOfBound = true
                         
-                        messageBuilder += .init("Left wheel \(index + 1) has to high pressure\n")
+                        messageBuilder += .init(String(format: NSLocalizedString("LeftWheelHighPressure", comment: ""), index + 1))
                     }
                 }
             }
@@ -199,16 +199,16 @@ final class ErrorManager: ObservableObject {
                     isOutOfBound = true
                                         
                     if axies[index].getPressure(isRight: true) == 0.0 {
-                        messageBuilder += .init("Right wheel \(index + 1) has flat tire or sensor is unscrewed\n")
+                        messageBuilder += .init(String(format: NSLocalizedString("RightWheelFlatOrSensor", comment: ""), index + 1))
                     } else {
-                        messageBuilder += .init("Right wheel \(index + 1) has to low pressure\n")
+                        messageBuilder += .init(String(format: NSLocalizedString("RightWheelLowPressure", comment: ""), index + 1))
                     }
                     
                     if axies[index].getPressure(isRight: true) > maxPressure {
                         tpmsManager.axies[index].isRightCriticalTPMS = true
                         isOutOfBound = true
                         
-                        messageBuilder += .init("Right wheel \(index + 1) has to high pressure\n")
+                        messageBuilder += .init(String(format: NSLocalizedString("RightWheelHighPressure", comment: ""), index + 1))
                     }
                 }
             }

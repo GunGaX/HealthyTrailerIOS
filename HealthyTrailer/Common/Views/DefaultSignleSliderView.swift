@@ -82,7 +82,7 @@ struct DefaultSignleSliderView: View {
     }
     
     private var title: some View {
-        Text(titleText)
+        Text(.init(titleText))
             .foregroundStyle(Color.textDark)
             .font(.roboto500, size: 16)
             .multilineTextAlignment(.leading)

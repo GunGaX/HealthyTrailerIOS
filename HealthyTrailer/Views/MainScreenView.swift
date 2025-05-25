@@ -591,7 +591,7 @@ fileprivate struct MotorcycleAxisBarView: View {
     
     var body: some View {
         VStack(spacing: 8) {
-            Text(.init("Tire \(axis.axisNumber)"))
+            Text(String(format: NSLocalizedString("Tire %d", comment: ""), axis.axisNumber))
                 .font(.roboto500, size: 16)
                 .foregroundStyle(Color.textDark)
                 .frame(maxWidth: .infinity, alignment: .leading)

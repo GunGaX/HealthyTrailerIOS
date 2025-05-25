@@ -42,7 +42,7 @@ struct AuthTextField: View {
     @ViewBuilder
     private var placeholderView: some View {
         if text.isEmpty {
-            Text(placeholder)
+            Text(.init(placeholder))
                 .font(.roboto400, size: 18)
                 .foregroundStyle(.gray)
                 .lineLimit(1)
