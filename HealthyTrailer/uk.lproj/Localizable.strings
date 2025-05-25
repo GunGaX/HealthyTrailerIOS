@@ -1,0 +1,120 @@
+/* 
+  Localizable.strings
+  HealthyTrailer
+
+  Created by Dmytro Savka on 19.05.2024.
+  
+*/
+
+"HealthyTrailer requires Bluetooth access to read data from TPMS devices." = "HealthyTrailer вимагає Bluetooth доступ, щоб зчитувати дані з TPMS датчиків.";
+"HealthyTrailer uses your location to track speed and elevation." = "HealthyTrailer використовує локацію, щоб відслідковувати швидкість та висоту.";
+
+"Welcome to Healthy Trailer App" = "Ласково просимо до Healthy Trailer додатку";
+"This is a security and safety for your trailer in one click. To use this application, you must grant the following permissions:" = "Це безпека та захист вашого трейлера, яка може керуватись одним кліком. Щоб використовувати цей додаток, вам потрібно надати наступні дозволи";
+"• Access to your device's location \n• Bluetooth activation" = "• Доступ до місцезнаходження вашого пристрою \n• Активація Bluetooth";
+"These permissions are essential for the app to function effectively and provide you with its features." = "Ці дозволи є необхідними для ефективної роботи додатку та надання його функцій.";
+"Please select how many axies do you want to track" = "Будь ласка, виберіть, скільки осей ви хочете відстежувати";
+"Ok, got it" = "Зрозуміло";
+
+"App needs to allow Location Permission to continue" = "Додатку потрібно дозволити доступ до місцезнаходження, щоб продовжити";
+"Open settings" = "Відкрити налаштування";
+
+"Settings" = "Налаштування";
+"Max allowed TPMS sensor temperature" = "Максимальна дозволена температура датчика TPMS";
+"Max allowed difference in TPMS sensor temperature" = "Максимальна довзолена різниця в температурі датчика TPMS";
+"Expected pressure range:" = "Очікуваний діапазон тиску:";
+"Axles:" = "Осей:";
+"This parameter is determined automatically" = "Цей параметр визначається автоматично";
+"Notification sound" = "Звук сповіщення";
+"PressureRangeFormat" = "%@ з %@ %@ до %@ %@";
+"Expected pressure range:" = "Очікуваний проміжок тиску:";
+"Log out" = "Вийти з акаунта";
+
+"Terminal" = "Термінал";
+"Status" = "Статус";
+
+"Exit" = "Вийти";
+"Error with Axle modules, please check connections" = "Помилка з модулями осі, перевірте підключення";
+"Connect" = "Підключити";
+"Add TPMS sensors to trailer" = "Додати TPMS сенсор до трейлера";
+"Forget connected TPMS sensors" = "Забути підключений TPMS сенсор";
+"Tire Temp" = "Темп. колеса";
+"Axis" = "Вісь";
+
+"RIGHT 1" = "Праве 1";
+"LEFT 1" = "Ліве 1";
+"RIGHT 2" = "Праве 2";
+"LEFT 2" = "Ліве 2";
+
+"Left sensor _ hasn't reported in over five minutes, please check sensor\n" = "Лівий датчик %@ не повідомляв протягом понад п'яти хвилин, будь ласка, перевірте датчик\n";
+"Right sensor _ hasn't reported in over five minutes, please check sensor\n" = "Правий датчик %@ не повідомляв протягом понад п'яти хвилин, будь ласка, перевірте датчик\n";
+
+"Left wheel _ is over temperature threshold\n" = "Лівe колесо %@ перевищує поріг температури\n";
+"Right wheel _ is over temperature threshold\n" = "Праве колесо %@ перевищує поріг температури\n";
+"Left wheel _ is over max temperature difference\n" = "Ліве колесо %@ перевищує максимальну різницю температур\n";
+"Right wheel _ is over max temperature difference\n" = "Праве колесо %@ перевищує максимальну різницю температур\n";
+"Left wheel _ has flat tire or sensor is unscrewed\n" = "Ліве колесо %@ проколоте або сенсор не прикріплений\n";
+"Right wheel _ has flat tire or sensor is unscrewed\n" = "Праве колесо %@ проколоте або сенсор не прикріплений\n";
+"Left wheel _ has to low pressure\n" = "Ліве колесо %@ має надто низький тиск\n";
+"Right wheel _ has to low pressure\n" = "Праве колесо %@ має надто низький тиск\n";
+"Left wheel _ has to high pressure\n" = "Ліве колесо %@ має надто високий тиск\n";
+"Right wheel _ has to high pressure\n" = "Праве колесо %@ має надто високий тиск\n";
+
+"Add new TPMS sensors" = "Додати новий TPMS сенсор";
+"Listening for new sensors" = "Сканую на нові сенсори";
+"Please install the TMPS sensor for tire:" = "Будь ласка, встановіть TPMS сенсор на колесо:";
+"Previously known sensors:" = "Раніше підключені сенсори:";
+"Forget known sensors" = "Забути раніше підключені сенсори";
+"Cancel" = "Скасувати";
+"Yes" = "Так";
+
+"Do you really want to add new TPMS sensors?" = "Ви дійсно хочете підключити нові TPMS сенсори?";
+
+"Forget TPMS sensors" = "Забути TPMS сенсори";
+"Are you sure you want to forgot all TMPS sensors assigned to this trailer?" = "Ви впевнені, що хочете забути усі підключені TPMS сенсори?";
+
+"Attention!" = "Увага!";
+
+"Tire %d" = "Колесо %d";
+"Select Date" = "Вибрана дата";
+"Temperature" = "Температура";
+"Pressure" = "Тиск";
+"No data" = "Немає інформації";
+
+"Login" = "Увійти";
+"Log In" = "Увійти";
+"Log in" = "Увійти";
+"Sign Up" = "Зареєструватись";
+"Sign up" = "Зареєструватись";
+
+"Welcome" = "Ласкаво просимо";
+"Email" = "Електронна пошта";
+"*Please enter a valid email address" = "*Будь ласка, введіть дійсну електронну пошту";
+"Password" = "Пароль";
+"*Must be at least 8 characters long, include a lowercase letter, an uppercase letter, a number, and a special character" = "*Пароль має містити щонайменше 8 символів, включаючи малу та велику літери, цифру і спеціальний символ";
+"Confirm Password" = "Підтвердження пароля";
+"Confirm password" = "Підтвердження пароля";
+"*Passwords must match." = "*Паролі мають співпадати.";
+"Forgot password?" = "Забули пароль?";
+"Log in with Google" = "Увійти через Google";
+"or" = "або";
+"Log in with Apple" = "Увійти через Apple";
+"The user cancelled the sign-in flow." = "Користувач скасував процес входу.";
+"An unknown error occurred." = "Сталася невідома помилка.";
+"Already have an account?" = "Вже маєте акаунт?";
+"Don't have an account?" = "Ще немає акаунта?";
+"Reset Password" = "Відновити пароль";
+"Continue" = "Продовжити";
+
+"Please select your vehicle type" = "Будь ласка, виберіть тип транспортного засобу";
+"Car" = "Автомобіль";
+"Motorcycle" = "Мотоцикл";
+
+"LeftWheelOverTemp" = "Ліве колесо %d перевищує допустиму різницю температур\n";
+"LeftWheelFlatOrSensor" = "Ліве колесо %d спущене або датчик відкручено\n";
+"LeftWheelLowPressure" = "Ліве колесо %d має занадто низький тиск\n";
+"LeftWheelHighPressure" = "Ліве колесо %d має занадто високий тиск\n";
+"RightWheelOverTemp" = "Праве колесо %d перевищує допустиму різницю температур\n";
+"RightWheelFlatOrSensor" = "Праве колесо %d спущене або датчик відкручено\n";
+"RightWheelLowPressure" = "Праве колесо %d має занадто низький тиск\n";
+"RightWheelHighPressure" = "Праве колесо %d має занадто високий тиск\n";

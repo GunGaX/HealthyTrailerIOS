@@ -1,0 +1,76 @@
+/* 
+  Localizable.strings
+  HealthyTrailer
+
+  Created by Dmytro Savka on 19.05.2024.
+  
+*/
+
+"Welcome to Healthy Trailer App" = "Welcome to Healthy Trailer App";
+"This is a security and safety for your trailer in one click. To use this application, you must grant the following permissions:" = "This is a security and safety for your trailer in one click. To use this application, you must grant the following permissions:";
+"• Access to your device's location \n• Bluetooth activation" = "• Access to your device's location \n• Bluetooth activation";
+"These permissions are essential for the app to function effectively and provide you with its features." = "These permissions are essential for the app to function effectively and provide you with its features.";
+"Please select how many axies do you want to track" = "Please select how many axies do you want to track";
+"Ok, got it" = "Ok, got it";
+
+"App needs to allow Location Permission to continue" = "App needs to allow Location Permission to continue";
+"Open settings" = "Open settings";
+
+"Settings" = "Settings";
+"Max allowed TPMS sensor temperature" = "Max allowed TPMS sensor temperature";
+"Max allowed difference in TPMS sensor temperature" = "Max allowed difference in TPMS sensor temperature";
+"Expected pressure range:" = "Expected pressure range:";
+"Axles:" = "Axles:";
+"This parameter is determined automatically" = "This parameter is determined automatically";
+"Notification sound" = "Notification sound";
+
+"Terminal" = "Terminal";
+"Status" = "Status";
+
+"Exit" = "Exit";
+"Error with Axle modules, please check connections" = "Error with Axle modules, please check connections";
+"Connect" = "Connect";
+"Add TPMS sensors to trailer" = "Add TPMS sensors to trailer";
+"Forget connected TPMS sensors" = "Forget connected TPMS sensors";
+"Tire Temp" = "Tire Temp";
+"Axis" = "Axis";
+
+"RIGHT" = "RIGHT";
+"LEFT" = "LEFT";
+"Left sensor _ hasn't reported in over five minutes, please check sensor\n" = "Left sensor %@ hasn't reported in over five minutes, please check sensor\n";
+"Right sensor _ hasn't reported in over five minutes, please check sensor\n" = "Right sensor %@ hasn't reported in over five minutes, please check sensor\n";
+
+"Left wheel _ is over temperature threshold\n" = "Left wheel %@ is over temperature threshold\n";
+"Right wheel _ is over temperature threshold\n" = "Right wheel %@ is over temperature threshold\n";
+"Left wheel _ is over max temperature difference\n" = "Left wheel %@ is over max temperature difference\n";
+"Right wheel _ is over max temperature difference\n" = "Right wheel %@ is over max temperature difference\n";
+"Left wheel _ has flat tire or sensor is unscrewed\n" = "Left wheel %@ has flat tire or sensor is unscrewed\n";
+"Right wheel _ has flat tire or sensor is unscrewed\n" = "Right wheel %@ has flat tire or sensor is unscrewed\n";
+"Left wheel _ has to low pressure\n" = "Left wheel %@ has to low pressure\n";
+"Right wheel _ has to low pressure\n" = "Right wheel %@ has to low pressure\n";
+"Left wheel _ has to high pressure\n" = "Left wheel %@ has to high pressure\n";
+"Right wheel _ has to high pressure\n" = "Right wheel %@ has to high pressure\n";
+
+"Add new TPMS sensors" = "Add new TPMS sensors";
+"Listening for new sensors" = "Listening for new sensors";
+"Please install the TMPS sensor for tire:" = "Please install the TMPS sensor for tire:";
+"Previously known sensors:" = "Previously known sensors:";
+"Forget known sensors" = "Forget known sensors";
+"Cancel" = "Cancel";
+"Yes" = "Yes";
+
+"Do you really want to add new TPMS sensors?" = "Do you really want to add new TPMS sensors?";
+
+"Forget TPMS sensors" = "Forget TPMS sensors";
+"Are you sure you want to forgot all TMPS sensors assigned to this trailer?" = "Are you sure you want to forgot all TMPS sensors assigned to this trailer?";
+
+"Attention!" = "Attention!";
+
+"LeftWheelOverTemp" = "Left wheel %d exceeds the maximum temperature difference\n";
+"LeftWheelFlatOrSensor" = "Left wheel %d is flat or the sensor is unscrewed\n";
+"LeftWheelLowPressure" = "Left wheel %d has too low pressure\n";
+"LeftWheelHighPressure" = "Left wheel %d has too high pressure\n";
+"RightWheelOverTemp" = "Right wheel %d exceeds the maximum temperature difference\n";
+"RightWheelFlatOrSensor" = "Right wheel %d is flat or the sensor is unscrewed\n";
+"RightWheelLowPressure" = "Right wheel %d has too low pressure\n";
+"RightWheelHighPressure" = "Right wheel %d has too high pressure\n";

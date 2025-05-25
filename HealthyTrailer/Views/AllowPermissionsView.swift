@@ -18,7 +18,7 @@ struct AllowPermissionsView: View {
     }
     
     private var desriptionText: some View {
-        Text("App needs to allow Location Permission to continue")
+        Text(.init("App needs to allow Location Permission to continue"))
             .fontWeight(.regular)
             .multilineTextAlignment(.center)
             .foregroundStyle(Color.textDark)
@@ -29,7 +29,7 @@ struct AllowPermissionsView: View {
         Button {
             settingsOpener()
         } label: {
-            Text("Open settings")
+            Text(.init("Open settings"))
         }
         .buttonStyle(.mainGreenButton)
     }

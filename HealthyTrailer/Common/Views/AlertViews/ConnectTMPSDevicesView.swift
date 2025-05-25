@@ -110,33 +110,33 @@ struct ConnectTMPSDevicesView: View {
     }
     
     private var title: some View {
-        Text("Add new TPMS sensors")
+        Text(.init("Add new TPMS sensors"))
             .font(.roboto500, size: 20)
             .foregroundStyle(Color.mainRed)
     }
     
     private var listeningText: some View {
-        Text("Listening for new sensors")
+        Text(.init("Listening for new sensors"))
             .font(.roboto400, size: 16)
             .foregroundStyle(Color.mainGrey)
     }
     
     private var installText: some View {
-        Text("Please install the TMPS sensor for tire:")
+        Text(.init("Please install the TMPS sensor for tire:"))
             .font(.roboto500, size: 14)
             .foregroundStyle(Color.textDark)
             .frame(maxWidth: .infinity)
     }
     
     private var tireToConnectText: some View {
-        Text(tireToConnect)
+        Text(.init(tireToConnect))
             .font(.roboto400, size: 18)
             .foregroundStyle(Color.mainGrey)
             .frame(maxWidth: .infinity)
     }
     
     private var previousDevicesText: some View {
-        Text("Previously known sensors:")
+        Text(.init("Previously known sensors:"))
             .font(.roboto500, size: 14)
             .foregroundStyle(Color.textDark)
     }
@@ -157,7 +157,7 @@ struct ConnectTMPSDevicesView: View {
             dataManager.forgetLastConnectedTPMSDevices()
             lastConnectedTPMSDevices = []
         } label: {
-            Text("Forget known sensors")
+            Text(.init("Forget known sensors"))
                 .font(.roboto500, size: 14)
                 .foregroundStyle(Color.textDark)
         }
@@ -168,7 +168,7 @@ struct ConnectTMPSDevicesView: View {
             onCancelTap()
             showAlert = false
         } label: {
-            Text("Cancel")
+            Text(.init("Cancel"))
                 .font(.roboto500, size: 16)
                 .foregroundStyle(Color.mainGrey)
         }
@@ -180,7 +180,7 @@ struct ConnectTMPSDevicesView: View {
             onButtonTap(selectedDevice)
             self.selectedDevice = nil
         } label: {
-            Text("Yes")
+            Text(.init("Yes"))
                 .font(.roboto500, size: 16)
                 .foregroundStyle(Color.mainRed)
         }

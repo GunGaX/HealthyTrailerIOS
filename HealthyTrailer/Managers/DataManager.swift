@@ -76,6 +76,25 @@ class DataManager: NSObject, ObservableObject {
     
     var canShowNotifications = false
     
+    var isMonitoring: Bool = false
+    var dataModel: [String: DataHistoryModel] = DataHistoryModel.mockDataHistoriesDictionary
+    
+    func uploadDataToFirestore() {
+        Task {
+            await withTaskGroup(of: Void.self) { group in
+                for data in dataModel {
+                    group.addTask {
+                        do {
+                            try await FirestoreManager.shared.addOrUpdateDataHistory(data.value)
+                        } catch {
+                            print("[Error][DataManager] Failed to upload data for id: \(data.value.id), error: \(error.localizedDescription)")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     func log(_ message:String) {
         if (useOSConsoleLog) {
             os_log("%@", log: .default, type: .info, message)
@@ -387,6 +406,8 @@ class DataManager: NSObject, ObservableObject {
             centralManager.scanForPeripherals(withServices: [tpmsServiceCBUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
         }
     }
+    
+    func refreshData() { }
 }
 
 extension DataManager: CLLocationManagerDelegate {

@@ -9,25 +9,63 @@ import Foundation
 import SwiftUI
 
 enum AppState {
-    case welcome, allowPermissions, app
+    case launched, welcome, allowPermissions, app
 }
 
 protocol PathItem: Hashable, Codable { }
 
 final class NavigationManager: ObservableObject {
-    @Published var appState: AppState = .welcome
+    @Published var appState: AppState = .launched
     @Published var path: NavigationPath = NavigationPath()
+    @Published var authPath: NavigationPath = NavigationPath()
     
     func append<T: PathItem>(_ pathItem: T) {
-        path.append(pathItem)
+        switch appState {
+        case .launched:
+            authPath.append(pathItem)
+        case .welcome, .allowPermissions, .app:
+            path.append(pathItem)
+        }
     }
     
     func removeLast(_ k: Int = 1) {
-        path.removeLast(k)
+        switch appState {
+        case .launched:
+            authPath.removeLast(k)
+        case .welcome, .allowPermissions, .app:
+            path.removeLast(k)
+        }
     }
     
     func resetCurrentPath() {
-        path = NavigationPath()
+        switch appState {
+        case .launched:
+            authPath = NavigationPath()
+        case .welcome, .allowPermissions, .app:
+            path = NavigationPath()
+        }
+    }
+    
+    func setupNavigationStatus() {
+        let user = try? AuthManager.shared.getLoggedUser()
+        
+        if LocationManager.shared.checkIfAccessIsGranted() && BluetoothManager.shared.checkBluetooth() {
+            if user != nil {
+                if UserDefaults.standard.integer(forKey: "axiesCount") == 0 {
+                    self.appState = .welcome
+                } else {
+                    self.appState = .app
+                }
+            } else {
+                self.appState = .launched
+            }
+        } else {
+            if user != nil {
+                self.appState = .allowPermissions
+            } else {
+                self.appState = .launched
+            }
+        }
     }
 }
 
@@ -39,4 +77,11 @@ struct FolderDetailsPathItem: PathItem {
 }
 struct LogFileDetailsPathItem: PathItem {    
     let file: HistoryFileModel
+}
+struct AuthViewPathItem: PathItem {
+    let authType: AuthType
+}
+struct ResetPasswordViewPathItem: PathItem {}
+struct ChartScreenPathItem: PathItem {
+    let sensorId: String
 }

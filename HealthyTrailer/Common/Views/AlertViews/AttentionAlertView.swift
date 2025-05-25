@@ -60,14 +60,14 @@ struct AttentionView: View {
     }
     
     private var title: some View {
-        Text("Attention!")
+        Text(.init("Attention!"))
             .font(.roboto500, size: 20)
             .foregroundStyle(Color.mainRed)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var confirmationText: some View {
-        Text(messageText)
+        Text(.init(messageText))
             .font(.roboto500, size: 14)
             .foregroundStyle(Color.textDark)
             .frame(maxWidth: .infinity, alignment: .leading)

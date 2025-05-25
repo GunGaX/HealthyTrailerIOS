@@ -15,7 +15,7 @@ struct TerminalView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            SecondaryHeaderView(titleText: "Terminal")
+            SecondaryHeaderView(titleText: .init("Terminal"))
             
             ScrollViewReader { proxy in
                 ScrollView {
@@ -59,7 +59,7 @@ struct TerminalView: View {
                         .foregroundStyle(viewModel.isConnected ? Color.mainGreen : Color.mainRed)
                 )
             
-            Text("Status")
+            Text(.init("Status"))
                 .font(.roboto500, size: 16)
                 .foregroundStyle(Color.textDark)
         }

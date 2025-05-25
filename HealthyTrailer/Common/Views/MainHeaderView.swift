@@ -49,7 +49,7 @@ struct MainHeaderView: View {
         Button {
             navigationManager.append(TerminalPathItem())
         } label: {
-            Text("Terminal")
+            Text(.init("Terminal"))
         }
     }
     
@@ -57,7 +57,7 @@ struct MainHeaderView: View {
         Button {
             navigationManager.append(SettingPathItem())
         } label: {
-            Text("Settings")
+            Text(.init("Settings"))
         }
     }
 }

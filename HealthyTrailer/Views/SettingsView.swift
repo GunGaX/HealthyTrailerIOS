@@ -14,7 +14,7 @@ struct SettingsView: View {
         
     var body: some View {
         VStack(spacing: 0) {
-            SecondaryHeaderView(titleText: "Settings")
+            SecondaryHeaderView(titleText: .init("Settings"))
             ScrollView {
                 VStack(spacing: 30) {
                     measurementPickers
@@ -24,15 +24,16 @@ struct SettingsView: View {
                     axlesInfo
                         .padding(.vertical, -10)
                        
-                    DefaultSignleSliderView(value: $viewModel.maxTPMSSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed TPMS sensor temperature", minValue: viewModel.maxTPMSSensorTemperatureLowerBound, maxValue: viewModel.maxTPMSSensorTemperatureUpperBound)
-                    DefaultSignleSliderView(value: $viewModel.maxDifferenceTPMSSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed difference in TPMS sensor temperature", minValue: viewModel.maxDifferenceTPMSSensorTemperatureLowerBound, maxValue: viewModel.maxDifferenceTPMSSensorTemperatureUpperBound)
+                    DefaultSignleSliderView(value: $viewModel.maxTPMSSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: .init("Max allowed TPMS sensor temperature"), minValue: viewModel.maxTPMSSensorTemperatureLowerBound, maxValue: viewModel.maxTPMSSensorTemperatureUpperBound)
+                    DefaultSignleSliderView(value: $viewModel.maxDifferenceTPMSSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: .init("Max allowed difference in TPMS sensor temperature"), minValue: viewModel.maxDifferenceTPMSSensorTemperatureLowerBound, maxValue: viewModel.maxDifferenceTPMSSensorTemperatureUpperBound)
                     
-                    DefaultSignleSliderView(value: $viewModel.maxTWDSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed TWD sensor temperature", minValue: viewModel.maxTWDSensorTemperatureLowerBound, maxValue: viewModel.maxTWDSensorTemperatureUpperBound)
-                    DefaultSignleSliderView(value: $viewModel.maxDifferenceTWDSensorTemperature, selectedTemperatureType: $viewModel.selectedTemperatureType, titleText: "Max allowed difference in TWD sensor temperature", minValue: viewModel.maxDifferenceTWDSensorTemperatureLowerBound, maxValue: viewModel.maxDifferenceTWDSensorTemperatureUpperBound)
-                    
-                    DefaultDoubleSliderView(firstValue: $viewModel.preassureMinValue, secondValue: $viewModel.preassureMaxValue, selectedPreassureType: $viewModel.selectedPreassureType, titleText: "Expected pressure range:", minValue: viewModel.preassureMinBound, maxValue: viewModel.preassureMaxBound)
+                    DefaultDoubleSliderView(firstValue: $viewModel.preassureMinValue, secondValue: $viewModel.preassureMaxValue, selectedPreassureType: $viewModel.selectedPreassureType, titleText: .init("Expected pressure range:"), minValue: viewModel.preassureMinBound, maxValue: viewModel.preassureMaxBound)
                     
                     notificationSection
+                        .padding(.bottom, 30)
+                    
+                    testButton
+                    logOutButton
                         .padding(.bottom, 30)
                 }
                 .padding(.horizontal)
@@ -44,7 +45,7 @@ struct SettingsView: View {
     
     private var axlesInfo: some View {
         HStack(spacing: 20) {
-            Text("Axles:")
+            Text(.init("Axles:"))
                 .foregroundStyle(Color.textDark)
                 .font(.roboto500, size: 18)
                 .padding(.trailing, 20)
@@ -58,7 +59,7 @@ struct SettingsView: View {
                         .foregroundStyle(Color.lightGrayBackground)
                 )
             
-            Text("This parameter is determined automatically")
+            Text(.init("This parameter is determined automatically"))
                 .multilineTextAlignment(.leading)
                 .foregroundStyle(Color.mainGrey)
                 .font(.roboto400, size: 14)
@@ -69,7 +70,7 @@ struct SettingsView: View {
     
     private var notificationSection: some View {
         VStack(spacing: 26) {
-            Text("Notification sound")
+            Text(.init("Notification sound"))
                 .font(.roboto500, size: 16)
                 .foregroundStyle(Color.textDark)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -83,6 +84,27 @@ struct SettingsView: View {
             PreassureTypePickerView(selectedPreassureType: $viewModel.selectedPreassureType)
             TemperatureTypePickerView(selectedPreassureType: $viewModel.selectedTemperatureType)
         }
+    }
+    
+    private var logOutButton: some View {
+        Button {
+            UserDefaults.standard.removeObject(forKey: "axiesCount")
+            try? AuthManager.shared.logOut()
+            navigationManager.setupNavigationStatus()
+        } label: {
+            Text(.init("Log out"))
+                .foregroundStyle(Color.red)
+        }
+    }
+    
+    @ViewBuilder
+    private var testButton: some View {
+//        Button {
+//            DataManager.shared.uploadDataToFirestore()
+//        } label: {
+//            Text("TEST")
+//        }
+//        .padding(.bottom, 30)
     }
 }
 
